@@ -62,8 +62,8 @@ for file in $files ; do
       sed "s/:author_name/$author_name/g" \
     | sed "s/:author_username/$author_username/g" \
     | sed "s/:author_email/$author_email/g" \
-    | sed "s/:vendor_name/$vendor_name_lowercase/g" \
-    | sed "s/:package_name/$package_name/g" \
+    | sed "s/sierratecnologia/$vendor_name_lowercase/g" \
+    | sed "s/pedreiro/$package_name/g" \
     | sed "s/Spatie/$vendor_name/g" \
     | sed "s/_pedreiro_/$package_name_underscore/g" \
     | sed "s/pedreiro/$package_name/g" \

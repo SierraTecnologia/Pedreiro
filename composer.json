@@ -1,11 +1,11 @@
 {
-    "name": ":vendor_name/:package_name",
+    "name": "sierratecnologia/pedreiro",
     "description": ":package_description",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "sierratecnologia",
+        "pedreiro"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/sierratecnologia/pedreiro",
     "license": "MIT",
     "authors": [
         {
