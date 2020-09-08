@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Fields\Former;
+namespace Pedreiro\Elements\Fields\Former;
 
 use Illuminate\Support\Str;
 use Former\MethodDispatcher as FormerDispatcher;

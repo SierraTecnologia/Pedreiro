@@ -1,6 +1,6 @@
-@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('crud-forms.blade_layout'))
+@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('pedreiro.blade_layout'))
 
-@section(\Illuminate\Support\Facades\Config::get('crud-forms.blade_section'))
+@section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
 
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -30,7 +30,7 @@
                         @foreach ($entities as $entity)
                             <tr>
                                 @foreach ($fields as $field)
-                                    <td>@include( "crud-forms::displays.{$field['type']}")</td>
+                                    <td>@include( "pedreiro::displays.{$field['type']}")</td>
                                 @endforeach
 
                                 @if ($withTrashed)
@@ -41,7 +41,7 @@
                                     @if (empty($entity->deleted_at))
                                         {{-- Show --}}
                                         <a href="{{ route("$route.show", $entity->id ) }}" class="btn btn-info">
-                                            @if (\Illuminate\Support\Facades\Config::get('crud-forms.button_icons'))
+                                            @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                 <i class="fa fa-info-circle"></i>
                                             @else
                                                 show
@@ -50,7 +50,7 @@
 
                                         {{-- Update --}}
                                         <a href="{{ route("$route.edit", $entity->id ) }}" class="btn btn-warning">
-                                            @if (\Illuminate\Support\Facades\Config::get('crud-forms.button_icons'))
+                                            @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                 <i class="fa fa-edit"></i>
                                             @else
                                                 edit
@@ -62,7 +62,7 @@
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
                                             <button class="btn btn-danger delete-btn" type="submit">
-                                                @if (\Illuminate\Support\Facades\Config::get('crud-forms.button_icons'))
+                                                @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                     <i class="fa fa-remove"></i>
                                                 @else
                                                     delete
@@ -75,7 +75,7 @@
                                             {{ method_field('PUT') }}
                                             {{ csrf_field() }}
                                             <button class="btn btn-success restore-btn" type="submit">
-                                                @if (\Illuminate\Support\Facades\Config::get('crud-forms.button_icons'))
+                                                @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                     <i class="fa fa-level-up"></i>
                                                 @endif
                                                 Restore

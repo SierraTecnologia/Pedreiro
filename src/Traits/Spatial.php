@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Traits;
+namespace Pedreiro\Traits;
 
 use Illuminate\Support\Facades\DB;
 

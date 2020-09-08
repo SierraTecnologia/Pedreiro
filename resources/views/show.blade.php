@@ -1,6 +1,6 @@
-@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('crud-forms.blade_layout'))
+@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('pedreiro.blade_layout'))
 
-@section(\Illuminate\Support\Facades\Config::get('crud-forms.blade_section'))
+@section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
@@ -13,7 +13,7 @@
                         @foreach ($fields as $field)
                             <li>
                                 <strong>{{ $field['label'] }}</strong>:
-                                @include( "crud-forms::displays.{$field['type']}")
+                                @include( "pedreiro::displays.{$field['type']}")
                             </li>
 
                         @endforeach

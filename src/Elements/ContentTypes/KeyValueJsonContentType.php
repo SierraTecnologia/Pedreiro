@@ -1,7 +1,7 @@
 <?php
 
-namespace Support\Elements\ContentTypes;
-use Support\Elements\ContentTypes\BaseType;
+namespace Pedreiro\Elements\ContentTypes;
+use Pedreiro\Elements\ContentTypes\BaseType;
 
 class KeyValueJsonContentType extends BaseType
 {

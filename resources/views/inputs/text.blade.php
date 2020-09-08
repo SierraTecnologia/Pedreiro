@@ -1,6 +1,6 @@
-@include('crud-forms::inputs.label')
+@include('pedreiro::inputs.label')
 
-<input type="email"
+<input type="text"
        id="{{ $field['name'] }}"
        class="form-control"
        name="{{ $field['name'] }}"

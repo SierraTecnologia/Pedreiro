@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Fields\Traits;
+namespace Pedreiro\Elements\Fields\Traits;
 
 /**
  * Misc uitlities that multiple fields may use

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Fields;
+namespace Pedreiro\Elements\Fields;
 
 use Former;
 use Bkwld\Library;
@@ -17,14 +17,14 @@ class Datetime extends Field
     /**
      * Store the date field instance
      *
-     * @var Support\Elements\Fields\Date
+     * @var Pedreiro\Elements\Fields\Date
      */
     private $date;
 
     /**
      * Store the time field instance
      *
-     * @var Support\Elements\Fields\Time
+     * @var Pedreiro\Elements\Fields\Time
      */
     private $time;
 

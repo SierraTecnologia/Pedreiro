@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\FormFields;
+namespace Pedreiro\Elements\FormFields;
 
 class MultipleImagesHandler extends AbstractHandler
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Fields\Traits;
+namespace Pedreiro\Elements\Fields\Traits;
 
 /**
  * Save a scope

@@ -1,12 +1,12 @@
 <?php
 
-namespace Support\Elements\Fields;
+namespace Pedreiro\Elements\Fields;
 
 use Config;
 use Illuminate\Support\Str;
 use Former\Form\Fields\Checkbox;
 use HtmlObject\Input as HtmlInput;
-use Facilitador\Observers\ManyToManyChecklist as ManyToManyChecklistObserver;
+use Pedreiro\Observers\ManyToManyChecklist as ManyToManyChecklistObserver;
 
 /**
  * Render a list of checkboxes to represent a related many-to-many table.  The
@@ -114,7 +114,7 @@ class ManyToManyChecklist extends Checkbox
 
     /**
      * Generate the checkbox name using a special prefix that tells
-     * Facilitador to treat it has a many to many checkbox
+     * Pedreiro to treat it has a many to many checkbox
      *
      * @return string
      */

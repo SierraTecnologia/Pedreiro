@@ -1,9 +1,9 @@
 <?php
 
-namespace Support\Elements\ContentTypes;
+namespace Pedreiro\Elements\ContentTypes;
 
-use Support\Elements\ContentTypes\BaseType;
-use Support\Elements\ContentTypes\MultipleImage;
+use Pedreiro\Elements\ContentTypes\BaseType;
+use Pedreiro\Elements\ContentTypes\MultipleImage;
 
 class MultipleImagesWithAttrsContentType extends BaseType
 {

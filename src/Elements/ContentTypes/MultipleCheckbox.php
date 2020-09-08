@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\ContentTypes;
+namespace Pedreiro\Elements\ContentTypes;
 
 class MultipleCheckbox extends BaseType
 {

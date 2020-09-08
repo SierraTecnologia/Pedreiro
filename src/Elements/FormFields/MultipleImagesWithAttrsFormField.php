@@ -1,8 +1,8 @@
 <?php
 
-namespace Support\Elements\FormFields;
+namespace Pedreiro\Elements\FormFields;
 
-use Support\Elements\FormFields\AbstractHandler;
+use Pedreiro\Elements\FormFields\AbstractHandler;
 
 class MultipleImagesWithAttrsFormField extends AbstractHandler
 {

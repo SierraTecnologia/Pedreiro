@@ -1,12 +1,12 @@
 <?php
 
-namespace Support\Elements\Fields;
+namespace Pedreiro\Elements\Fields;
 
 use Former\Form\Fields\Textarea;
 use Illuminate\Container\Container;
 
 /**
- * Essentially a textarea with the wysiwyg class applied, which Facilitador JS
+ * Essentially a textarea with the wysiwyg class applied, which Pedreiro JS
  * turns into a Wywsiwyg editor
  */
 class Wysiwyg extends Textarea

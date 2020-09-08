@@ -1,6 +1,6 @@
-@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('crud-forms.blade_layout'))
+@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('pedreiro.blade_layout'))
 
-@section(\Illuminate\Support\Facades\Config::get('crud-forms.blade_section'))
+@section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-primary">
@@ -8,12 +8,12 @@
                 <h3 class="panel-title">Add New {{ $title }}</h3>
             </div>
             <div class="panel-body">
-                @include('crud-forms::_errors')
+                @include('pedreiro::_errors')
                 <form action="{{ route("$route.store", $entity->id) }}" method="POST">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-sm-12">
-                            @include('crud-forms::form')
+                            @include('pedreiro::form')
                         </div>
                     </div>
                     <hr>

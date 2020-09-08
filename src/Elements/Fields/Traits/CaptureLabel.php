@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Fields\Traits;
+namespace Pedreiro\Elements\Fields\Traits;
 
 /**
  * Store the raw label text since Former immediately transforms it

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Fields\Traits;
+namespace Pedreiro\Elements\Fields\Traits;
 
 /**
  * Methods to assist in inserting markup needed for more

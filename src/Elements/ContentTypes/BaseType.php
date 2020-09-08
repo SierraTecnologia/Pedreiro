@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\ContentTypes;
+namespace Pedreiro\Elements\ContentTypes;
 
 use Illuminate\Http\Request;
 
