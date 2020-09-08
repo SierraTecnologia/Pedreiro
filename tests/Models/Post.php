@@ -15,7 +15,7 @@ class Post extends Model
         'body',
         'publish_on',
         'published',
-        'category_id'
+        'category_id',
     ];
 
     public function category()
