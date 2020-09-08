@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Skeleton\Commands;
+namespace Pedreiro\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class PedreiroCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'pedreiro';
 
     public $description = 'My command';
 
