@@ -13,7 +13,7 @@ class File extends BaseType
      */
     public function handle()
     {
-        if (!$this->request->hasFile($this->row->field)) {
+        if (! $this->request->hasFile($this->row->field)) {
             return;
         }
 
@@ -31,7 +31,8 @@ class File extends BaseType
             );
 
             array_push(
-                $filesPath, [
+                $filesPath,
+                [
                 'download_link' => $path.$filename.'.'.$file->getClientOriginalExtension(),
                 'original_name' => $file->getClientOriginalName(),
                 ]

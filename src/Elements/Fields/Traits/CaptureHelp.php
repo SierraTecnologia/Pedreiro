@@ -53,7 +53,7 @@ trait CaptureHelp
     /**
      * Was help defined
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHelp()
     {

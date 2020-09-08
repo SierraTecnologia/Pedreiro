@@ -8,7 +8,7 @@ class Timestamp extends BaseType
 {
     public function handle()
     {
-        if (!in_array($this->request->method(), ['PUT', 'POST'])) {
+        if (! in_array($this->request->method(), ['PUT', 'POST'])) {
             return;
         }
 

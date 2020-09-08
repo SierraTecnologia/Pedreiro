@@ -17,12 +17,12 @@ class MultipleImage extends BaseType
         $filesPath = [];
         $files = $this->request->file($this->row->field);
 
-        if (!$files) {
+        if (! $files) {
             return;
         }
 
         foreach ($files as $file) {
-            if (!$file->isValid()) {
+            if (! $file->isValid()) {
                 continue;
             }
 
@@ -31,7 +31,7 @@ class MultipleImage extends BaseType
             $resize_width = null;
             $resize_height = null;
 
-            if (isset($this->options->resize) && (                isset($this->options->resize->width) || isset($this->options->resize->height))
+            if (isset($this->options->resize) && (isset($this->options->resize->width) || isset($this->options->resize->height))
             ) {
                 if (isset($this->options->resize->width)) {
                     $resize_width = $this->options->resize->width;
@@ -56,7 +56,7 @@ class MultipleImage extends BaseType
                 $resize_height,
                 function (Constraint $constraint) {
                     $constraint->aspectRatio();
-                    if (isset($this->options->upsize) && !$this->options->upsize) {
+                    if (isset($this->options->upsize) && ! $this->options->upsize) {
                         $constraint->upsize();
                     }
                 }
@@ -84,7 +84,7 @@ class MultipleImage extends BaseType
                             $thumb_resize_height,
                             function (Constraint $constraint) {
                                 $constraint->aspectRatio();
-                                if (isset($this->options->upsize) && !$this->options->upsize) {
+                                if (isset($this->options->upsize) && ! $this->options->upsize) {
                                     $constraint->upsize();
                                 }
                             }

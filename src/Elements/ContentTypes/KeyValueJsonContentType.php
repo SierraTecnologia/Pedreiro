@@ -1,7 +1,6 @@
 <?php
 
 namespace Pedreiro\Elements\ContentTypes;
-use Pedreiro\Elements\ContentTypes\BaseType;
 
 class KeyValueJsonContentType extends BaseType
 {
@@ -12,9 +11,9 @@ class KeyValueJsonContentType extends BaseType
     {
         $value = $this->request->input($this->row->field);
 
-        $new_parameters = array();
+        $new_parameters = [];
         foreach ($value as $key => $val) {
-            if($value[$key]['key']) {
+            if ($value[$key]['key']) {
                 $new_parameters[] = $value[$key];
             }
         }

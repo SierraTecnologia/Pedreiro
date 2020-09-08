@@ -8,11 +8,11 @@ class DescriptionHandler extends AbstractHandler
 
     public function visible($row, $dataType, $dataTypeContent, $options)
     {
-        if (!isset($options->description)) {
+        if (! isset($options->description)) {
             return false;
         }
 
-        return !empty($options->description);
+        return ! empty($options->description);
     }
 
     public function createContent($row, $dataType, $dataTypeContent, $options)

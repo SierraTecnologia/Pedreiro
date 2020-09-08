@@ -2,8 +2,6 @@
 
 namespace Pedreiro\Elements\FormFields;
 
-use Pedreiro\Elements\FormFields\AbstractHandler;
-
 class MultipleImagesWithAttrsFormField extends AbstractHandler
 {
     protected $codename = 'multiple_images_with_attrs';
@@ -11,10 +9,11 @@ class MultipleImagesWithAttrsFormField extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'extended-fields::formfields.multiple_images_with_attrs', [
-            'row'             => $row,
-            'options'         => $options,
-            'dataType'        => $dataType,
+            'extended-fields::formfields.multiple_images_with_attrs',
+            [
+            'row' => $row,
+            'options' => $options,
+            'dataType' => $dataType,
             'dataTypeContent' => $dataTypeContent,
             ]
         );

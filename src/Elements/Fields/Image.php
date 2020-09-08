@@ -2,13 +2,13 @@
 
 namespace Pedreiro\Elements\Fields;
 
+use Bkwld\Library\Utils;
 use Croppa;
 use Former;
-use Bkwld\Library\Utils;
-use Former\LiveValidation;
 use Former\Form\Fields\File;
-use Pedreiro\Models\Element;
+use Former\LiveValidation;
 use Illuminate\Container\Container;
+use Pedreiro\Models\Element;
 use Stalker\Models\Image as ImageModel;
 
 /**
@@ -56,7 +56,7 @@ class Image extends File
 
         // Set a default label if there is a NULL name
         // DEPRECATED
-        if (!$name) {
+        if (! $name) {
             $this->group->setLabel('Image');
         }
 
@@ -87,7 +87,7 @@ class Image extends File
     {
         // Check if there are rules for this field
         $rules_key = 'images.' . ($this->name ?: 'default');
-        if (!$rules = Former::getRules($rules_key)) {
+        if (! $rules = Former::getRules($rules_key)) {
             return;
         }
 
@@ -216,7 +216,8 @@ class Image extends File
         $html .= sprintf(
             '</div>
 			<div class="preview"><img class="source" src="%s"></div>
-			</div>', $src
+			</div>',
+            $src
         );
 
         return $html;
@@ -225,7 +226,7 @@ class Image extends File
     /**
      * Check if there is already an upload
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasImage()
     {
@@ -243,7 +244,7 @@ class Image extends File
     {
         $field = Former::hidden($this->inputName($name))->class('input-'.$name);
         if ($value) {
-            if (!is_scalar($value)) {
+            if (! is_scalar($value)) {
                 $value = json_encode($value);
             }
             $field->forceValue($value);
@@ -277,7 +278,7 @@ class Image extends File
 
         // Otherwise, use the name of the field, which should be unique compared
         // to other image fields on the page.
-        if (!$this->input_id) {
+        if (! $this->input_id) {
             $this->input_id = '_'.preg_replace('#[^\w]#', '', $this->name);
         }
 
@@ -291,7 +292,7 @@ class Image extends File
      */
     protected function image()
     {
-        if (!$model = $this->getModel()) {
+        if (! $model = $this->getModel()) {
             return new ImageModel;
         }
 

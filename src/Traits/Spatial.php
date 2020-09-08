@@ -31,10 +31,10 @@ trait Spatial
     {
         $coords = [];
 
-        if (!empty($this->spatial)) {
+        if (! empty($this->spatial)) {
             foreach ($this->spatial as $column) {
                 $clear = trim(preg_replace('/[a-zA-Z\(\)]/', '', $this->getLocation($column)));
-                if (!empty($clear)) {
+                if (! empty($clear)) {
                     foreach (explode(',', $clear) as $point) {
                         list($lng, $lat) = explode(' ', $point);
                         $coords[] = [

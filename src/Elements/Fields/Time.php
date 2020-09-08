@@ -38,7 +38,8 @@ class Time extends Field
             'maxlength' => 8,
             'placeholder' => 'HH:MM',
             'id' => null, // We don't want to conflict on the id
-            ], (array) $attributes
+            ],
+            (array) $attributes
         );
 
         // Create a text type field

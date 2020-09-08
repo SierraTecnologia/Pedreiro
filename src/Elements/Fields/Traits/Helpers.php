@@ -55,7 +55,7 @@ trait Helpers
      */
     public function span()
     {
-        if (!isset($this->attributes['class'])) {
+        if (! isset($this->attributes['class'])) {
             return;
         }
         preg_match('#span\d#', $this->attributes['class'], $matches);

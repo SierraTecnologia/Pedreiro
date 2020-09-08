@@ -27,7 +27,8 @@ class Checklist extends Checkbox
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
         // Make Former treat this commponent like a regular checkbox field
-        if ($type == 'checklist') { $type = 'checkbox';
+        if ($type == 'checklist') {
+            $type = 'checkbox';
         }
         parent::__construct($app, $type, $name, $label, $value, $attributes);
     }

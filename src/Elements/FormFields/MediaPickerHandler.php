@@ -30,19 +30,23 @@ class MediaPickerHandler extends AbstractHandler
             $options->base_path = str_replace('{uid}', Auth::user()->getKey(), $options->base_path);
             if (Str::contains($options->base_path, '{date:')) {
                 $options->base_path = preg_replace_callback(
-                    '/\{date:([^\/\}]*)\}/', function ($date) {
+                    '/\{date:([^\/\}]*)\}/',
+                    function ($date) {
                         return \Carbon\Carbon::now()->format($date[1]);
-                    }, $options->base_path
+                    },
+                    $options->base_path
                 );
             }
             if (Str::contains($options->base_path, '{random:')) {
                 $options->base_path = preg_replace_callback(
-                    '/\{random:([0-9]+)\}/', function ($random) {
+                    '/\{random:([0-9]+)\}/',
+                    function ($random) {
                         return Str::random($random[1]);
-                    }, $options->base_path
+                    },
+                    $options->base_path
                 );
             }
-            if (!$dataTypeContent->getKey()) {
+            if (! $dataTypeContent->getKey()) {
                 $uuid = (string) Str::uuid();
                 $options->base_path = str_replace('{pk}', $uuid, $options->base_path);
                 \Session::put($dataType->slug.'_path', $options->base_path);
@@ -53,11 +57,12 @@ class MediaPickerHandler extends AbstractHandler
         }
 
         return view(
-            'support::shared.forms.fields.media_picker', [
-            'row'      => $row,
-            'options'  => $options,
+            'support::shared.forms.fields.media_picker',
+            [
+            'row' => $row,
+            'options' => $options,
             'dataType' => $dataType,
-            'content'  => $content,
+            'content' => $content,
             ]
         );
     }

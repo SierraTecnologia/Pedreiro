@@ -2,18 +2,18 @@
 
 namespace Pedreiro\Elements\Fields;
 
-use URL;
-use View;
-use Support;
 use Former;
-use Request;
-use SupportURL;
 use Former\Traits\Field;
-use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
+use Request;
+use Support;
 use Support\Http\Controllers\Admin\Base;
+use SupportURL;
+use URL;
+use View;
 
 /**
  * Create a table-layout listing of records in the database.  An index view.  It may
@@ -63,7 +63,7 @@ class Listing extends Field
     /**
      * Preserve the items
      *
-     * @var LengthAwarePaginator|Collection|string $items
+     * @var LengthAwarePaginator|Collection|string
      */
     private $items;
 
@@ -112,9 +112,9 @@ class Listing extends Field
         );
 
         // If no title is passed, set it to the controller name
-        if (!$label && $this->controller) {
+        if (! $label && $this->controller) {
             $label = $this->controller->title();
-        } elseif (!$label) {
+        } elseif (! $label) {
             $label = Str::plural($model);
         }
 
@@ -140,7 +140,11 @@ class Listing extends Field
         $model = $controller->model();
 
         return Former::listing(
-            $model, null, null, null, [
+            $model,
+            null,
+            null,
+            null,
+            [
             'controller' => $controller,
             'items' => $items,
             ]
@@ -285,7 +289,7 @@ class Listing extends Field
         $this->addGroupClass('list-form-group');
 
         // Use the controller description for blockhelp
-        if (!$this->hasHelp()) {
+        if (! $this->hasHelp()) {
             $this->blockhelp($this->controller->description());
         }
 
@@ -325,9 +329,10 @@ class Listing extends Field
 
         // If in a sidebar and there is no parent (like if you are on a create page)
         // then don't show a special message
-        if ($this->layout == 'sidebar' && !$this->parent_item) {
+        if ($this->layout == 'sidebar' && ! $this->parent_item) {
             return View::make(
-                'support::shared.list._pending', [
+                'support::shared.list._pending',
+                [
                 'title' => $this->label_text,
                 'description' => $this->controller->description(),
                 ]
@@ -343,22 +348,22 @@ class Listing extends Field
 
         // Create all the vars the standard list expects
         $vars = [
-            'controller'        => $this->controller_name,
-            'title'             => $this->label_text,
-            'description'       => $this->controller->description(),
-            'columns'           => $this->getColumns($this->controller),
-            'search'            => $this->controller->search(),
-            'convert_dates'     => 'date',
-            'layout'            => $this->layout,
-            'parent_id'         => null,
+            'controller' => $this->controller_name,
+            'title' => $this->label_text,
+            'description' => $this->controller->description(),
+            'columns' => $this->getColumns($this->controller),
+            'search' => $this->controller->search(),
+            'convert_dates' => 'date',
+            'layout' => $this->layout,
+            'parent_id' => null,
             'parent_controller' => null,
-            'many_to_many'      => false,
-            'listing'           => $items,
-            'count'             => is_a($items, LengthAwarePaginator::class) ?
+            'many_to_many' => false,
+            'listing' => $items,
+            'count' => is_a($items, LengthAwarePaginator::class) ?
                 $items->total() : $items->count(),
-            'paginator_from'    => (request('page', 1)-1) * $this->perPage(),
-            'with_trashed'      => $this->controller->withTrashed(),
-            'is_exportable'     => $model_instance->isExportable(),
+            'paginator_from' => (request('page', 1) - 1) * $this->perPage(),
+            'with_trashed' => $this->controller->withTrashed(),
+            'is_exportable' => $model_instance->isExportable(),
         ];
 
         // If the listing has a parent, add relationship vars
@@ -427,6 +432,7 @@ class Listing extends Field
         // http://stackoverflow.com/a/1028677/59160
         if ($this->layout == 'sidebar') {
             $val = reset($columns); // Making sure this gets called before `key()`
+
             return [key($columns) => $val];
 
             // Otherwise, just return all columns
