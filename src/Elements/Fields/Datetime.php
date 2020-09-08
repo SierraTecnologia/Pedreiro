@@ -2,8 +2,8 @@
 
 namespace Pedreiro\Elements\Fields;
 
-use Former;
 use Bkwld\Library;
+use Former;
 use Former\Traits\Field;
 use HtmlObject\Input as HtmlInput;
 use Illuminate\Container\Container;

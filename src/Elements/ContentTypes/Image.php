@@ -24,7 +24,7 @@ class Image extends BaseType
 
             $resize_width = null;
             $resize_height = null;
-            if (isset($this->options->resize) && (                isset($this->options->resize->width) || isset($this->options->resize->height))
+            if (isset($this->options->resize) && (isset($this->options->resize->width) || isset($this->options->resize->height))
             ) {
                 if (isset($this->options->resize->width)) {
                     $resize_width = $this->options->resize->width;
@@ -44,7 +44,7 @@ class Image extends BaseType
                 $resize_height,
                 function (Constraint $constraint) {
                     $constraint->aspectRatio();
-                    if (isset($this->options->upsize) && !$this->options->upsize) {
+                    if (isset($this->options->upsize) && ! $this->options->upsize) {
                         $constraint->upsize();
                     }
                 }
@@ -78,7 +78,7 @@ class Image extends BaseType
                             $thumb_resize_height,
                             function (Constraint $constraint) {
                                 $constraint->aspectRatio();
-                                if (isset($this->options->upsize) && !$this->options->upsize) {
+                                if (isset($this->options->upsize) && ! $this->options->upsize) {
                                     $constraint->upsize();
                                 }
                             }

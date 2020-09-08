@@ -79,11 +79,11 @@ class Upload extends File
      */
     protected function renderReview()
     {
-        if (!$this->value) {
+        if (! $this->value) {
             return;
         }
 
-        if (!$this->isRequired() && $this->isInUploads()) {
+        if (! $this->isRequired() && $this->isInUploads()) {
             return $this->renderDestuctableReview();
         }
 
@@ -95,7 +95,7 @@ class Upload extends File
      * with the Elements system where the default images would usually be in the
      * img directory
      *
-     * @return boolean
+     * @return bool
      */
     protected function isInUploads()
     {

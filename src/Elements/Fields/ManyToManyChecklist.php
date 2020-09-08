@@ -3,9 +3,9 @@
 namespace Pedreiro\Elements\Fields;
 
 use Config;
-use Illuminate\Support\Str;
 use Former\Form\Fields\Checkbox;
 use HtmlObject\Input as HtmlInput;
+use Illuminate\Support\Str;
 use Pedreiro\Observers\ManyToManyChecklist as ManyToManyChecklistObserver;
 
 /**
@@ -56,7 +56,7 @@ class ManyToManyChecklist extends Checkbox
     public function wrapAndRender()
     {
         // Do not show the form at all if they don't have permission
-        if (!app('facilitador.user')->can('read', $this->name)) {
+        if (! app('facilitador.user')->can('read', $this->name)) {
             return '';
         }
 
@@ -86,7 +86,6 @@ class ManyToManyChecklist extends Checkbox
             $this->checkboxes($boxes);
 
             return parent::render().HtmlInput::hidden($this->boxName());
-
         }
 
         // There are no relations yet, show a message to that effect
@@ -186,7 +185,7 @@ class ManyToManyChecklist extends Checkbox
      * each individual `.checkbox`div.
      *
      * @param string|array $item          A checkable item
-     * @param integer      $fallbackValue A fallback value if none is set
+     * @param int      $fallbackValue A fallback value if none is set
      *
      * @return string
      */

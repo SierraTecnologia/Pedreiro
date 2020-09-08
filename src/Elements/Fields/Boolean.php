@@ -44,6 +44,7 @@ class Boolean extends Checkbox
     public function render()
     {
         $this->makeBooleanCheckbox();
+
         return HtmlInput::hidden($this->name, '0').parent::render();
     }
 
@@ -56,6 +57,7 @@ class Boolean extends Checkbox
     public function message($message)
     {
         $this->message = $message;
+
         return $this;
     }
 
@@ -71,7 +73,7 @@ class Boolean extends Checkbox
             $this->message => [
                 'name' => $this->name,
                 'value' => 1,
-            ]
+            ],
             ]
         );
     }

@@ -2,8 +2,8 @@
 
 namespace Pedreiro\Elements\Fields\Former;
 
-use Illuminate\Support\Str;
 use Former\MethodDispatcher as FormerDispatcher;
+use Illuminate\Support\Str;
 
 /**
  * Override the getClassFromMethod() so that it doesn't destroy casing

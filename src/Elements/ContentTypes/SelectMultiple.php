@@ -14,11 +14,11 @@ class SelectMultiple extends BaseType
 
         // Check if we need to parse the editablePivotFields to update fields in the corresponding pivot table
 
-        if (isset($this->options->relationship) && !empty($this->options->relationship->editablePivotFields)) {
+        if (isset($this->options->relationship) && ! empty($this->options->relationship->editablePivotFields)) {
             $pivotContent = [];
             // Read all values for fields in pivot tables from the request
             foreach ($this->options->relationship->editablePivotFields as $pivotField) {
-                if (!isset($pivotContent[$pivotField])) {
+                if (! isset($pivotContent[$pivotField])) {
                     $pivotContent[$pivotField] = [];
                 }
                 $pivotContent[$pivotField] = $this->request->input('pivot_'.$pivotField);

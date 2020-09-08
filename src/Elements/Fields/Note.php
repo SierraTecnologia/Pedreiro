@@ -2,8 +2,8 @@
 
 namespace Pedreiro\Elements\Fields;
 
-use HtmlObject\Element;
 use Former\Traits\Field;
+use HtmlObject\Element;
 use Illuminate\Container\Container;
 
 /**

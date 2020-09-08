@@ -33,7 +33,6 @@ trait InsertMarkup
         // Horizontal form
         if (app('former.form')->isOfType('horizontal')) {
             return preg_replace('#(</div>\s*</div>)$#', $html.'$1', $group);
-
         }
 
         // Vertical form

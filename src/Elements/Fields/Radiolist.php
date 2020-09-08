@@ -27,7 +27,8 @@ class Radiolist extends Radio
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
         // Make Former treat this commponent like a regular radio field
-        if ($type == 'radiolist') { $type = 'radio';
+        if ($type == 'radiolist') {
+            $type = 'radio';
         }
         parent::__construct($app, $type, $name, $label, $value, $attributes);
     }

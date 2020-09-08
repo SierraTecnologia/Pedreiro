@@ -38,7 +38,8 @@ class Date extends Field
             'maxlength' => 10,
             'placeholder' => __('facilitador::form.date.placeholder'),
             'id' => null, // We don't want to conflict on the id
-            ], (array) $attributes
+            ],
+            (array) $attributes
         );
 
         // Create a text type field

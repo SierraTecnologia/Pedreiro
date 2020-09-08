@@ -2,9 +2,6 @@
 
 namespace Pedreiro\Elements\ContentTypes;
 
-use Pedreiro\Elements\ContentTypes\BaseType;
-use Pedreiro\Elements\ContentTypes\MultipleImage;
-
 class MultipleImagesWithAttrsContentType extends BaseType
 {
     /**
@@ -12,7 +9,7 @@ class MultipleImagesWithAttrsContentType extends BaseType
      */
     public function handle()
     {
-        $files = []; 
+        $files = [];
         if ($this->request->file($this->row->field)) {
             $pathes = (new MultipleImage($this->request, $this->slug, $this->row, $this->options))->handle();
             foreach (json_decode($pathes) as $i => $path) {
@@ -20,9 +17,8 @@ class MultipleImagesWithAttrsContentType extends BaseType
                 $files[$i]['alt'] = '';
                 $files[$i]['title'] = '';
             }
-    
         }
-        return json_encode($files);
 
+        return json_encode($files);
     }
 }

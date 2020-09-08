@@ -9,10 +9,11 @@ class CodeEditorHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.code_editor', [
-            'row'             => $row,
-            'options'         => $options,
-            'dataType'        => $dataType,
+            'support::shared.forms.fields.code_editor',
+            [
+            'row' => $row,
+            'options' => $options,
+            'dataType' => $dataType,
             'dataTypeContent' => $dataTypeContent,
             ]
         );
