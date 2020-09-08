@@ -9,72 +9,193 @@
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
 ## Support us
+# Laravel CRUD Forms
 
-Learn how to create a package like this one, by watching our premium video course:
+This is a Laravel >=5.5 package to help easily create CRUD (Create, Read, Update, Delete) forms for eloquent models (as well as an index page).
+It aims to be used as a quick tool which does not interfere with the other parts of the application that it's used in.
 
-[![Laravel Package training](https://spatie.be/github/package-training.jpg)](https://laravelpackage.training)
+The package provides:
+- A trait to use in resource controllers and
+- A series of views for displaying the forms
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+The views are built using bootstrap (v3), but the styling can easily be overriden.
 
 ## Installation
 
-You can install the package via composer:
+### Composer
 
-```bash
-composer require sierratecnologia/pedreiro
+From the command line, run:
+
 ```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --provider="Pedreiro\PedreiroServiceProvider" --tag="migrations"
-php artisan migrate
+composer require achillesp/laravel-pedreito
 ```
+ 
+### Configuration
 
-You can publish the config file with:
-```bash
-php artisan vendor:publish --provider="Pedreiro\PedreiroServiceProvider" --tag="config"
+This package uses a config file which you can override by publishing it to your app's config dir.
+
 ```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
+php artisan vendor:publish --provider=Pedreiro\CrudFormsServiceProvider --tag=config
+``` 
 
 ## Usage
 
-``` php
-$pedreiro = new Pedreiro();
-echo $pedreiro->echoPhrase('Hello, Spatie!');
+To use the package, you need to use the trait `Pedreiro\CrudForms` in your model's controller and define your routes.
+The trait provides all the required methods for a Resource Controller, as well as a restore method in case of soft-deleted models.
+
+### Routes
+
+If for example you have a `Post` model, you would define the routes:
+
+```php
+Route::resource('/posts', 'PostController');
 ```
 
-## Testing
+### Controller
 
-``` bash
-composer test
+Then in your `PostController`, you will need to use the trait and also define a constructor where you give the needed details of the model.
+
+```php
+use App\Post;
+use Pedreiro\CrudForms;
+
+class PostController extends Controller
+{
+    use CrudForms;
+
+    public function __construct(Post $post)
+    {
+        $this->model = $post;
+    }
+}
+``` 
+
+In the controller's constructor you can define the properties which are handled by the controller.
+The available properties that can be defined are as follows.
+
+### The model
+
+This is the model, which should be passed in the constructor through Dependency Injection.
+
+### The formFields array
+
+This is an array of all the fields you need in the forms. Each field is declared as an array that has:
+1. `name`: This is the model's attribute name, as it is in the database.
+2. `label`: This is the field's label in the forms.
+3. `type`: The type of the form input field that will be used. Accepted types are: 
+    - text
+    - textarea
+    - email
+    - url
+    - password
+    - date
+    - select
+    - select_multiple
+    - checkbox
+    - checkbox_multiple
+    - radio
+4. `relationship`: This is needed in case of a select, select_multiple, radio or checkbox_multiple buttons. 
+You can state here the name of the relationship as it is defined in the model. 
+In the example bellow, the `Post` model has a `belongsTo` relationship to `category` and a `belongsToMany` relationship to `tags`.
+For `belongsTo` relationships you can use a select or a radio(group of radios) input.
+For `belongsToMany` relationships you can use a select_multiple or checkbox_multiple inputs. 
+5. `relFieldName`: This is optional. It is used only in case we have a relationship, to set the name of the attribute of the related model that is displayed (ie. in a select's options).
+If not defined, the default attribute to be used is `name`.
+
+```php
+$this->formFields = [
+    ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
+    ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
+    ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
+    ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
+    ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
+    ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
+    ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+];
 ```
 
-## Changelog
+### The `indexFields` array
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+These are the model's attributes that are displayed in the index page.
 
-## Contributing
+```php
+$this->indexFields = ['title', 'category_id', 'published'];
+```
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+If not defined, then the first of the `formFields` is shown.
 
-## Security
+### The `formTitle` (optional)
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+You can optionally, define the name of the model as we want it to appear in the views. 
+If not defined, the name of the model will be used.
 
-## Credits
+### The `bladeLayout` (optional)
 
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
+This is used to define the blade layout file that will be extended by the views for the crud forms and index page.
+
+### The option to display deleted models (`withTrashed`)
+
+Setting this to true, will also display deleted models and offer an option to restore them.
+
+```php
+$this->withTrashed = true;
+```
+
+In order to be able to restore the models, you need to define an additional route:
+
+```php
+Route::put('/posts/{post}/restore', ['as' => 'posts.restore', 'uses' => 'PostController@restore']);
+```
+
+### The `validationRules` array (optional)
+
+These are the rules we want to use to validate data before saving the model.
+
+```php
+$this->validationRules = [
+    'title'       => 'required|max:255',
+    'slug'        => 'required|max:100',
+    'body'        => 'required',
+    'publish_on'  => 'date',
+    'published'   => 'boolean',
+    'category_id' => 'required|int',
+];
+```
+
+### The `validationMessages` array (optional)
+
+Use this to define custom messages for validation errors. For example:
+
+```php
+$this->validationMessages = [
+    'body.required' => "You need to fill in the post content."
+];
+```
+
+### The `validationAttributes` array (optional)
+
+Use this to change the way an attribute's name should appear in validation error messages.
+
+```php
+$this->validationAttributes = [
+    'title' => 'Post title'
+];
+```
+
+## Views
+
+The views are built with bootstrap v.3 and also have css classes to support some common JavaScript libraries.
+- select2 class is used in select inputs
+- datepicker class is used in date inputs
+- data-table class is used in the index view table
+
+It is also possible to publish the views, so you can change them anyway you need. 
+To publish them, use the following artisan command:
+
+```
+php artisan vendor:publish --provider=Pedreiro\CrudFormsServiceProvider --tag=views
+``` 
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information. 
