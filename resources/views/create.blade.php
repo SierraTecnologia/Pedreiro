@@ -1,4 +1,4 @@
-@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('pedreiro.blade_layout'))
+@extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('pedreiro.blade_layout', 'layouts.app'))
 
 @section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
 <div class="row">

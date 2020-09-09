@@ -6,7 +6,7 @@ return [
      * The default base layout that the views extend.
      * Change this to your app's main layout or the layout you want to use for the forms.
      */
-    'blade_layout' => 'pedreito::layout',
+    'blade_layout' => 'pedreiro::layout',
 
     /*
      * The default section in the base blade layout, that the CRUD views will use.

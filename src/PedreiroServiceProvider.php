@@ -4,6 +4,7 @@ namespace Pedreiro;
 
 use Illuminate\Support\ServiceProvider;
 use Pedreiro\Commands\PedreiroCommand;
+use Pedreiro\Events\FormFieldsRegistered;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
@@ -38,10 +39,13 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
         // ExtendedBreadFormFieldsServiceProvider
 
-        SupportFacade::addFormField(KeyValueJsonFormField::class);
-        SupportFacade::addFormField(MultipleImagesWithAttrsFormField::class);
+        // SupportFacade::addFormField(KeyValueJsonFormField::class);
+        // SupportFacade::addFormField(MultipleImagesWithAttrsFormField::class);
 
         $this->registerFormFields();
+
+
+        // $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'pedreiro');
     }
 
     public static function migrationFileExists(string $migrationFileName): bool
@@ -82,13 +86,13 @@ class PedreiroServiceProvider extends ServiceProvider
             'coordinates',
         ];
 
-        foreach ($formFields as $formField) {
-            $class = Str::studly("{$formField}_handler");
+        // foreach ($formFields as $formField) {
+        //     $class = Str::studly("{$formField}_handler");
 
-            SupportFacade::addFormField("Support\\Elements\\FormFields\\{$class}");
-        }
+        //     // SupportFacade::addFormField("Support\\Elements\\FormFields\\{$class}");
+        // }
 
-        SupportFacade::addAfterFormField(DescriptionHandler::class);
+        // SupportFacade::addAfterFormField(DescriptionHandler::class);
 
         event(new FormFieldsRegistered($formFields));
     }

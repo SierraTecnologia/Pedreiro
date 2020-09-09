@@ -27,7 +27,7 @@ The views are built using bootstrap (v3), but the styling can easily be override
 From the command line, run:
 
 ```
-composer require achillesp/laravel-pedreito
+composer require achillesp/laravel-pedreiro
 ```
  
 ### Configuration

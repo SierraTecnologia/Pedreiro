@@ -60,7 +60,7 @@ trait CrudController
      *
      * @var string
      */
-    protected $bladeLayout;
+    protected $bladeLayout = 'layouts.app';
 
     /**
      * Whether we want to handle deleted resources.
@@ -125,7 +125,7 @@ trait CrudController
         $bladeLayout = $this->bladeLayout;
 
         return view(
-            'pedreito::index',
+            'pedreiro::index',
             compact(
                 'entities',
                 'fields',
@@ -146,6 +146,7 @@ trait CrudController
     {
         $entity = $this->model;
 
+        $relationshipOptions = null;
         if (count($this->getRelationships())) {
             $relationshipOptions = $this->getModelRelationshipData();
         }
@@ -156,7 +157,7 @@ trait CrudController
         $bladeLayout = $this->bladeLayout;
 
         return view(
-            'pedreito::create',
+            'pedreiro::create',
             compact(
                 'entity',
                 'fields',
@@ -212,7 +213,7 @@ trait CrudController
         $bladeLayout = $this->bladeLayout;
 
         return view(
-            'pedreito::show',
+            'pedreiro::show',
             compact(
                 'entity',
                 'fields',
@@ -236,6 +237,7 @@ trait CrudController
 
         $this->loadModelRelationships($entity);
 
+        $relationshipOptions = null;
         if (count($this->getRelationships())) {
             $relationshipOptions = $this->getModelRelationshipData();
         }
@@ -246,7 +248,7 @@ trait CrudController
         $bladeLayout = $this->bladeLayout;
 
         return view(
-            'pedreito::edit',
+            'pedreiro::edit',
             compact(
                 'entity',
                 'fields',
