@@ -3,6 +3,7 @@
 namespace Pedreiro;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Pedreiro\Commands\PedreiroCommand;
 use Pedreiro\Events\FormFieldsRegistered;
 
@@ -39,8 +40,7 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
         // ExtendedBreadFormFieldsServiceProvider
 
-        // SupportFacade::addFormField(KeyValueJsonFormField::class);
-        // SupportFacade::addFormField(MultipleImagesWithAttrsFormField::class);
+        PedreiroFacade::ddFormField(MultipleImagesWithAttrsFormField::class);
 
         $this->registerFormFields();
 
@@ -86,13 +86,13 @@ class PedreiroServiceProvider extends ServiceProvider
             'coordinates',
         ];
 
-        // foreach ($formFields as $formField) {
-        //     $class = Str::studly("{$formField}_handler");
+        foreach ($formFields as $formField) {
+            $class = Str::studly("{$formField}_handler");
 
-        //     // SupportFacade::addFormField("Support\\Elements\\FormFields\\{$class}");
-        // }
+            PedreiroFacade::addFormField("Pedreiro\\Elements\\FormFields\\{$class}");
+        }
 
-        // SupportFacade::addAfterFormField(DescriptionHandler::class);
+        PedreiroFacade::addAfterFormField(DescriptionHandler::class);
 
         event(new FormFieldsRegistered($formFields));
     }
