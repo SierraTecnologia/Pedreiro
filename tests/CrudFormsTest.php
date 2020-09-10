@@ -54,12 +54,12 @@ class CrudFormsTest extends TestCase
     public function it_can_create_a_new_resource()
     {
         $this->post('/post', [
-            'title'      => 'post X',
-            'slug'       => 'post-x',
-            'body'       => 'post X body',
+            'title' => 'post X',
+            'slug' => 'post-x',
+            'body' => 'post X body',
             'publish_on' => now(),
-            'published'  => 1,
-            'category_id'=> 1,
+            'published' => 1,
+            'category_id' => 1,
         ]);
 
         $this->assertCount(1, Post::where('title', '=', 'post X')->get());
@@ -71,12 +71,12 @@ class CrudFormsTest extends TestCase
         $this->assertCount(0, Post::where('title', '=', 'post X')->get());
 
         $this->put('/post/1', [
-            'title'      => 'post X',
-            'slug'       => 'post-x',
-            'body'       => 'post X body',
+            'title' => 'post X',
+            'slug' => 'post-x',
+            'body' => 'post X body',
             'publish_on' => now(),
-            'published'  => 1,
-            'category_id'=> 1,
+            'published' => 1,
+            'category_id' => 1,
         ]);
 
         $this->assertCount(1, Post::where('title', '=', 'post X')->get());

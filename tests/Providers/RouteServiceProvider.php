@@ -2,8 +2,8 @@
 
 namespace Pedreiro\Test\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -31,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
 
             $router->group(['middleware' => 'web'], function ($router) {
                 $router->resource('/post', 'PostController');
-                $router->put('/post/{post}/restore','PostController@restore');
+                $router->put('/post/{post}/restore', 'PostController@restore');
             });
         });
     }

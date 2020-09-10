@@ -2,12 +2,12 @@
 
 namespace Pedreiro\Test\Controllers;
 
-use Pedreiro\CrudForms;
-use Illuminate\Routing\Controller;
-use Pedreiro\Test\Models\Post;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controller;
+use Pedreiro\CrudForms;
+use Pedreiro\Test\Models\Post;
 
 class PostController extends Controller
 {
@@ -31,11 +31,11 @@ class PostController extends Controller
         $this->withTrashed = true;
 
         $this->validationRules = [
-            'title'       => 'string|required|max:255',
-            'slug'        => 'string|required|max:100',
-            'body'        => 'required',
-            'publish_on'  => 'date',
-            'published'   => 'boolean',
+            'title' => 'string|required|max:255',
+            'slug' => 'string|required|max:100',
+            'body' => 'required',
+            'publish_on' => 'date',
+            'published' => 'boolean',
             'category_id' => 'int|required',
         ];
 
