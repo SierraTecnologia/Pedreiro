@@ -37,10 +37,14 @@ class PedreiroServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->app->bind('pedreiro', Pedreiro::class);
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Pedreiro', PedreiroFacade::class);
+
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
         // ExtendedBreadFormFieldsServiceProvider
 
-        PedreiroFacade::ddFormField(MultipleImagesWithAttrsFormField::class);
+        PedreiroFacade::FormField(MultipleImagesWithAttrsFormField::class);
 
         $this->registerFormFields();
 
