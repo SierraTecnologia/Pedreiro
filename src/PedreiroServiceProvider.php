@@ -2,6 +2,7 @@
 
 namespace Pedreiro;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Pedreiro\Commands\PedreiroCommand;
@@ -44,7 +45,7 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
         // ExtendedBreadFormFieldsServiceProvider
 
-        PedreiroFacade::FormField(MultipleImagesWithAttrsFormField::class);
+        // PedreiroFacade::FormField(MultipleImagesWithAttrsFormField::class);
 
         $this->registerFormFields();
 
@@ -96,7 +97,7 @@ class PedreiroServiceProvider extends ServiceProvider
             PedreiroFacade::addFormField("Pedreiro\\Elements\\FormFields\\{$class}");
         }
 
-        PedreiroFacade::addAfterFormField(DescriptionHandler::class);
+        // PedreiroFacade::addAfterFormField(DescriptionHandler::class);
 
         event(new FormFieldsRegistered($formFields));
     }
