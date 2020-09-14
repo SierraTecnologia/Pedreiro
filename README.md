@@ -56,16 +56,16 @@ Route::resource('/posts', 'PostController');
 Then in your `PostController`, you will need to use the trait and also define a constructor where you give the needed details of the model.
 
 ```php
-use App\Post;
-use Pedreiro\CrudForms;
+use App\Models\Post;
+use Pedreiro\CrudController;
 
 class PostController extends Controller
 {
-    use CrudForms;
+    use CrudController;
 
-    public function __construct(Post $post)
+    public function __construct(Post $model)
     {
-        $this->model = $post;
+        $this->model = $model;
     }
 }
 ``` 
@@ -103,15 +103,46 @@ For `belongsToMany` relationships you can use a select_multiple or checkbox_mult
 If not defined, the default attribute to be used is `name`.
 
 ```php
-$this->formFields = [
-    ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
-    ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
-    ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
-    ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
-    ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
-    ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
-    ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
-];
+
+    public $formFields = [
+        [
+            'name' => 'title',
+            'label' => 'Title',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'slug',
+            'label' => 'Slug',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'body',
+            'label' => 'Enter your content here',
+            'type' => 'textarea'
+        ],
+        [
+            'name' => 'publish_on',
+            'label' => 'Publish Date',
+            'type' => 'date'
+        ],
+        [
+            'name' => 'published',
+            'label' => 'Published',
+            'type' => 'checkbox'
+        ],
+        [
+            'name' => 'category_id',
+            'label' => 'Category',
+            'type' => 'select',
+            'relationship' => 'category'
+        ],
+        [
+            'name' => 'tags',
+            'label' => 'Tags',
+            'type' => 'select_multiple',
+            'relationship' => 'tags'
+        ],
+    ];
 ```
 
 ### The `indexFields` array

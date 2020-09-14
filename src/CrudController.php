@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 trait CrudController
 {
+    use \Muleta\Traits\Controllers\Exportable;
     /**
      * The model that we use.
      *
@@ -155,6 +156,7 @@ trait CrudController
         $title = $this->getFormTitle();
         $route = $this->getRoute();
         $bladeLayout = $this->bladeLayout;
+
 
         return view(
             'pedreiro::create',
@@ -344,10 +346,15 @@ trait CrudController
         }
 
         foreach ($this->formFields as $key => $field) {
-            if (Arr::has($field, 'relationship') && ! Arr::has($field, 'relFieldName')) {
+            if (Arr::has($field, 'relationship') && $field['type'] !== "inline" && ! Arr::has($field, 'relFieldName')) {
                 // set default name of related table main field
                 $this->formFields[$key]['relFieldName'] = 'name';
             }
+            // @todo fazer para type inine
+            //  else if (Arr::has($field, 'relationship') && $field['type'] === "inline") {
+            //     // set default name of related table main field
+            //     $this->formFields[$key]['relFieldName'] = 'name';
+            // }
         }
 
         return $this->formFields;
@@ -539,5 +546,251 @@ trait CrudController
     protected function hasField($fieldName)
     {
         return in_array($fieldName, array_column($this->formFields, 'name'), true);
+    }
+
+    /**
+     * EU Adaptei
+     *
+     * @param [type] $model
+     * @return void
+     */
+
+    /**
+     * Get the permission options for the controller.  By default, these are the
+     * stanadard CRUD actions
+     *
+     * @return array An associative array.  The keys are the permissions slugs.
+     *               The value is either the description as a string or an array
+     *               with the first index being an english title and the second
+     *               being the description.
+     */
+    public function getPermissionOptions()
+    {
+        return [
+            'read' => 'View listing and edit views',
+            'create' => 'Create new items',
+            'update' => 'Update existing items',
+            'publish' => 'Move from "draft" to "published"',
+            'destroy' => ['Delete', 'Delete items permanently'],
+        ];
+    }
+    /**
+     * Criei
+     */
+
+    protected function loadModel($model)
+    {
+        $this->model = $model;
+        if (empty($this->indexFields)) {
+            $this->indexFields = $this->model->indexFields;
+        }
+        if (empty($this->formFields)) {
+            $this->formFields = $this->model->formFields;
+        }
+    }
+
+    /**
+     * Get the search settings for a controller, merging in default selectors
+     *
+     * @return array
+     */
+    // public function search(Request $request)
+    public function search()
+    {
+        $search = new Search;
+
+        return array_merge(
+            $search->makeSoftDeletesCondition($this),
+            $this->search ?: []
+        );
+    }
+
+
+    /**
+     * From Decoy @todo recuperar a merda q fiz
+     */
+    // rn $class::RULES;
+    //     }
+        
+    //     if (!property_exists($class, 'rules')) {
+    //         return [];
+    //     }
+
+    //     if (isset($class::$rules)) {
+    //         return $class::$rules;
+    //     }
+    //     return (new $class)->rules;
+    // }
+
+    /**
+     * All actions validate in basically the same way.  This is shared logic for that
+     *
+     * @param  BaseModel|Request|array $data
+     * @param  array                   $rules    A Laravel rules array. If null, will be pulled from model
+     * @param  array                   $messages Special error messages
+     * @return void
+     *
+     * @throws ValidationFail
+     */
+    public function validateEloquentData($data, $rules = null, $messages = [])
+    {
+        // A request may be passed in when using Laravel traits, like how resetting
+        // passwords work.  Get the input from it
+        if (is_a($data, \Illuminate\Http\Request::class)) {
+            $data = $data->input();
+        }
+
+        // Get validation rules from model
+        $model = null;
+        if (is_a($data, BaseModel::class)) {
+            $model = $data;
+            $data = $model->getAttributes();
+            if (empty($rules)) {
+                $rules = $model::$rules;
+            }
+        }
+
+        // If an AJAX update, don't require all fields to be present. Pass just the
+        // keys of the input to the array_only function to filter the rules list.
+        if (Request::ajax() && Request::getMethod() == 'PUT') {
+            $rules = array_only($rules, array_keys(request()->input()));
+        }
+
+        // Stop if no rules
+        if (empty($rules)) {
+            return;
+        }
+
+        // Build the validation instance and fire the intiating event.
+        if ($model) {
+            (new ModelValidator)->validateEloquentData($model, $rules, $messages);
+        } else {
+            $messages = array_merge(BkwldLibraryValidator::$messages, $messages);
+            $validation = Validator::make($data, $rules, $messages);
+            if ($validation->fails()) {
+                throw new ValidationFail($validation);
+            }
+        }
+    }
+
+    /**
+     * Format the results of a query in the format needed for the autocomplete
+     * responses
+     *
+     * @param  array $results
+     * @return array
+     */
+    public function formatAutocompleteResponse($results)
+    {
+        $output = [];
+        foreach ($results as $row) {
+
+            // Only keep the id and title fields
+            $item = new stdClass;
+            $item->id = $row->getKey();
+            $item->title = $row->getAdminTitleAttribute();
+
+            // Add properties for the columns mentioned in the list view within the
+            // 'columns' property of this row in the response.  Use the same logic
+            // found in Support::renderListColumn();
+            $item->columns = [];
+            foreach ($this->columns() as $column) {
+                if (method_exists($row, $column)) {
+                    $item->columns[$column] = call_user_func([$row, $column]);
+                } elseif (isset($row->$column)) {
+                    if (is_a($row->$column, 'Carbon\Carbon')) {
+                        $item->columns[$column] = $row->$column->format(FORMAT_DATE);
+                    } else {
+                        $item->columns[$column] = $row->$column;
+                    }
+                } else {
+                    $item->columns[$column] = null;
+                }
+            }
+
+            // Add the item to the output
+            $output[] = $item;
+        }
+
+        return $output;
+    }
+
+    // Return the per_page based on the input
+    public function perPage()
+    {
+        $per_page = request('count', static::$per_page);
+        if ($per_page == 'all') {
+            return 1000;
+        }
+
+        return $per_page;
+    }
+
+    /**
+     * Run the parent relationship function for the active model, returning the Relation
+     * object. Returns false if none found.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\Relation | false
+     */
+    private function parentRelation()
+    {
+        if ($this->parent && method_exists($this->parent, $this->parent_to_self)) {
+            return $this->parent->{$this->parent_to_self}();
+        }
+
+        return false;
+    }
+
+    /**
+     * Tell Laravel to look for view files within the app admin views so that,
+     * on a controller-level basis, the app can customize elements of an admin
+     * view through it's partials.
+     *
+     * @return void
+     */
+    protected function overrideViews()
+    {
+        $dir = Str::snake($this->controllerName());
+        $path = base_path('resources/views/admin/').$dir;
+        app('view')->prependNamespace('facilitador', $path);
+    }
+
+    /**
+     * Creates a success message for CRUD commands
+     *
+     * @param  Support\Model\Base|string $title The model instance that is
+     *                                              being worked on  or a string
+     *                                              containing the title
+     * @param  string                        $verb  Default: 'saved'. Past tense CRUD verb (created, saved, etc)
+     * @return string                        The CRUD success message string
+     */
+    protected function successMessage($input = '', $verb = 'saved')
+    {
+        // Figure out the title and wrap it in quotes
+        $title = $input;
+        if (is_a($input, '\Support\Models\Base')) {
+            $title = $input->getAdminTitleAttribute();
+        }
+
+        if ($title && is_string($title)) {
+            $title = '"'.$title.'"';
+        }
+
+        // Render the message
+        $message = __('facilitador::base.success_message', ['model' => Str::singular($this->title), 'title' => $title, 'verb' => __("facilitador::base.verb.$verb")]);
+
+        // Add extra messaging for copies
+        if ($verb == 'duplicated') {
+            $url = preg_replace('#/duplicate#', '/edit', Request::url());
+            $message .= __('facilitador::base.success_duplicated', ['url' => $url]);
+        }
+
+        // Add extra messaging if the creation was begun from the localize UI
+        if ($verb == 'duplicated' && is_a($input, '\Support\Models\Base') && ! empty($input->locale)) {
+            $message .= __('facilitador::base.success_localized', ['locale' => \Illuminate\Support\Facades\Config::get('sitec.site.locales')[$input->locale]]);
+        }
+
+        // Return message
+        return $message;
     }
 }
