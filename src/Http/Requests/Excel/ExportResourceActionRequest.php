@@ -2,10 +2,10 @@
 
 namespace Support\Http\Requests\Excel;
 
-use Laravel\Nova\Resource;
-use Support\Elements\Entities\Fields\Field;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\ActionRequest;
+use Laravel\Nova\Resource;
+use Support\Elements\Entities\Fields\Field;
 
 class ExportResourceActionRequest extends ActionRequest implements ExportActionRequest
 {
@@ -18,7 +18,8 @@ class ExportResourceActionRequest extends ActionRequest implements ExportActionR
     public function toExportQuery()
     {
         return $this->toSelectedResourceQuery()->when(
-            !$this->forAllMatchingResources(), function ($query) {
+            ! $this->forAllMatchingResources(),
+            function ($query) {
                 $query->whereKey(explode(',', $this->resources));
             }
         );
