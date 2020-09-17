@@ -5,8 +5,9 @@ namespace Pedreiro;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Pedreiro\
 use Pedreiro\Commands\PedreiroCommand;
-use Pedreiro\Events\FormFieldsRegistered;
+use Pedreiro\Facades\Form;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
@@ -40,6 +41,7 @@ class PedreiroServiceProvider extends ServiceProvider
     {
         $this->app->bind('pedreiro', Pedreiro::class);
         $loader = AliasLoader::getInstance();
+        $loader->alias('Form', Form::class);
         $loader->alias('Pedreiro', PedreiroFacade::class);
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
