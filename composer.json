@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^7.4",
+        "sierratecnologia/former": "dev-master",
         "anahkiasen/html-object": "^1.4",
         "spatie/laravel-validation-rules": "^2.6"
     },
