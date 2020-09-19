@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class File extends BaseType
 {
     /**
-     * @return string
+     * @return false|null|string
      */
     public function handle()
     {

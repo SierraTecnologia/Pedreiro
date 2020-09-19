@@ -5,7 +5,7 @@ namespace Support\Http\Requests\Excel;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\LensActionRequest;
 use Laravel\Nova\Resource;
-use Support\Elements\Entities\Fields\Field;
+use Pedreiro\Elements\Fields\Field;
 
 class ExportLensActionRequest extends LensActionRequest implements ExportActionRequest
 {

@@ -5,7 +5,7 @@ namespace Support\Http\Requests\Excel;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Resource;
-use Support\Elements\Entities\Fields\Field;
+use Pedreiro\Elements\Fields\Field;
 
 class ExportResourceActionRequest extends ActionRequest implements ExportActionRequest
 {

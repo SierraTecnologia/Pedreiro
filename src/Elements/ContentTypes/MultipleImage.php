@@ -10,7 +10,7 @@ use Intervention\Image\Facades\Image as InterventionImage;
 class MultipleImage extends BaseType
 {
     /**
-     * @return string
+     * @return false|null|string
      */
     public function handle()
     {
