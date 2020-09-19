@@ -48,19 +48,15 @@
     "repositories": [
         {
             "type": "path",
-            "url": "/sierra/Dev/Libs/**",
+            "url": "../**",
             "options": {
                 "symlink": true
             }
-        },
-        {
-            "type": "vcs",
-            "url":  "git@github.com:botman/studio-addons.git"
         }
     ],
     "config": {
-        "preferred-install": "dist",
         "sort-packages": true,
+        "preferred-install": "dist",
         "optimize-autoloader": true
     },
     "extra": {
