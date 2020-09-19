@@ -2,9 +2,9 @@
 
 namespace Support\Http\Requests\Excel;
 
+use Illuminate\Support\Collection;
 use Laravel\Nova\Resource;
 use Support\Elements\Entities\Fields\Field;
-use Illuminate\Support\Collection;
 
 trait WithIndexFields
 {
@@ -17,7 +17,7 @@ trait WithIndexFields
     {
         return $this->resourceFields($resource)->map(
             function (Field $field) {
-                if (!$field->computed()) {
+                if (! $field->computed()) {
                     return $field->attribute;
                 }
 

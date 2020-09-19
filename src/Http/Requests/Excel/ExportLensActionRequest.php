@@ -2,10 +2,10 @@
 
 namespace Support\Http\Requests\Excel;
 
-use Laravel\Nova\Resource;
-use Support\Elements\Entities\Fields\Field;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\LensActionRequest;
+use Laravel\Nova\Resource;
+use Support\Elements\Entities\Fields\Field;
 
 class ExportLensActionRequest extends LensActionRequest implements ExportActionRequest
 {
@@ -23,7 +23,8 @@ class ExportLensActionRequest extends LensActionRequest implements ExportActionR
     public function toExportQuery()
     {
         return $this->toQuery()->when(
-            !$this->forAllMatchingResources(), function ($query) {
+            ! $this->forAllMatchingResources(),
+            function ($query) {
                 $query->whereKey(explode(',', $this->resources));
             }
         );
@@ -38,7 +39,7 @@ class ExportLensActionRequest extends LensActionRequest implements ExportActionR
     {
         $this->resourceInstance = $resource;
 
-        $lens           = $this->lens();
+        $lens = $this->lens();
         $lens->resource = $resource->model();
 
         return $lens->resolveFields($this);
@@ -51,7 +52,7 @@ class ExportLensActionRequest extends LensActionRequest implements ExportActionR
      */
     public function availableLenses()
     {
-        if (!$this->resourceInstance) {
+        if (! $this->resourceInstance) {
             $this->resourceInstance = $this->newResource();
         }
 

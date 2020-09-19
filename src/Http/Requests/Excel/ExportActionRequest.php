@@ -2,9 +2,9 @@
 
 namespace Support\Http\Requests\Excel;
 
+use Illuminate\Support\Collection;
 use Laravel\Nova\Resource;
 use Support\Elements\Entities\Fields\Field;
-use Illuminate\Support\Collection;
 
 interface ExportActionRequest
 {

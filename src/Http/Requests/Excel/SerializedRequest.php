@@ -2,9 +2,9 @@
 
 namespace Support\Http\Requests\Excel;
 
-use Support\Http\Requests\FacilitadorRequest as NovaRequest;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\LensActionRequest;
+use Support\Http\Requests\FacilitadorRequest as NovaRequest;
 
 class SerializedRequest
 {
@@ -31,8 +31,8 @@ class SerializedRequest
     public function __construct(string $className, string $resource, string $lens = null)
     {
         $this->className = $className;
-        $this->resource  = $resource;
-        $this->lens      = $lens;
+        $this->resource = $resource;
+        $this->lens = $lens;
     }
 
     /**
@@ -57,11 +57,11 @@ class SerializedRequest
         $className = $this->className;
 
         /**
-         * @var ExportActionRequest|NovaRequest $request 
+         * @var ExportActionRequest|NovaRequest $request
         */
-        $request           = new $className;
+        $request = new $className;
         $request->resource = $this->resource;
-        $request->lens     = $this->lens;
+        $request->lens = $this->lens;
 
         return $request;
     }
