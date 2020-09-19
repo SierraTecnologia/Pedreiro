@@ -8,8 +8,8 @@ use Former;
 use Former\Form\Fields\File;
 use Former\LiveValidation;
 use Illuminate\Container\Container;
-use Pedreiro\Models\Element;
 use MediaManager\Models\Image as ImageModel;
+use Pedreiro\Models\Element;
 
 /**
  * Creates an image file upload field with addtional UI for displaing previously
