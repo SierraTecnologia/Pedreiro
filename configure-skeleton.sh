@@ -31,7 +31,7 @@ author_username=$(ask_question "Author username" "$username_guess")
 current_directory=$(pwd)
 folder_name=$(basename "$current_directory")
 
-vendor_name_unsantized=$(ask_question "Vendor name" "spatie")
+vendor_name_unsantized=$(ask_question "Vendor name" "ricasolucoes")
 package_name=$(ask_question "Package name" "$folder_name")
 package_description=$(ask_question "Package description" "")
 
@@ -46,7 +46,7 @@ vendor_name_lowercase=`echo "$vendor_name_unsantized" | tr '[:upper:]' '[:lower:
 package_name_underscore=`echo "-$package_name-" | tr '-' '_'`
 
 echo
-files=$(grep -E -r -l -i ":author|:vendor|:package|spatie|pedreiro" --exclude-dir=vendor ./*  | grep -v "$script_name")
+files=$(grep -E -r -l -i ":author|:vendor|:package|ricasolucoes|pedreiro" --exclude-dir=vendor ./*  | grep -v "$script_name")
 
 echo "This script will replace the above values in all relevant files in the project directory."
 if ! confirm "Modify files?" ; then
