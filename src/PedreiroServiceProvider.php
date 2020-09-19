@@ -5,8 +5,11 @@ namespace Pedreiro;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Pedreiro\
 use Pedreiro\Commands\PedreiroCommand;
+use Pedreiro\Elements\FormFields\After\DescriptionHandler;
+use Pedreiro\Elements\FormFields\KeyValueJsonFormField;
+use Pedreiro\Elements\FormFields\MultipleImagesWithAttrsFormField;
+use Pedreiro\Events\FormFieldsRegistered;
 use Pedreiro\Facades\Form;
 
 class PedreiroServiceProvider extends ServiceProvider
@@ -22,12 +25,12 @@ class PedreiroServiceProvider extends ServiceProvider
                 __DIR__ . '/../resources/views' => base_path('resources/views/vendor/pedreiro'),
             ], 'views');
 
-            $migrationFileName = 'create_pedreiro_table.php';
-            if (! $this->migrationFileExists($migrationFileName)) {
-                $this->publishes([
-                    __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
-                ], 'migrations');
-            }
+            // $migrationFileName = 'create_pedreiro_table.php';
+            // if (! $this->migrationFileExists($migrationFileName)) {
+            //     $this->publishes([
+            //         __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
+            //     ], 'migrations');
+            // }
 
             $this->commands([
                 PedreiroCommand::class,
@@ -45,10 +48,20 @@ class PedreiroServiceProvider extends ServiceProvider
         $loader->alias('Pedreiro', PedreiroFacade::class);
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
+  
+
+        $loader->alias('FormMaker', \Pedreiro\Facades\FormMaker::class);
+        $this->app->singleton(
+            'form-maker',
+            function () {
+                return new \Grafite\Forms\Services\FormMaker();
+            }
+        );
+
         // ExtendedBreadFormFieldsServiceProvider
 
-        // PedreiroFacade::FormField(MultipleImagesWithAttrsFormField::class);
-
+        PedreiroFacade::addFormField(KeyValueJsonFormField::class);
+        PedreiroFacade::addFormField(MultipleImagesWithAttrsFormField::class);
         $this->registerFormFields();
 
 

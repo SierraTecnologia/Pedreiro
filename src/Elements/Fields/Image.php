@@ -9,7 +9,7 @@ use Former\Form\Fields\File;
 use Former\LiveValidation;
 use Illuminate\Container\Container;
 use Pedreiro\Models\Element;
-use Stalker\Models\Image as ImageModel;
+use MediaManager\Models\Image as ImageModel;
 
 /**
  * Creates an image file upload field with addtional UI for displaing previously
