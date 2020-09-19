@@ -368,8 +368,8 @@ trait CrudController
     public function getRelationships()
     {
         foreach ($this->getFormFields() as $field) {
-            if (Arr::has($field, 'relationship') 
-                && ! Arr::has($this->relationships, $field['relationship']) 
+            if (Arr::has($field, 'relationship')
+                && ! Arr::has($this->relationships, $field['relationship'])
                 && method_exists($this->model, $field['relationship'])
             ) {
                 $this->relationships[] = $field['relationship'];
@@ -467,7 +467,8 @@ trait CrudController
         }
 
         return Arr::where(
-            $this->getFormFields(), function ($value) {
+            $this->getFormFields(),
+            function ($value) {
                 return in_array($value['name'], $this->indexFields, true);
             }
         );
@@ -488,7 +489,8 @@ trait CrudController
             // We need to find the relationship's field
             $field = Arr::first(
                 array_filter(
-                    $formFields, function ($var) use ($relationship) {
+                    $formFields,
+                    function ($var) use ($relationship) {
                         if (Arr::has($var, 'relationship') && ($relationship == $var['relationship'])) {
                             return $var;
                         }

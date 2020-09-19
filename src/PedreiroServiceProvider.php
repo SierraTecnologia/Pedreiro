@@ -20,13 +20,15 @@ class PedreiroServiceProvider extends ServiceProvider
             $this->publishes(
                 [
                 __DIR__ . '/../config/pedreiro.php' => config_path('pedreiro.php'),
-                ], 'config'
+                ],
+                'config'
             );
 
             $this->publishes(
                 [
                 __DIR__ . '/../resources/views' => base_path('resources/views/vendor/pedreiro'),
-                ], 'views'
+                ],
+                'views'
             );
 
             // $migrationFileName = 'create_pedreiro_table.php';
