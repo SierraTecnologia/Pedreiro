@@ -368,10 +368,9 @@ trait CrudController
     public function getRelationships()
     {
         foreach ($this->getFormFields() as $field) {
-            if (
-                Arr::has($field, 'relationship') &&
-                ! Arr::has($this->relationships, $field['relationship']) &&
-                method_exists($this->model, $field['relationship'])
+            if (Arr::has($field, 'relationship') 
+                && ! Arr::has($this->relationships, $field['relationship']) 
+                && method_exists($this->model, $field['relationship'])
             ) {
                 $this->relationships[] = $field['relationship'];
             }
@@ -467,9 +466,11 @@ trait CrudController
             return array_slice($this->getFormFields(), 0, 1);
         }
 
-        return Arr::where($this->getFormFields(), function ($value) {
-            return in_array($value['name'], $this->indexFields, true);
-        });
+        return Arr::where(
+            $this->getFormFields(), function ($value) {
+                return in_array($value['name'], $this->indexFields, true);
+            }
+        );
     }
 
     /**
@@ -485,11 +486,15 @@ trait CrudController
 
         foreach ($relationships as $relationship) {
             // We need to find the relationship's field
-            $field = Arr::first(array_filter($formFields, function ($var) use ($relationship) {
-                if (Arr::has($var, 'relationship') && ($relationship == $var['relationship'])) {
-                    return $var;
-                }
-            }));
+            $field = Arr::first(
+                array_filter(
+                    $formFields, function ($var) use ($relationship) {
+                        if (Arr::has($var, 'relationship') && ($relationship == $var['relationship'])) {
+                            return $var;
+                        }
+                    }
+                )
+            );
 
             if (in_array(get_class($this->model->$relationship()), $this->relationTypesToLoad, true)) {
                 $relationshipData["$relationship"] = $this->model->$relationship()->getRelated()->all()->pluck($field['relFieldName'], 'id');
@@ -551,7 +556,7 @@ trait CrudController
     /**
      * EU Adaptei
      *
-     * @param [type] $model
+     * @param  [type] $model
      * @return void
      */
 
@@ -759,9 +764,9 @@ trait CrudController
      * Creates a success message for CRUD commands
      *
      * @param  Support\Model\Base|string $title The model instance that is
-     *                                              being worked on  or a string
-     *                                              containing the title
-     * @param  string                        $verb  Default: 'saved'. Past tense CRUD verb (created, saved, etc)
+     *                                          being worked on  or a string
+     *                                          containing the title
+     * @param  string                    $verb  Default: 'saved'. Past tense CRUD verb (created, saved, etc)
      * @return string                        The CRUD success message string
      */
     protected function successMessage($input = '', $verb = 'saved')

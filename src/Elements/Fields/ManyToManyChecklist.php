@@ -185,7 +185,7 @@ class ManyToManyChecklist extends Checkbox
      * each individual `.checkbox`div.
      *
      * @param string|array $item          A checkable item
-     * @param int      $fallbackValue A fallback value if none is set
+     * @param int          $fallbackValue A fallback value if none is set
      *
      * @return string
      */

@@ -17,13 +17,17 @@ class PedreiroServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
+            $this->publishes(
+                [
                 __DIR__ . '/../config/pedreiro.php' => config_path('pedreiro.php'),
-            ], 'config');
+                ], 'config'
+            );
 
-            $this->publishes([
+            $this->publishes(
+                [
                 __DIR__ . '/../resources/views' => base_path('resources/views/vendor/pedreiro'),
-            ], 'views');
+                ], 'views'
+            );
 
             // $migrationFileName = 'create_pedreiro_table.php';
             // if (! $this->migrationFileExists($migrationFileName)) {
@@ -32,9 +36,11 @@ class PedreiroServiceProvider extends ServiceProvider
             //     ], 'migrations');
             // }
 
-            $this->commands([
+            $this->commands(
+                [
                 PedreiroCommand::class,
-            ]);
+                ]
+            );
         }
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pedreiro');

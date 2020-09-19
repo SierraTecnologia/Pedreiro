@@ -15,9 +15,11 @@ class Pedreiro
 
     public function afterFormFields($row, $dataType, $dataTypeContent)
     {
-        return collect($this->afterFormFields)->filter(function ($after) use ($row, $dataType, $dataTypeContent) {
-            return $after->visible($row, $dataType, $dataTypeContent, $row->details);
-        });
+        return collect($this->afterFormFields)->filter(
+            function ($after) use ($row, $dataType, $dataTypeContent) {
+                return $after->visible($row, $dataType, $dataTypeContent, $row->details);
+            }
+        );
     }
 
     public function addFormField($handler)
@@ -47,8 +49,10 @@ class Pedreiro
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver", 'mysql');
 
-        return collect($this->formFields)->filter(function ($after) use ($driver) {
-            return $after->supports($driver);
-        });
+        return collect($this->formFields)->filter(
+            function ($after) use ($driver) {
+                return $after->supports($driver);
+            }
+        );
     }
 }
