@@ -1,12 +1,12 @@
 <?php
 
-namespace Support\Exceptions\Coder;
+namespace Pedreiro\Exceptions\Coder;
 
 /**
  * Used when validation fails. Contains the invalid model for easy analysis.
  * Class InvalidModelException
  *
- * @package Support\Exceptions\Coder
+ * @package Pedreiro\Exceptions\Coder
  */
 class EloquentTableNotExistException extends EloquentHasErrorException
 {

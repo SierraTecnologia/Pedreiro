@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Requests\Excel;
+namespace Pedreiro\Http\Requests\Excel;
 
 use Illuminate\Support\Collection;
 use Laravel\Nova\Resource;

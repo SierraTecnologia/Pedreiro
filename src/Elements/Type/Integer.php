@@ -16,7 +16,7 @@ use Pedreiro\Models\Value;
  * @property      string                                             $entity_type
  * @property      \Carbon\Carbon|null                                $created_at
  * @property      \Carbon\Carbon|null                                $updated_at
- * @property-read \Facilitador\Models\Attribute           $attribute
+ * @property-read \Pedreiro\Models\Attribute           $attribute
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $entity
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Elements\Type\Integer whereAttributeId($value)

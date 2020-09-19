@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Support\Models;
+namespace Pedreiro\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Support\Recursos\Cacheable\CacheableEloquent;
 use Muleta\Traits\Models\ValidatingTrait;
-use Support\Support\ValueCollection;
+use Pedreiro\Support\ValueCollection;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Models;
+namespace Pedreiro\Models;
 
 use Closure;
 use Illuminate\Container\Container;
@@ -150,7 +150,7 @@ abstract class Ardent extends Model
      * An instance of a Hasher object, to be used by standalone Ardent instances. Will be null if not external.
      *
      * @var \Illuminate\Contracts\Hashing\Hasher
-     * @see Facilitador\Models\Ardent::configureAsExternal()
+     * @see Pedreiro\Models\Ardent::configureAsExternal()
      */
     public static $hasher;
 
@@ -238,7 +238,7 @@ abstract class Ardent extends Model
      * Create a new Ardent model instance.
      *
      * @param  array $attributes
-     * @return \Facilitador\Models\Ardent
+     * @return \Pedreiro\Models\Ardent
      */
     public function __construct(array $attributes = array())
     {

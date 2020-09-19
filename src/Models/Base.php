@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Models;
+namespace Pedreiro\Models;
 
 use App;
 use Audit\Traits\Loggable;
@@ -30,8 +30,8 @@ use Session;
 use Support;
 use SupportURL;
 
-use Support\Collections\Base as BaseCollection;
-use Support\Exceptions\Exception;
+use Pedreiro\Collections\Base as BaseCollection;
+use Pedreiro\Exceptions\Exception;
 use Support\Models\SortableTrait;
 use Support\Services\ModelService;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;

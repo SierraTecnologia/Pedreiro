@@ -1,8 +1,8 @@
 <?php
 
-namespace Support\Http\Controllers\Admin;
+namespace Pedreiro\Http\Controllers\Admin;
 
-use Support\Services\System\VersionService;
+use Pedreiro\Services\VersionService;
 
 class PageController extends Base
 {

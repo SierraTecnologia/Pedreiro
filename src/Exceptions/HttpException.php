@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Exceptions;
+namespace Pedreiro\Exceptions;
 
 class HttpException extends Exception
 {

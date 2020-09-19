@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Support\Models;
+namespace Pedreiro\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Support\Recursos\Cacheable\CacheableEloquent;

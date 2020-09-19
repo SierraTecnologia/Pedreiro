@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Requests\Excel;
+namespace Pedreiro\Http\Requests\Excel;
 
 trait WithHeadingFinder
 {

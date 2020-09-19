@@ -1,8 +1,8 @@
 <?php
 
-namespace Support\Exceptions\HttpException;
+namespace Pedreiro\Exceptions\HttpException;
 
-use Support\Exceptions\HttpException;
+use Pedreiro\Exceptions\HttpException;
 
 class BadRequestException extends HttpException
 {

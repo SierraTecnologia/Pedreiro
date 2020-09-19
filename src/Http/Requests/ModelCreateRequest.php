@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Requests;
+namespace Pedreiro\Http\Requests;
 
 // use Laravel\Nova\Resource;
 // use Pedreiro\Elements\Fields\Field;

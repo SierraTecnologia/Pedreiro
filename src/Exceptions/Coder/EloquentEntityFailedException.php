@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Exceptions\Coder;
+namespace Pedreiro\Exceptions\Coder;
 
 use Support\Components\Database\Render\EloquentRender;
 
@@ -8,7 +8,7 @@ use Support\Components\Database\Render\EloquentRender;
  * Used when validation fails. Contains the invalid model for easy analysis.
  * Class InvalidModelException
  *
- * @package Support\Exceptions\Coder
+ * @package Pedreiro\Exceptions\Coder
  */
 class EloquentEntityFailedException extends CoderException
 {

@@ -1,7 +1,7 @@
 <?php
-namespace Support\Exceptions\Components\Coders;
+namespace Pedreiro\Exceptions\Components\Coders;
 
-use Support\Exceptions\Exception;
+use Pedreiro\Exceptions\Exception;
 
 class ParserException extends Exception
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Support\Exceptions\Coder;
+namespace Pedreiro\Exceptions\Coder;
 
-use Support\Exceptions\Exception;
+use Pedreiro\Exceptions\Exception;
 
 /**
  * Exception da Manipulação do Código
  *
- * @package Support\Exceptions\Coder
+ * @package Pedreiro\Exceptions\Coder
  */
 class CoderException extends Exception
 {

@@ -1,7 +1,7 @@
 <?php
-namespace Support\Exceptions;
+namespace Pedreiro\Exceptions;
 
-use Support\Exceptions\Exception;
+use Pedreiro\Exceptions\Exception;
 
 class SetterGetterException extends Exception
 {

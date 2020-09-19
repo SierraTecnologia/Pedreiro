@@ -1,12 +1,12 @@
 <?php
 
-namespace Support\Exceptions;
+namespace Pedreiro\Exceptions;
 
 /**
  * Used when validation fails. Contains the invalid model for easy analysis.
  * Class InvalidModelException
  *
- * @package Support\Exceptions
+ * @package Pedreiro\Exceptions
  */
 class InvalidModelException extends \RuntimeException
 {

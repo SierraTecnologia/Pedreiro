@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Requests\Excel;
+namespace Pedreiro\Http\Requests\Excel;
 
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\LensActionRequest;

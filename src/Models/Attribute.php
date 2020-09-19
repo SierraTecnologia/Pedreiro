@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Support\Models;
+namespace Pedreiro\Models;
 
 use Muleta\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +21,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Facilitador\Models\Attribute.
+ * Pedreiro\Models\Attribute.
  *
  * @property      int                                                                               $id
  * @property      string                                                                            $slug
@@ -36,21 +36,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property      \Carbon\Carbon|null                                                               $created_at
  * @property      \Carbon\Carbon|null                                                               $updated_at
  * @property      array                                                                             $entities
- * @property-read \Support\Support\ValueCollection|\Pedreiro\Models\Value[] $values
+ * @property-read \Pedreiro\Support\ValueCollection|\Pedreiro\Models\Value[] $values
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute ordered($direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereDefault($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereGroup($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereIsCollection($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereIsRequired($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereSortOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute ordered($direction = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereDefault($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereGroup($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereIsCollection($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereIsRequired($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereSortOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereUpdatedAt($value)
  * @mixin  \Eloquent
  */
 class Attribute extends Model// implements Sortable
