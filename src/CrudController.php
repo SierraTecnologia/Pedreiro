@@ -773,7 +773,7 @@ trait CrudController
     {
         // Figure out the title and wrap it in quotes
         $title = $input;
-        if (is_a($input, '\Support\Models\Base')) {
+        if (is_a($input, '\Pedreiro\Models\Base')) {
             $title = $input->getAdminTitleAttribute();
         }
 
@@ -791,7 +791,7 @@ trait CrudController
         }
 
         // Add extra messaging if the creation was begun from the localize UI
-        if ($verb == 'duplicated' && is_a($input, '\Support\Models\Base') && ! empty($input->locale)) {
+        if ($verb == 'duplicated' && is_a($input, '\Pedreiro\Models\Base') && ! empty($input->locale)) {
             $message .= __('facilitador::base.success_localized', ['locale' => \Illuminate\Support\Facades\Config::get('sitec.site.locales')[$input->locale]]);
         }
 

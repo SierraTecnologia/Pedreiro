@@ -2,31 +2,81 @@
 
 namespace Pedreiro;
 
+use App;
+use Config;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Events\RouteMatched;
+
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Muleta\Traits\Providers\ConsoleTools;
 use Pedreiro\Commands\PedreiroCommand;
 use Pedreiro\Elements\FormFields\After\DescriptionHandler;
 use Pedreiro\Elements\FormFields\KeyValueJsonFormField;
 use Pedreiro\Elements\FormFields\MultipleImagesWithAttrsFormField;
 use Pedreiro\Events\FormFieldsRegistered;
 use Pedreiro\Facades\Form;
+use Support\Facades\Support as SupportFacade;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
-    public function boot()
+    use ConsoleTools;
+
+    public $packageName = 'pedreiro';
+    const pathVendor = 'sierratecnologia/pedreiro';
+
+    public static $aliasProviders = [
+        'Active' => \Pedreiro\Facades\Active::class,
+
+        // Form field generation
+        'Former' => \Former\Facades\Former::class,
+    ];
+
+    // public static $providers = [
+    public static $providers = [
+            /**
+             * Layoults
+             */
+            \RicardoSierra\Minify\MinifyServiceProvider::class,
+            \Collective\Html\HtmlServiceProvider::class,
+            \Laracasts\Flash\FlashServiceProvider::class,
+    
+            /**
+             * VEio pelo Facilitador
+             **/
+            \Former\FormerServiceProvider::class,
+            \Bkwld\Upchuck\ServiceProvider::class,
+    
+            /**
+             * Outros
+             */
+            \Laravel\Tinker\TinkerServiceProvider::class,
+        ];
+    
+    public static $menuItens = [
+    ];
+
+    public function boot(Router $router, Dispatcher $event)
     {
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
                 __DIR__ . '/../config/pedreiro.php' => config_path('pedreiro.php'),
-                ], 'config'
+                ],
+                'config'
             );
 
             $this->publishes(
                 [
                 __DIR__ . '/../resources/views' => base_path('resources/views/vendor/pedreiro'),
-                ], 'views'
+                ],
+                'views'
             );
 
             // $migrationFileName = 'create_pedreiro_table.php';
@@ -44,6 +94,35 @@ class PedreiroServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pedreiro');
+
+        /**
+         * Load Active https://github.com/letrunghieu/active
+         */
+        // Update the instances each time a request is resolved and a route is matched
+        $instance = app('active');
+        app('router')->matched(
+            function (RouteMatched $event) use ($instance) {
+                $instance->updateInstances($event->route, $event->request);
+            }
+        );
+
+        // Add strip_tags validation rule
+        Validator::extend(
+            'strip_tags',
+            function ($attribute, $value) {
+                return strip_tags($value) === $value;
+            },
+            trans('validation.invalid_strip_tags')
+        );
+
+        // //ExtendedBreadFormFieldsServiceProvider
+        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'extended-fields');
+        $this->registerAlertComponents();
+        // Config Former
+        $this->configureFormer();
+
+
+        $this->registerViewComposers();
     }
 
     public function register()
@@ -55,6 +134,19 @@ class PedreiroServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   
+
+        /**
+         * Load Active https://github.com/letrunghieu/active
+         */
+        $this->app->singleton(
+            'active',
+            function ($app) {
+                $instance = new Active($app['router']->getCurrentRequest());
+
+                return $instance;
+            }
+        );
+
 
         $loader->alias('FormMaker', \Pedreiro\Facades\FormMaker::class);
         $this->app->singleton(
@@ -121,5 +213,60 @@ class PedreiroServiceProvider extends ServiceProvider
         // PedreiroFacade::addAfterFormField(DescriptionHandler::class);
 
         event(new FormFieldsRegistered($formFields));
+    }
+
+    /**
+     * Register alert components.
+     */
+    protected function registerAlertComponents()
+    {
+        $components = ['title', 'text', 'button'];
+
+        foreach ($components as $component) {
+            $class = 'Support\\Elements\\Alert\\'.ucfirst(Str::camel($component)).'Component';
+
+            $this->app->bind("facilitador.alert.components.{$component}", $class);
+        }
+    }
+
+    /**
+     * Register view composers.
+     */
+    protected function registerViewComposers()
+    {
+        // Register alerts
+        View::composer(
+            'support::*',
+            function ($view) {
+                $view->with('alerts', SupportFacade::alerts());
+            }
+        );
+    }
+    /**
+     * Config Former
+     *
+     * @return void
+     */
+    protected function configureFormer()
+    {
+        // Use Bootstrap 3
+        Config::set('former.framework', 'TwitterBootstrap3');
+
+        // Reduce the horizontal form's label width
+        Config::set('former.TwitterBootstrap3.labelWidths', []);
+
+        // @todo desfazer pq da erro qnd falta tabela model_translactions
+        // // Change Former's required field HTML
+        // Config::set(
+        //     'former.required_text', ' <span class="glyphicon glyphicon-exclamation-sign js-tooltip required" title="' .
+        //     __('facilitador::login.form.required') . '"></span>'
+        // );
+
+        // Make pushed checkboxes have an empty string as their value
+        Config::set('former.unchecked_value', '');
+
+        // Add Facilitador's custom Fields to Former so they can be invoked using the "Former::"
+        // namespace and so we can take advantage of sublassing Former's Field class.
+        $this->app['former.dispatcher']->addRepository('Support\\Elements\\Fields\\');
     }
 }

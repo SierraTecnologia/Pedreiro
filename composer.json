@@ -32,7 +32,13 @@
     "autoload": {
         "psr-4": {
             "Pedreiro\\": "src"
-        }
+        },
+        "files": [
+            "utils/funcs/load-laravel.php",
+            "utils/funcs/helpers.php",
+            "utils/funcs/helperSlugify.php",
+            "utils/funcs/Reflection.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

@@ -8,12 +8,8 @@ use Audit\Traits\Loggable;
 use Bkwld\Library\Utils\Collection;
 use Bkwld\Upchuck\SupportsUploads;
 use Config;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use DB;
-use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 use Event;
-use Facilitador\Services\FacilitadorService;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,13 +22,12 @@ use Muleta\Utils\Inclusores\DbalInclusor;
 use Muleta\Utils\Mergeators\DbalMergeator;
 
 use Muleta\Utils\Modificators\ArrayModificator;
-use Session;
-use Support;
-use SupportURL;
-
 use Pedreiro\Collections\Base as BaseCollection;
 use Pedreiro\Exceptions\Exception;
-use Support\Models\SortableTrait;
+use Session;
+
+use Support;
+use SupportURL;
 use Support\Services\ModelService;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use URL;
@@ -47,13 +42,10 @@ abstract class Base extends Model //Ardent
      * negligible.
      */
     // use Cloneable;
-    use Sluggable,
-        SluggableScopeHelpers,
-        // SupportsUploads,
+    use // SupportsUploads,
         \Muleta\Traits\Models\CanSerializeTransform,
         \Muleta\Traits\Models\Exportable,
-        Loggable,
-        SortableTrait;
+        Loggable;
     
 
     /**
@@ -85,14 +77,14 @@ abstract class Base extends Model //Ardent
      * Should this model be localizable in the admin.  If not undefined, will
      * override the site config "auto_localize_root_models"
      *
-     * @var boolean
+     * @var bool
      */
     public static $localizable;
 
     /**
      * If false, this model cannot be cloned
      *
-     * @var boolean
+     * @var bool
      */
     public $cloneable = true;
 
@@ -122,7 +114,7 @@ abstract class Base extends Model //Ardent
     /**
      * Should the model be exportable as CSV?
      *
-     * @var boolean
+     * @var bool
      */
     public $exportable = false;
 
@@ -142,7 +134,7 @@ abstract class Base extends Model //Ardent
      * during a non-http unit test.
      *
      * @param  string $action Like "deleted", "updated", etc
-     * @return boolean
+     * @return bool
      */
     public function shouldLogChange($action)
     {
@@ -230,7 +222,7 @@ abstract class Base extends Model //Ardent
     /**
      * Check for a validation rule for a slug column
      *
-     * @return boolean
+     * @return bool
      */
     protected function needsSlugging()
     {
@@ -301,7 +293,7 @@ abstract class Base extends Model //Ardent
      */
     public function getAdminThumbTagAttribute()
     {
-        if (!$url = $this->getAdminThumbAttribute()) {
+        if (! $url = $this->getAdminThumbAttribute()) {
             return;
         }
 
@@ -317,7 +309,7 @@ abstract class Base extends Model //Ardent
     {
 
         // Check if there are images for the model
-        if (!method_exists($this, 'images')) {
+        if (! method_exists($this, 'images')) {
             return;
         }
 
@@ -430,6 +422,7 @@ abstract class Base extends Model //Ardent
         if (method_exists($this, 'croppedImages')) {
             $attributes['images'] = $this->croppedImages(300);
         }
+
         return $attributes;
     }
 
@@ -481,7 +474,7 @@ abstract class Base extends Model //Ardent
     public static function findBySlugOrFail(string $slug, array $columns = ['*'])
     {
         // Model not found, throw exception
-        if (!$item = static::findBySlug($slug)) {
+        if (! $item = static::findBySlug($slug)) {
             throw (new ModelNotFoundException)->setModel(get_called_class());
         }
 
@@ -503,8 +496,8 @@ abstract class Base extends Model //Ardent
     public function enforceVisibility()
     {
         if (array_key_exists('public', $this->getAttributes())
-            && !$this->getAttribute('public')
-            && !app('facilitador.user')
+            && ! $this->getAttribute('public')
+            && ! app('facilitador.user')
         ) {
             throw new AccessDeniedHttpException;
         }
@@ -546,15 +539,15 @@ abstract class Base extends Model //Ardent
      * currently done in Facilitador_Base_Controller->get_index_child()).  This function
      * checks for either
      *
-     * @return integer
+     * @return int
      */
     public function pivotId()
     {
-        if (!empty($this->pivot->id)) {
+        if (! empty($this->pivot->id)) {
             return $this->pivot->id;
         }
 
-        if (!empty($this->pivot_id)) {
+        if (! empty($this->pivot_id)) {
             return $this->pivot_id;
         }
 
@@ -596,6 +589,7 @@ abstract class Base extends Model //Ardent
         if (method_exists($associateTo, $method)) {
             return call_user_func_array([$associateTo, $method], [])->save($associateFrom);
         }
+
         return false;
     }
 
@@ -614,12 +608,13 @@ abstract class Base extends Model //Ardent
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
 
-        if (!$eloquentEntityForModel = ModelService::make(static::class)) {
+        if (! $eloquentEntityForModel = ModelService::make(static::class)) {
             dd('Nao deeria cair aqui debug');
             $entity = static::firstOrCreate($data);
             if ($associate) {
                 static::associate($entity, $associate);
             }
+
             return $entity;
         }
         
@@ -634,16 +629,18 @@ abstract class Base extends Model //Ardent
             $eloquentEntityForModel->getIndexes()
         ))->map(
             function ($query) use ($data) {
-                if (is_array($query) && !empty($query) && $modelFind = static::where($query)->first()) {
+                if (is_array($query) && ! empty($query) && $modelFind = static::where($query)->first()) {
                     // @todo mesclar parametros e salvar
                     Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($query, true).' e Data: '.print_r($data, true));
+
                     return DbalMergeator::mergeWithAttributes($modelFind, $data);
                 }
+
                 return false;
             }
         )->reject(
             function ($result) {
-                return !$result;
+                return ! $result;
             }
         );
         if ($results->isNotEmpty()) {
@@ -651,6 +648,7 @@ abstract class Base extends Model //Ardent
             if ($associate) {
                 static::associate($entity, $associate);
             }
+
             return $entity;
         }
 
@@ -660,6 +658,7 @@ abstract class Base extends Model //Ardent
             if ($associate) {
                 static::associate($entity, $associate);
             }
+
             return $entity;
         }
 
@@ -667,6 +666,7 @@ abstract class Base extends Model //Ardent
         if ($associate) {
             static::associate($entity, $associate);
         }
+
         return $entity;
     }
 
@@ -723,8 +723,8 @@ abstract class Base extends Model //Ardent
      */
     public function hasGetMutator($key)
     {
-        if (!Support::handling()
-            || !array_key_exists($key, $this->attributes)
+        if (! Support::handling()
+            || ! array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
             return parent::hasGetMutator($key);
@@ -741,8 +741,8 @@ abstract class Base extends Model //Ardent
      */
     public function hasSetMutator($key)
     {
-        if (!Support::handling()
-            || !array_key_exists($key, $this->attributes)
+        if (! Support::handling()
+            || ! array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
             return parent::hasSetMutator($key);
@@ -795,17 +795,18 @@ abstract class Base extends Model //Ardent
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
-        if (!$this->needsSlugging()) {
+        if (! $this->needsSlugging()) {
             return [];
         }
+
         return [
             'slug' => [
                 'source' => 'admin_title',
                 'maxLength' => 100,
                 'includeTrashed' => true,
-            ]
+            ],
         ];
     }
 
@@ -829,6 +830,7 @@ abstract class Base extends Model //Ardent
 
         // Create the markup
         $public = $this->getAttribute('public');
+
         return sprintf(
             '<a class="visibility js-tooltip" data-placement="left" title="%s">
                 <span class="glyphicon glyphicon-eye-%s"></span>
@@ -850,6 +852,7 @@ abstract class Base extends Model //Ardent
 
         // Make markup
         $editable = app('facilitador.user')->can('update', $controller);
+
         return sprintf(
             '<a href="%s" class="action-edit js-tooltip"
             data-placement="left" title="%s">
@@ -868,7 +871,7 @@ abstract class Base extends Model //Ardent
      * being listed as a many to many
      *
      * @param  string  $controller   ex: Admin\ArticlesController
-     * @param  boolean $many_to_many
+     * @param  bool $many_to_many
      * @return string
      */
     public function getAdminEditUri($controller, $many_to_many = false)
@@ -888,7 +891,7 @@ abstract class Base extends Model //Ardent
      */
     protected function makeViewAction($data)
     {
-        if (!$uri = $this->getUriAttribute()) {
+        if (! $uri = $this->getUriAttribute()) {
             return;
         }
 
@@ -987,6 +990,7 @@ abstract class Base extends Model //Ardent
         if ($this->usesTimestamps()) {
             $query->orderBy($this->getTable().'.created_at', 'desc');
         }
+
         return $query;
     }
 }
