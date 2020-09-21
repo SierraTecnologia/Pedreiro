@@ -48,9 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        if (config('app.env')=='production' && $this->shouldReport($exception)) {
+        if (config('app.env') == 'production' && $this->shouldReport($exception)) {
             // Slack Report
-            Log::channel('slack')->error('['.config('app.name').' (V'.config('app.version').') Report] Fatal erro: '.$exception->getMessage());
+            Log::channel('slack')->error($exception);
+            // Log::channel('slack')->error('['.config('app.name').' (V'.config('app.version').') Report] Fatal erro: '.$exception->getMessage());
 
             if (app()->bound('sentry')) {
                 // Sentry Report
@@ -62,7 +63,7 @@ class Handler extends ExceptionHandler
                                     [
                                     'id' => $user->id,
                                     'email' => $user->email,
-                                    'cpf' => $user->cpf
+                                    'cpf' => $user->cpf,
                                     ]
                                 );
                             }
@@ -111,7 +112,7 @@ class Handler extends ExceptionHandler
             return response()->json(
                 [
                     'success' => false,
-                    'message' => $exception->getMessage()
+                    'message' => $exception->getMessage(),
                 ],
                 406
             );
@@ -121,25 +122,26 @@ class Handler extends ExceptionHandler
             $json = [
                 'success' => false,
                 'message' => $exception->getMessage(),
-                'obs'     => 'handlerByAjaxWantsJson',
+                'obs' => 'handlerByAjaxWantsJson',
                 'error' => [
                     'code' => $exception->getCode(),
                     'message' => $exception->getMessage(),
                 ],
             ];
-            if (config('app.env')=='production') {
+            if (config('app.env') == 'production') {
                 $json = [
                     'success' => false,
-                    'message' => $exception->getMessage()
+                    'message' => $exception->getMessage(),
                 ];
             }
+
             return response()->json($json, 400);
         }
         
         // Convert all non-http exceptions to a proper 500 http exception
         // if we don't do this exceptions are shown as a default template
         // instead of our own view in resources/views/errors/500.blade.php
-        if (config('app.env')=='production' && $this->shouldReport($exception) && !$this->isHttpException($exception) && !config('app.debug')) {
+        if (config('app.env') == 'production' && $this->shouldReport($exception) && ! $this->isHttpException($exception) && ! config('app.debug')) {
             $exception = new HttpException(500, 'Whoops!');
         } elseif (config('app.debug') && $this->shouldReport($exception)) {
             dd('Error Handler', $exception);
@@ -159,7 +161,7 @@ class Handler extends ExceptionHandler
     protected function handle404s($request, $e)
     {
         // Check for right exception
-        if (!is_a($e, ModelNotFoundException::class) && !is_a($e, NotFoundHttpException::class)) {
+        if (! is_a($e, ModelNotFoundException::class) && ! is_a($e, NotFoundHttpException::class)) {
             return;
         }
 
@@ -178,7 +180,7 @@ class Handler extends ExceptionHandler
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'Página não existe'
+                    'message' => 'Página não existe',
                 ],
                 406
             );
@@ -187,7 +189,7 @@ class Handler extends ExceptionHandler
         return response()->json(
             [
                 'success' => false,
-                'message' => 'Registro não encontrado'
+                'message' => 'Registro não encontrado',
             ],
             406
         );
@@ -199,10 +201,11 @@ class Handler extends ExceptionHandler
      */
     private function getErrorMessage($exception)
     {
-        if (config('app.env')=='production') {
+        if (config('app.env') == 'production') {
             return self::$DEFAULT_MESSAGE;
         }
         Log::info('[Payment] Enviando para o cliente a mensagem: '.$exception->getMessage());
+
         return $exception->getMessage();
     }
 
@@ -214,7 +217,7 @@ class Handler extends ExceptionHandler
      */
     protected function handleCSRF($e)
     {
-        if (!is_a($e, TokenMismatchException::class)) {
+        if (! is_a($e, TokenMismatchException::class)) {
             return;
         }
 
@@ -230,7 +233,7 @@ class Handler extends ExceptionHandler
      */
     protected function handleValidation($request, $exception)
     {
-        if (!is_a($exception, ValidationFail::class)) {
+        if (! is_a($exception, ValidationFail::class)) {
             return;
         }
 
@@ -243,7 +246,7 @@ class Handler extends ExceptionHandler
             return response()->json(
                 [
                     'message' => 'Os dados fornecidos não são válidos.',
-                    'errors' => $exception->validator->getMessageBag()
+                    'errors' => $exception->validator->getMessageBag(),
                 ],
                 422
             );
