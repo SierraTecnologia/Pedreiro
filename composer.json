@@ -25,6 +25,7 @@
         "sierratecnologia/locaravel": "dev-master",
         "google/recaptcha": "^1.2.4",
         "kartik-v/bootstrap-fileinput": "dev-master",
+        "hieu-le/active": "^8.0",
         "creativeorange/gravatar": "^1.0",
         "league/csv": "^9.0",
         "rap2hpoutre/fast-excel": "^1.7|^2.0",
