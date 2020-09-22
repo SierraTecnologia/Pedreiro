@@ -1,6 +1,6 @@
 <?php
 
-namespace Pedreiro\Http\Controllers\Admin;
+namespace Pedreiro\Http\Controllers;
 
 use Pedreiro\Services\VersionService;
 
@@ -39,6 +39,7 @@ class PageController extends Base
     public function help()
     {
         $this->subTitle = 'Ajuda';
+
         return view('support::pages.help');
     }
 
@@ -46,6 +47,7 @@ class PageController extends Base
     {
         $this->subTitle = trans('words.changelog');
         $releases = $versionService->getReleases();
+
         return view('support::pages.releases', compact('releases'));
     }
 }

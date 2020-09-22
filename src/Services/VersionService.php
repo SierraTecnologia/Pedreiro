@@ -1,8 +1,7 @@
 <?php
 
-namespace Pedreiro\Services\System;
+namespace Pedreiro\Services;
 
-use Illuminate\Support\Facades\Config;
 use SiPlugins\ProjectManager\ProjectManager;
 use SiWeapons\Manipuladores\Locations\Folder;
 
@@ -33,7 +32,7 @@ class VersionService
     /**
      * Retorna se o sistema está instalado ou não
      *
-     * @return boolean
+     * @return bool
      */
     public static function isInstall()
     {
