@@ -34,6 +34,13 @@ class PedreiroServiceProvider extends ServiceProvider
     public static $aliasProviders = [
         'Active' => \Pedreiro\Facades\Active::class,
 
+        'Flash' => \Laracasts\Flash\Flash::class,
+        'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Active' => HieuLe\Active\Facades\Active::class,
+
+        'Translation' => Translation\Facades\Translation::class,
+        'TranslationCache' => Translation\Facades\TranslationCache::class,
         // Form field generation
         'Former' => \Former\Facades\Former::class,
     ];
@@ -47,12 +54,19 @@ class PedreiroServiceProvider extends ServiceProvider
             \Collective\Html\HtmlServiceProvider::class,
             \Laracasts\Flash\FlashServiceProvider::class,
     
+            JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
             /**
              * VEio pelo Facilitador
              **/
             \Former\FormerServiceProvider::class,
             \Bkwld\Upchuck\ServiceProvider::class,
     
+            Translation\TranslationServiceProvider::class,
+            /**
+             * Helpers
+             */
+            HieuLe\Active\ActiveServiceProvider::class,
+            Laracasts\Flash\FlashServiceProvider::class,
             /**
              * Outros
              */
