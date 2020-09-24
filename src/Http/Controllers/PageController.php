@@ -4,7 +4,7 @@ namespace Pedreiro\Http\Controllers;
 
 use Pedreiro\Services\VersionService;
 
-class PageController extends Base
+class PageController extends Controller
 {
     /**
      * The controller class name. Ex: Admin\PostsController

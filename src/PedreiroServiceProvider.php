@@ -76,6 +76,25 @@ class PedreiroServiceProvider extends ServiceProvider
     public static $menuItens = [
     ];
 
+    
+    /**
+     * Register the tool's routes.
+     *
+     * @return void
+     */
+    protected function routes()
+    {
+        if ($this->app->routesAreCached()) {
+            return;
+        }
+
+
+        /**
+         * Porteiro; Routes
+         */
+        $this->loadRoutesForRiCa(__DIR__.'/../routes');
+    }
+    
     public function boot(Router $router, Dispatcher $event)
     {
         if ($this->app->runningInConsole()) {
@@ -108,6 +127,13 @@ class PedreiroServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pedreiro');
+
+        // COloquei no register pq nao tava reconhecendo as rotas para o adminlte
+        $this->app->booted(
+            function () {
+                $this->routes();
+            }
+        );
 
         /**
          * Load Active https://github.com/letrunghieu/active

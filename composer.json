@@ -19,7 +19,7 @@
         "php": "^7.4",
         "sierratecnologia/former": "dev-master",
         "ricardosierra/minify": "dev-master",
-        "ricardosierra/validate": "^0.2",
+        "ricardosierra/validate": "dev-master",
         "ricardosierra/changelog": "~1.4",
         "sierratecnologia/crudmaker": "dev-master",
         "sierratecnologia/locaravel": "dev-master",

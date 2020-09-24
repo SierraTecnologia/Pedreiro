@@ -3,7 +3,7 @@
 namespace Pedreiro\Models;
 
 use App;
-use Audit\Traits\Loggable;
+// use Audit\Traits\Loggable;
 // use Bkwld\Cloner\Cloneable;
 use Bkwld\Library\Utils\Collection;
 use Bkwld\Upchuck\SupportsUploads;
@@ -22,11 +22,11 @@ use Muleta\Utils\Inclusores\DbalInclusor;
 use Muleta\Utils\Mergeators\DbalMergeator;
 
 use Muleta\Utils\Modificators\ArrayModificator;
+use Pedreiro;
 use Pedreiro\Collections\Base as BaseCollection;
 use Pedreiro\Exceptions\Exception;
-use Session;
 
-use Support;
+use Session;
 use SupportURL;
 use Support\Services\ModelService;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -44,8 +44,8 @@ abstract class Base extends Model //Ardent
     // use Cloneable;
     use // SupportsUploads,
         \Muleta\Traits\Models\CanSerializeTransform,
-        \Muleta\Traits\Models\Exportable,
-        Loggable;
+        \Muleta\Traits\Models\Exportable;
+    // Loggable;
     
 
     /**
@@ -138,7 +138,7 @@ abstract class Base extends Model //Ardent
      */
     public function shouldLogChange($action)
     {
-        return Support::handling()
+        return Pedreiro::handling()
             || (App::runningInConsole() && request()->path() == '/');
     }
 
@@ -601,7 +601,7 @@ abstract class Base extends Model //Ardent
         $associate = false;
         // @todo migrar isso pra ca pro support
         if (config('siravel.influencia', false)) {
-            $associate = Support::getInfluencia();
+            $associate = Pedreiro::getInfluencia();
         }
         
         $modelFind = false;
@@ -723,7 +723,7 @@ abstract class Base extends Model //Ardent
      */
     public function hasGetMutator($key)
     {
-        if (! Support::handling()
+        if (! Pedreiro::handling()
             || ! array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
@@ -741,7 +741,7 @@ abstract class Base extends Model //Ardent
      */
     public function hasSetMutator($key)
     {
-        if (! Support::handling()
+        if (! Pedreiro::handling()
             || ! array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
@@ -777,7 +777,7 @@ abstract class Base extends Model //Ardent
          */
         // Remove any settings that affect JSON conversion (visible / hidden) and
         // mass assignment protection (fillable / guarded) while in the admin
-        if (Support::handling()) {
+        if (Pedreiro::handling()) {
             $this->visible = $this->hidden = $this->fillable = $this->guarded = [];
         }
 
@@ -960,7 +960,7 @@ abstract class Base extends Model //Ardent
      */
     public function scopeLocalize($query, $locale = null)
     {
-        return $query->where('locale', $locale ?: Support::locale());
+        return $query->where('locale', $locale ?: Pedreiro::locale());
     }
 
     /**
@@ -972,7 +972,7 @@ abstract class Base extends Model //Ardent
      */
     public function fireFacilitadorEvent($event, $args = null)
     {
-        $event = "support::model.{$event}: ".get_class($this);
+        $event = "Pedreiro::model.{$event}: ".get_class($this);
 
         return Event::dispatch($event, $args);
     }
