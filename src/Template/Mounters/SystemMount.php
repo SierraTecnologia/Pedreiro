@@ -5,6 +5,7 @@
 
 namespace Pedreiro\Template\Mounters;
 
+use Session;
 use Translation;
 
 /**

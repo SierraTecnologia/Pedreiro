@@ -9,7 +9,7 @@ class {{controller}} extends Base
     /*
      * Example settings
 
-    protected $title = 'News & Events';
+    public $title = 'News & Events';
 
     protected $description = 'News and events yo!';
 

@@ -18,7 +18,7 @@ class PageController extends Controller
      *
      * @var string
      */
-    protected $title = 'Paginas';
+    public $title = 'Paginas';
 
     /**
      * The text description of what this controller manages, shown in the header.
@@ -26,7 +26,7 @@ class PageController extends Controller
      *
      * @var string
      */
-    protected $description;
+    public $description;
 
 
     protected $subTitle = false;
