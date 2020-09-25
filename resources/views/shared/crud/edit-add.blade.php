@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
                     <button type="button" class="btn btn-danger" id="confirm_delete">{{ __('facilitador::generic.delete_confirm') }}</button>
                 </div>
             </div>

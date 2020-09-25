@@ -23,12 +23,12 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="box box-info card card-info">
-            <div class="box-header card-header with-border">
-                <h3 class="box-title card-title">Dispositivos</h3>
+        <div class="box box-info panel-info card-info card card-info">
+            <div class="box-header panel-header card-header with-border">
+                <h3 class="box-title panel-title card-title">Dispositivos</h3>
             </div>
-            <!-- /.box-header card-header -->
-            <div class="box-body card-body table-responsive p-0">
+            <!-- /.box-header panel-header card-header -->
+            <div class="box-body panel-body card-body table-responsive p-0">
             
        
 <?php
@@ -40,7 +40,7 @@
 
     // Add sidebar pagination
     if (!empty($layout) && $layout != 'full' && $count > count($listing)) : ?>
-        <a href="<?php echo SupportURL::relative('index', $parent_id, $controller)?>" class="btn btn-default btn-sm btn-block full-list"><?php echo __('facilitador::list.standard.related', ['title' => title_case($title)]) ?></b></a>
+        <a href="<?php echo SupportURL::relative('index', $parent_id, $controller)?>" class="btn btn-secondary btn-sm btn-block full-list"><?php echo __('facilitador::list.standard.related', ['title' => title_case($title)]) ?></b></a>
     <?php endif ?>
 
 

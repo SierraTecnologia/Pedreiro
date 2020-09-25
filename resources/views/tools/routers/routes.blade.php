@@ -40,11 +40,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="content">
-                    <div class="box card">
-                        <div class="box-header card-header">
-                            <h3 class="box-title card-title">All Routes</h3>
+                    <div class="box panel car">
+                        <div class="box-header panel-header card-header">
+                            <h3 class="box-title panel-title card-title">All Routes</h3>
                         </div>
-                        <div class="box-body card-body">
+                        <div class="box-body panel-body card-body">
                             <table class="table table-bordered table-hover table-responsive" id="routes-table">
                                 <thead>
                                 <th>Name</th>

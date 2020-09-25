@@ -22,7 +22,7 @@
                     <div class="row">
                         {{-- Back to resource index --}}
                         <div class="col-sm-2">
-                            <a href="{{ route("$route.index") }}" class="btn btn-default btn-block">
+                            <a href="{{ route("$route.index") }}" class="btn btn-secondary btn-block">
                                 <i class='fa fa-arrow-circle-left'></i> Back to Index
                             </a>
                         </div>

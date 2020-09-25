@@ -71,9 +71,30 @@ class Pedreiro
         $this->findVersion();
     }
 
+    public function view($name, array $parameters = [])
+    {
+        foreach (Arr::get($this->viewLoadingEvents, $name, []) as $event) {
+            $event($name, $parameters);
+        }
+
+        return view($name, $parameters);
+    }
+
+    public function onLoadingView($name, \Closure $closure)
+    {
+        if (!isset($this->viewLoadingEvents[$name])) {
+            $this->viewLoadingEvents[$name] = [];
+        }
+
+        $this->viewLoadingEvents[$name][] = $closure;
+    }
 
     public function formField($row, $dataType, $dataTypeContent)
     {
+        if (empty($this->formFields)) {
+            $this->registerFormFields();
+        }
+        // dd($this->formFields);
         $formField = $this->formFields[$row->type];
 
         return $formField->handle($row, $dataType, $dataTypeContent);
@@ -670,5 +691,49 @@ class Pedreiro
     public function emptyInfluencia()
     {
         $this->setInfluencia();
+    }
+
+
+
+
+
+
+
+    /**
+     * GAMBI @TODO
+     */
+
+    protected function registerFormFields()
+    {
+        $formFields = [
+            'checkbox',
+            'multiple_checkbox',
+            'color',
+            'date',
+            'file',
+            'image',
+            'multiple_images',
+            'media_picker',
+            'number',
+            'password',
+            'radio_btn',
+            'rich_text_box',
+            'code_editor',
+            'markdown_editor',
+            'select_dropdown',
+            'select_multiple',
+            'text',
+            'text_area',
+            'time',
+            'timestamp',
+            'hidden',
+            'coordinates',
+        ];
+
+        foreach ($formFields as $formField) {
+            $class = Str::studly("{$formField}_handler");
+
+            $this->addFormField("Pedreiro\\Elements\\FormFields\\{$class}");
+        }
     }
 }

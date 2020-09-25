@@ -6,15 +6,15 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <div class="btn-group pull-right">
-                    <a href="{{ route("$route.create" ) }}" class="btn btn-default btn-xs pull-right">
+                <div class="btn-group float-right">
+                    <a href="{{ route("$route.create" ) }}" class="btn btn-secondary btn-xs float-right">
                         <i class='fa fa-plus'></i> Add New {{ $title }}
                     </a>
                 </div>
                 <h3 class="panel-title">{{ Illuminate\Support\Str::plural($title) }} Index</h3>
             </div>
             <div class="panel-body">
-                <table class="table table-striped table-condensed data-table">
+                <table class="table table-striped table-sm data-table">
                     <thead>
                         <tr>
                             @foreach ($fields as $field)

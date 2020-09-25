@@ -15,7 +15,7 @@
         <a class="btn btn-danger delete-confirm" href="#">
             <?php echo __('facilitador::list.bulk_actions.yes_delete'); ?>
         </a>
-        <a class="btn btn-default delete-cancel" href="#">
+        <a class="btn btn-secondary delete-cancel" href="#">
             <?php echo __('facilitador::list.bulk_actions.cancel_delete'); ?>
         </a>
     </td>

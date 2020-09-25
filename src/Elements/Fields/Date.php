@@ -54,7 +54,7 @@ class Date extends Field
         }
 
         // Apend the button that the calendar selector hooks into
-        $this->append('<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-calendar"></span></button>');
+        $this->append('<button class="btn btn-secondary" type="button"><span class="glyphicon glyphicon-calendar"></span></button>');
     }
 
     /**

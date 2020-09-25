@@ -5,7 +5,7 @@
         <?php if (!empty($item) && ($url = $item->getUriAttribute())) : ?>
             <a href="<?php echo $url?>"
                 target="_blank"
-                class="btn btn-default btn-sm outline pull-right">
+                class="btn btn-secondary btn-sm outline float-right">
                 <span class="glyphicon glyphicon-bookmark"></span>
                 <?php echo __('facilitador::display.legend.view'); ?>
             </a>

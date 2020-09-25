@@ -2,7 +2,7 @@
 
 <div class="legend sidebar-header"><a href="<?php echo URL::to(SupportURL::relative('index', $parent_id, $controller))?>" title="<?php echo $description?>" class="js-tooltip progress-link"><?php echo $title?></a> <span class="badge"><?php echo $count?></span> 
     
-    <div class="btn-toolbar pull-right">
+    <div class="btn-toolbar float-right">
     
     <?php // If we've declared this relationship a many to many one, show the autocomplete ?>
 

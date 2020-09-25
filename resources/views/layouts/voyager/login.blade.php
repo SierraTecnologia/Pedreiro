@@ -49,9 +49,9 @@
                     <div class="logo-title-container">
                         <?php $admin_logo_img = Facilitador::setting('admin.icon_image', ''); ?>
                         @if($admin_logo_img == '')
-                        <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="{{ facilitador_asset('images/logo-icon-light.png') }}" alt="Logo Icon">
+                        <img class="img-fluid float-left flip logo hidden-xs animated fadeIn" src="{{ facilitador_asset('images/logo-icon-light.png') }}" alt="Logo Icon">
                         @else
-                        <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="{{ Facilitador::image($admin_logo_img) }}" alt="Logo Icon">
+                        <img class="img-fluid float-left flip logo hidden-xs animated fadeIn" src="{{ Facilitador::image($admin_logo_img) }}" alt="Logo Icon">
                         @endif
                         <div class="copy animated fadeIn">
                             <h1>{{ Facilitador::setting('admin.title', 'Facilitador') }}</h1>

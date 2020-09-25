@@ -152,13 +152,13 @@ class BelongsTo extends Field
     {
         if ($this->value) {
             $this->append(
-                '<button type="button" class="btn btn-default">
+                '<button type="button" class="btn btn-secondary">
 				<span class="glyphicon glyphicon-pencil"></span>
 			</button>'
             );
         } else {
             $this->append(
-                '<button type="button" class="btn btn-default" disabled>
+                '<button type="button" class="btn btn-secondary" disabled>
 				<span class="glyphicon glyphicon-ban-circle"></span>
 			</button>'
             );

@@ -18,10 +18,10 @@
                     {{ method_field("DELETE") }}
                     {{ csrf_field() }}
                     <input type="hidden" name="ids" id="bulk_delete_input" value="">
-                    <input type="submit" class="btn btn-danger pull-right delete-confirm"
+                    <input type="submit" class="btn btn-danger float-right delete-confirm"
                              value="{{ __('facilitador::generic.bulk_delete_confirm') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_plural')) }}">
                 </form>
-                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">
                     {{ __('facilitador::generic.cancel') }}
                 </button>
             </div>

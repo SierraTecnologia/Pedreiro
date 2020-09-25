@@ -169,10 +169,16 @@ class PedreiroServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind('pedreiro', Pedreiro::class);
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', Form::class);
         $loader->alias('Pedreiro', PedreiroFacade::class);
+        $this->app->singleton(
+            'pedreiro',
+            function ($app) {
+                return app()->make(Pedreiro::class);
+            }
+        );
+        // $this->app->bind('pedreiro', Pedreiro::class);
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   

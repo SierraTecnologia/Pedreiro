@@ -2,18 +2,18 @@
 
 @section('content')
     @foreach($releases as $release)
-        <div class="box card">
-            <div class="box-header card-header with-border">
-            <h3 class="box-title card-title">{!! $release->getName() !!}</h3>
+        <div class="box panel car">
+            <div class="box-header panel-header card-header with-border">
+            <h3 class="box-title panel-title card-title">{!! $release->getName() !!}</h3>
 
-            <div class="box-tools card-tools pull-right">
+            <div class="box-tools panel-tools card-tools float-right">
                 {!! ($release->getDate()?(new Carbon\Carbon($release->getDate()))->diffForHumans():'') !!}
                 <a href="{!! $release->getLink() !!}" class="btn btn-box-tool btn btn-tool">
                     View changes
                 </a>
             </div>
             </div>
-            <div class="box-body card-body">
+            <div class="box-body panel-body card-body">
                 <dl class="dl-horizontal">
 
                     @if (!empty($changes = $release->getChanges('Added')))
@@ -42,7 +42,7 @@
                     @endif
                 </dl>
             </div>
-            <!-- /.box-body card-body -->
+            <!-- /.box-body panel-body card-body -->
         </div>
     @endforeach
 
