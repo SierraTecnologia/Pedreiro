@@ -11,7 +11,7 @@ class PageController extends Controller
      *
      * @var string
      */
-    protected $controller;
+    public $controller;
 
     /**
      * The HTML title, shown in header of the vie. Ex: News Posts
@@ -29,7 +29,7 @@ class PageController extends Controller
     public $description;
 
 
-    protected $subTitle = false;
+    public $subTitle = false;
 
     public function title($controller_name = null)
     {

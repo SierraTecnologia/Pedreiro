@@ -343,7 +343,7 @@ class Base extends BaseController
      *
      * @return Illuminate\Contracts\View\Factory
      */
-    public function index()
+    public function index(Request $request)
     {
         // Look for overriden views
         $this->overrideViews();
