@@ -9,7 +9,7 @@ class RichTextBoxHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.rich_text_box',
+            'pedreiro::shared.forms.fields.rich_text_box',
             [
             'row' => $row,
             'options' => $options,

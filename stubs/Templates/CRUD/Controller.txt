@@ -79,7 +79,7 @@ class _ucCamel_casePlural_Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $_lower_case_ = $this->service->find($id);
         return view('_lower_casePlural_::_lower_casePlural_.show')->with('_lower_case_', $_lower_case_);
@@ -91,7 +91,7 @@ class _ucCamel_casePlural_Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $_lower_case_ = $this->service->find($id);
         return view('_lower_casePlural_::_lower_casePlural_.edit')->with('_lower_case_', $_lower_case_);

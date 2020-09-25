@@ -9,7 +9,7 @@ class MultipleImagesHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.multiple_images',
+            'pedreiro::shared.forms.fields.multiple_images',
             [
             'row' => $row,
             'options' => $options,

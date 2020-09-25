@@ -9,7 +9,7 @@ class CheckboxHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.checkbox',
+            'pedreiro::shared.forms.fields.checkbox',
             [
             'row' => $row,
             'options' => $options,

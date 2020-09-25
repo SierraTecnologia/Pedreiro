@@ -14,7 +14,7 @@ class CoordinatesHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.coordinates',
+            'pedreiro::shared.forms.fields.coordinates',
             [
             'row' => $row,
             'options' => $options,

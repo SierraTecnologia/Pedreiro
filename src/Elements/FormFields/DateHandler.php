@@ -9,7 +9,7 @@ class DateHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.date',
+            'pedreiro::shared.forms.fields.date',
             [
             'row' => $row,
             'options' => $options,

@@ -9,7 +9,7 @@ class SelectMultipleHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.select_multiple',
+            'pedreiro::shared.forms.fields.select_multiple',
             [
             'row' => $row,
             'options' => $options,

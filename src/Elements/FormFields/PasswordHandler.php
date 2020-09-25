@@ -9,7 +9,7 @@ class PasswordHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.password',
+            'pedreiro::shared.forms.fields.password',
             [
             'row' => $row,
             'options' => $options,

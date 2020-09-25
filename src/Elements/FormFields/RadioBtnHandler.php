@@ -10,7 +10,7 @@ class RadioBtnHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.radio_btn',
+            'pedreiro::shared.forms.fields.radio_btn',
             [
             'row' => $row,
             'options' => $options,

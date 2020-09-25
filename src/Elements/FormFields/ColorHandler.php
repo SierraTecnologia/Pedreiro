@@ -9,7 +9,7 @@ class ColorHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.color',
+            'pedreiro::shared.forms.fields.color',
             [
             'row' => $row,
             'options' => $options,

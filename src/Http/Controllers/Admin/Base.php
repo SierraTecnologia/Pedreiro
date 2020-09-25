@@ -48,21 +48,21 @@ class Base extends BaseController
     /**
      * Amount of results to return per page
      *
-     * @var integer
+     * @var int
      */
     public static $per_page = 20;
 
     /**
      * Amount of results to show in the sidebar layout
      *
-     * @var integer
+     * @var int
      */
     public static $per_sidebar = 6;
 
     /**
      * Include soft deleted models in the listing
      *
-     * @var boolean
+     * @var bool
      */
     public $with_trashed = false;
 
@@ -145,7 +145,7 @@ class Base extends BaseController
         // Try to suss out the model by singularizing the controller
         if (empty($this->model)) {
             $this->model = $this->model($this->controller);
-            if (!class_exists($this->model)) {
+            if (! class_exists($this->model)) {
                 $this->model = null;
             }
         }
@@ -185,6 +185,7 @@ class Base extends BaseController
     public function search()
     {
         $search = new Search;
+
         return array_merge(
             $search->makeSoftDeletesCondition($this),
             $this->search ?: []
@@ -304,7 +305,7 @@ class Base extends BaseController
      * Determine whether the relationship between the parent to this controller
      * is a many to many
      *
-     * @return boolean
+     * @return bool
      */
     public function isChildInManyToMany()
     {
@@ -326,9 +327,9 @@ class Base extends BaseController
     public function getPermissionOptions()
     {
         return [
-            'read'    => 'View listing and edit views',
-            'create'  => 'Create new items',
-            'update'  => 'Update existing items',
+            'read' => 'View listing and edit views',
+            'create' => 'Create new items',
+            'update' => 'Update existing items',
             'publish' => 'Move from "draft" to "published"',
             'destroy' => ['Delete', 'Delete items permanently'],
         ];
@@ -369,7 +370,7 @@ class Base extends BaseController
      *
      * @return Illuminate\Contracts\View\Factory
      */
-    public function create()
+    public function create(Request $request)
     {
         // Look for overriden views
         $this->overrideViews();
@@ -384,7 +385,7 @@ class Base extends BaseController
 
         // Make the sidebar
         $sidebar = new Sidebar;
-        if (!$localize->hidden()) {
+        if (! $localize->hidden()) {
             $sidebar->addToEnd($localize);
         }
 
@@ -439,7 +440,7 @@ class Base extends BaseController
      * @param  int $id Model key
      * @return Illuminate\Contracts\View\Factory
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         // Get the model instance
         $item = $this->findOrFail($id);
@@ -463,7 +464,7 @@ class Base extends BaseController
 
         // Make the sidebar
         $sidebar = new Sidebar($item);
-        if (!$localize->hidden()) {
+        if (! $localize->hidden()) {
             $sidebar->addToEnd($localize);
         }
 
@@ -529,7 +530,7 @@ class Base extends BaseController
      * @param  int $id Model key
      * @return Symfony\Component\HttpFoundation\Response Redirect to listing
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         // Find the item
         $item = $this->findOrFail($id);
@@ -614,7 +615,7 @@ class Base extends BaseController
 
         // Get an instance so the title attributes can be found.  If none are found,
         // then there are no results, so bounce
-        if (!$model = call_user_func([$this->model, 'first'])) {
+        if (! $model = call_user_func([$this->model, 'first'])) {
             return Response::json($this->formatAutocompleteResponse([]));
         }
 
@@ -666,7 +667,7 @@ class Base extends BaseController
      */
     public function autocompleteViewVars()
     {
-        if (!$this->parent) {
+        if (! $this->parent) {
             return [];
         }
 
@@ -765,6 +766,7 @@ class Base extends BaseController
         // Apply search
         $search = new Search();
         $query = $search->apply($query, $this->search());
+
         return $query;
     }
 
@@ -798,13 +800,14 @@ class Base extends BaseController
             return $class::RULES;
         }
         
-        if (!property_exists($class, 'rules')) {
+        if (! property_exists($class, 'rules')) {
             return [];
         }
 
         if (isset($class::$rules)) {
             return $class::$rules;
         }
+
         return (new $class)->rules;
     }
 
@@ -959,7 +962,7 @@ class Base extends BaseController
         }
 
         if ($title && is_string($title)) {
-            $title =  '"'.$title.'"';
+            $title = '"'.$title.'"';
         }
 
         // Render the message
@@ -972,7 +975,7 @@ class Base extends BaseController
         }
 
         // Add extra messaging if the creation was begun from the localize UI
-        if ($verb == 'duplicated' && is_a($input, '\Pedreiro\Models\Base') && !empty($input->locale)) {
+        if ($verb == 'duplicated' && is_a($input, '\Pedreiro\Models\Base') && ! empty($input->locale)) {
             $message .= __('facilitador::base.success_localized', ['locale' => \Illuminate\Support\Facades\Config::get('sitec.site.locales')[$input->locale]]);
         }
 

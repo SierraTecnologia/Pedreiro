@@ -9,7 +9,7 @@ class FileHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.file',
+            'pedreiro::shared.forms.fields.file',
             [
             'row' => $row,
             'options' => $options,

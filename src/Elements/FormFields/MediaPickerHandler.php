@@ -57,7 +57,7 @@ class MediaPickerHandler extends AbstractHandler
         }
 
         return view(
-            'support::shared.forms.fields.media_picker',
+            'pedreiro::shared.forms.fields.media_picker',
             [
             'row' => $row,
             'options' => $options,

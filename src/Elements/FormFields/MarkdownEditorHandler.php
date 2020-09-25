@@ -9,7 +9,7 @@ class MarkdownEditorHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::shared.forms.fields.markdown_editor',
+            'pedreiro::shared.forms.fields.markdown_editor',
             [
             'row' => $row,
             'options' => $options,
