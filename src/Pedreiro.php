@@ -45,6 +45,14 @@ class Pedreiro
     protected $version;
     protected $filesystem;
 
+    protected $urlSection = null;
+    protected $urlSectionOptions = [
+        'painel',
+        'master',
+        'admin',
+        'rica',
+    ];
+
     protected $alerts = [];
     protected $alertsCollected = false;
 
@@ -69,6 +77,22 @@ class Pedreiro
         $this->filesystem = app(Filesystem::class);
 
         $this->findVersion();
+    }
+
+    public function getUrlSection()
+    {
+        if (!$this->urlSection) {
+            $urlSection = Request::segment(1);
+            if (!in_array($urlSection, $this->urlSectionOptions)) {
+                $urlSection = Session::get('url_section');
+            }
+            if (!$urlSection) {
+                $urlSection = $this->urlSectionOptions[0];
+            }
+            $this->urlSection = $urlSection;
+            Session::put('url_section', $this->urlSection);
+        }
+        return $this->urlSection;
     }
 
     public function view($name, array $parameters = [])

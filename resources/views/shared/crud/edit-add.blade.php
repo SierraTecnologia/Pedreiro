@@ -101,7 +101,7 @@
                     </form>
 
                     <iframe id="form_target" name="form_target" style="display:none"></iframe>
-                    <form id="my_form" action="{{ route('profile.upload') }}" target="form_target" method="post"
+                    <form id="my_form" action="{{ route('profile.porteiro.upload') }}" target="form_target" method="post"
                             enctype="multipart/form-data" style="width:0;height:0;overflow:hidden">
                         <input name="image" id="upload_file" type="file"
                                  onchange="$('#my_form').submit();this.value='';">
