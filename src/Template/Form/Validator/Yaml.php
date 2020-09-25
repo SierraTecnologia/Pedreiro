@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Parser;
 class Yaml implements ValidatorInterface
 {
     /**
-     * @var Parser 
+     * @var Parser
      */
     protected $parser;
 
@@ -26,7 +26,7 @@ class Yaml implements ValidatorInterface
 
     public function getParser()
     {
-        if (!$this->parser) {
+        if (! $this->parser) {
             $this->parser = new Parser();
         }
 

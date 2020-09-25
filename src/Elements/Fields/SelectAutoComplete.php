@@ -6,7 +6,6 @@
 namespace Pedreiro\Elements\Fields;
 
 use Exception;
-use Pedreiro\Elements\Fields\Select;
 
 class SelectAutoComplete extends Select
 {
@@ -39,7 +38,7 @@ class SelectAutoComplete extends Select
 
         $this->withMeta(
             ['maxResults' => (int)$this->maxResults ?: 30,
-            'maxHeight'  => $this->maxHeight]
+            'maxHeight' => $this->maxHeight, ]
         );
     }
 
@@ -66,6 +65,7 @@ class SelectAutoComplete extends Select
 
             return $this->withMeta([__FUNCTION__ => $this->maxResults]);
         }
+
         throw new Exception('Max results value has to be a positive interge!');
     }
 

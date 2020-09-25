@@ -2,9 +2,6 @@
 
 namespace Pedreiro\Template\Layout;
 
-use URL;
-use Request;
-use Support\Routing\Wildcard;
 use Muleta\Utils\Semantics\ReturnSimilars;
 
 /**
@@ -21,7 +18,7 @@ class Icons
     {
         $icon = array_rand(self::icons(), 1);
 
-        if (!isset(self::icons()[$icon]['class'])) {
+        if (! isset(self::icons()[$icon]['class'])) {
             dd(
                 'IconsDeuPau',
                 self::icons()[$icon],
@@ -29,9 +26,10 @@ class Icons
             );
         }
 
-        if (!$html) {
+        if (! $html) {
             return self::icons()[$icon]['class'];
         }
+
         return  self::withHtml(self::icons()[$icon]['class']);
     }
 
@@ -43,7 +41,7 @@ class Icons
         $name = ReturnSimilars::getSimilarsFor($name);
         $icons = [];
 
-        if (!empty($name)) {
+        if (! empty($name)) {
             $icons = collect(self::icons())->reject(
                 function ($icon) use ($name) {
                     $reject = true;
@@ -62,7 +60,7 @@ class Icons
                         }
 
                         // Procura no uses
-                        if (!isset($icon['uses']) || !is_array($icon['uses']) || empty($icon['uses'])) {
+                        if (! isset($icon['uses']) || ! is_array($icon['uses']) || empty($icon['uses'])) {
                             continue;
                         }
                         if (in_array($searchName, $icon['uses'])) {
@@ -80,14 +78,15 @@ class Icons
         }
         $icon = array_rand($icons, 1);
 
-        if (!isset($icons[$icon]['class'])) {
+        if (! isset($icons[$icon]['class'])) {
             dd('Erro aqui nos icones', $icon, $icons[$icon]);
         }
 
 
-        if (!$html) {
+        if (! $html) {
             return $icons[$icon]['class'];
         }
+
         return '<i class="' . $icons[$icon]['class'] . '"></i>';
     }
 
@@ -726,7 +725,7 @@ class Icons
                 'class' => 'fa fa-fw fa-book',
                 'name' => 'fa-book',
                 'uses' => [
-                    'biblioteca'
+                    'biblioteca',
                 ],
             ],
             [
@@ -2532,7 +2531,7 @@ class Icons
                 'class' => 'fa fa-fw fa-user',
                 'name' => 'fa-user',
                 'uses' => [
-                    'person'
+                    'person',
                 ],
             ],
             [
@@ -4069,7 +4068,7 @@ class Icons
                 'class' => 'fa fa-fw fa-youtube-play',
                 'name' => 'fa-youtube-play',
                 'uses' => [
-                    'video'
+                    'video',
                 ],
             ],
 
@@ -6222,7 +6221,7 @@ class Icons
                 'class' => 'glyphicon glyphicon-menu-up',
                 'name' => 'glyphicon glyphicon-menu-up',
                 'uses' => [],
-            ]
+            ],
         ];
         //     </ul>
 

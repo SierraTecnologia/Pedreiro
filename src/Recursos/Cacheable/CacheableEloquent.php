@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Support\Recursos\Cacheable;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 trait CacheableEloquent
 {

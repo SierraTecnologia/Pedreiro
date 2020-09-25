@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Pedreiro\Support;
 
 use Closure;
-use Pedreiro\Models\Attribute;
 use Illuminate\Database\Eloquent\Model as Entity;
+use Pedreiro\Models\Attribute;
 
 class RelationBuilder
 {
@@ -59,7 +59,9 @@ class RelationBuilder
                 // related to the given attribute. If no condition is set, it will
                 // fetch all the value rows related to the current entity.
                 return $relation->where($attribute->getForeignKey(), $attribute->getKey());
-            }, $entity, get_class($entity)
+            },
+            $entity,
+            get_class($entity)
         );
     }
 }

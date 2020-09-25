@@ -3,15 +3,15 @@
 namespace Support\Models;
 
 // Dependencies
-use Stalker\Traits\Encodable;
-use Muleta\Traits\Models\HasImages;
 use Bkwld\Library\Utils\File;
 use Config;
 use DB;
-use Support;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Muleta\Traits\Models\HasImages;
+use Stalker\Traits\Encodable;
+use Support;
 
 /**
  * Represents an indivudal Element instance, hydrated with the merge of
@@ -75,7 +75,8 @@ class Element extends Base
             function (Element $el) {
                 $el->setRawAttributes(
                     array_only(
-                        $el->getAttributes(), [
+                        $el->getAttributes(),
+                        [
                         'key', 'type', 'value', 'locale',
                         ]
                     )
@@ -113,10 +114,13 @@ class Element extends Base
         if ($key == 'type') {
             switch ($value) {
             case 'image': $this->rules['value'] = 'image';
+
                 break;
             case 'file': $this->rules['value'] = 'file';
+
                 break;
             case 'video-encoder': $this->rules['value'] = 'video';
+
                 break;
             }
         }
@@ -140,21 +144,21 @@ class Element extends Base
 
         // Different outputs depending on type
         switch ($this->type) {
-        case 'boolean': 
-            return !empty($this->value);
-        case 'image': 
+        case 'boolean':
+            return ! empty($this->value);
+        case 'image':
             return $this->img()->url;
-        case 'textarea': 
+        case 'textarea':
             return nl2br($this->value);
-        case 'wysiwyg': 
+        case 'wysiwyg':
             return Str::startsWith($this->value, '<') ? $this->value : "<p>{$this->value}</p>";
-        case 'checkboxes': 
+        case 'checkboxes':
             return explode(',', $this->value);
-        case 'video-encoder': 
+        case 'video-encoder':
             return $this->encoding('value')->tag;
-        case 'model': 
+        case 'model':
             return $this->relatedModel();
-        default: 
+        default:
             return $this->value;
         }
     }
@@ -234,7 +238,7 @@ class Element extends Base
     {
         // Check that the image is in the elements dir, which means it's
         // a default image
-        if (!strpos($image->file, '/elements/')) {
+        if (! strpos($image->file, '/elements/')) {
             return;
         }
 
@@ -244,7 +248,7 @@ class Element extends Base
         $replacement = $yaml[$this->key]['value'];
 
         // Check if the filenames are the same
-        if (pathinfo($image->file, PATHINFO_BASENAME)== pathinfo($replacement, PATHINFO_BASENAME)
+        if (pathinfo($image->file, PATHINFO_BASENAME) == pathinfo($replacement, PATHINFO_BASENAME)
         ) {
             return;
         }
@@ -272,8 +276,9 @@ class Element extends Base
         }
 
         // All src images must live in the /img (relative) directory
-        if (!Str::is('/img/*', $this->value)) {
+        if (! Str::is('/img/*', $this->value)) {
             $msg = 'Element images must be stored in public/img: '.$this->value;
+
             throw new Exception($msg);
         }
 
@@ -281,7 +286,7 @@ class Element extends Base
         $src = $this->value;
         $src_abs = public_path($src);
         $path = str_replace('/img/', '/elements/', $src);
-        if (!app('upchuck.disk')->has($path)) {
+        if (! app('upchuck.disk')->has($path)) {
 
             // Copy it to the disk
             $stream = fopen($src_abs, 'r+');
@@ -306,8 +311,8 @@ class Element extends Base
             'name' => $this->inputName(),
             'file_type' => pathinfo($src_abs, PATHINFO_EXTENSION),
             'file_size' => filesize($src_abs),
-            'width'     => $size[0],
-            'height'    => $size[1],
+            'width' => $size[0],
+            'height' => $size[1],
             ]
         );
         $this->images()->save($image);
@@ -336,7 +341,7 @@ class Element extends Base
      * Element changes into a single log.
      *
      * @param  string $action
-     * @return boolean
+     * @return bool
      */
     public function shouldLogChange($action)
     {

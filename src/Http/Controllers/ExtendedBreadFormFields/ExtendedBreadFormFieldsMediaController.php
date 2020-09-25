@@ -3,16 +3,15 @@
 namespace Support\Http\Controllers\ExtendedBreadFormFields;
 
 use Exception;
+use Facilitador\Http\Controllers\FacilitadorMediaController;
 use Illuminate\Http\Request;
 use Support\Facades\Support;
-use Facilitador\Http\Controllers\FacilitadorMediaController;
 
 class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
 {
-    
     public function remove(Request $request)
     {
-        if($request->get('multiple_ext')) {
+        if ($request->get('multiple_ext')) {
             try {
                 // GET THE SLUG, ex. 'posts', 'pages', etc.
                 $slug = $request->get('slug');
@@ -37,7 +36,7 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                 $data = $model::find([$id])->first();
     
                 // Check if field exists
-                if (!isset($data->{$field})) {
+                if (! isset($data->{$field})) {
                     throw new Exception(__('facilitador::generic.field_does_not_exist'), 400);
                 }
     
@@ -50,11 +49,11 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                 $fieldData = @json_decode($data->{$field}, true);
                 foreach ($fieldData as $i => $single) {
                     // Check if image exists in array
-                    if(in_array($image, array_values($single))) {
+                    if (in_array($image, array_values($single))) {
                         $founded = $i;
                     }
                 }
-                if(!isset($founded)) {
+                if (! isset($founded)) {
                     throw new Exception(__('facilitador::media.image_does_not_exist'), 400);
                 }
                 
@@ -68,7 +67,7 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                 return response()->json(
                     [
                     'data' => [
-                       'status'  => 200,
+                       'status' => 200,
                        'message' => __('facilitador::media.image_removed'),
                     ],
                     ]
@@ -88,15 +87,15 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                 return response()->json(
                     [
                     'data' => [
-                        'status'  => $code,
+                        'status' => $code,
                         'message' => $message,
                     ],
-                    ], $code
+                    ],
+                    $code
                 );
             }
-        } else{
+        } else {
             FacilitadorMediaController::remove($request);
         }
     }
-
 }

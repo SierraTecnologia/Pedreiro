@@ -3,8 +3,8 @@
 namespace Pedreiro\Template\Input;
 
 use Facilitador;
-use MediaManager\Models\Image;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use MediaManager\Models\Image;
 
 /**
  * Check the input during a store or update for nested models in the input and
@@ -34,7 +34,7 @@ class NestedModels
 
         // Loop through the input, looking for relationships
         foreach ($input as $name => $data) {
-            if (!$relation = $this->makeRelation($model, $name, $data)) {
+            if (! $relation = $this->makeRelation($model, $name, $data)) {
                 continue;
             }
             $relation_attributes[] = $name;
@@ -69,12 +69,13 @@ class NestedModels
     protected function makeRelation($model, $name, $data)
     {
         // The data must be an array and must contain arrays
-        if (!is_array($data)
+        if (! is_array($data)
             || empty($data)
             || count(
                 array_filter(
-                    $data, function ($child) {
-                        return !is_array($child);
+                    $data,
+                    function ($child) {
+                        return ! is_array($child);
                     }
                 )
             )
@@ -83,13 +84,13 @@ class NestedModels
         }
 
         // The input name should be a function defined on the model.
-        if (!method_exists($model, $name)) {
+        if (! method_exists($model, $name)) {
             return false;
         }
 
         // Check if the running the function actually returns a relationship
         $relation = $model->$name();
-        if (!is_a($relation, Relation::class)) {
+        if (! is_a($relation, Relation::class)) {
             return false;
         }
 
@@ -141,7 +142,7 @@ class NestedModels
      * Update an existing child record
      *
      * @param  Relation $relation
-     * @param  integer  $id
+     * @param  int  $id
      * @param  array    $input    The data for the nested model
      * @param  string   $prefix   The input name prefix, for validation
      * @return void
@@ -169,14 +170,14 @@ class NestedModels
 
         // If nested is not an Image, don't do anything special.  This will result
         // in the default validation behavior which gets the rules off of the child.
-        if (!is_a($child, Image::class)) {
+        if (! is_a($child, Image::class)) {
             return;
         }
 
         // Check for image rules on the parent
         $parent = $relation->getParent();
         $rules_key = 'images.' . ($input['name'] ?: 'default');
-        if (!array_key_exists($rules_key, $parent::$rules)) {
+        if (! array_key_exists($rules_key, $parent::$rules)) {
             return;
         }
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Pedreiro\Support;
 
-use Illuminate\Database\Eloquent\Model;
-use Pedreiro\Models\Attribute;
-use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection as BaseCollection;
+use Pedreiro\Models\Attribute;
 
 class ValueCollection extends EloquentCollection
 {

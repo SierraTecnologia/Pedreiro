@@ -2,12 +2,11 @@
 
 namespace Pedreiro\Template\Input;
 
-use Validator;
-use Illuminate\Support\Arr;
-use MediaManager\Models\Image;
-use Facilitador\Models\Base as BaseModel;
-use Pedreiro\Exceptions\ValidationFail;
 use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
+use Facilitador\Models\Base as BaseModel;
+use MediaManager\Models\Image;
+use Pedreiro\Exceptions\ValidationFail;
+use Validator;
 
 /**
  * Validate the attributs of a model
@@ -105,8 +104,9 @@ class ModelValidator
         // Otherwise, remove any image rules because this is a non-Image and
         // these rules will get applied by NestedModels
         return array_where(
-            $rules, function ($val, $key) {
-                return !starts_with($key, 'images.');
+            $rules,
+            function ($val, $key) {
+                return ! starts_with($key, 'images.');
             }
         );
     }
@@ -121,9 +121,10 @@ class ModelValidator
     public function nestArray($prefix, $array)
     {
         $data = [];
-        foreach($array as $key => $value) {
+        foreach ($array as $key => $value) {
             array_set($data, $prefix.$key, $value);
         }
+
         return $data;
     }
 
@@ -140,8 +141,10 @@ class ModelValidator
             array_map(
                 function ($key) use ($prefix) {
                     return $prefix.$key;
-                }, array_keys($array)
-            ), array_values($array)
+                },
+                array_keys($array)
+            ),
+            array_values($array)
         );
     }
 
@@ -161,8 +164,10 @@ class ModelValidator
         $rules = array_map(
             function ($rule) {
                 preg_match('#^([^:]+)#', $rule, $matches);
+
                 return $matches[1];
-            }, $rules
+            },
+            $rules
         );
 
         // Callback that removes isntances of the prefix from a message. Laravel

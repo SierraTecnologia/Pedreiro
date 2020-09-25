@@ -10,5 +10,4 @@ namespace Pedreiro\Exceptions\Coder;
  */
 class EloquentNotExistException extends CoderException
 {
-    
 }

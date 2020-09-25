@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Pedreiro\Models;
 
-use Muleta\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Model;
-// // // @Arquivo no existe
-use Spatie\Sluggable\SlugOptions;
-// // // @Arquivo no existe
-use Spatie\EloquentSortable\Sortable;
-// // @Arquivo no existe
-use Support\Recursos\Cacheable\CacheableEloquent;
-// @Arquivo no existe
-use Muleta\Traits\Models\HasTranslations;
-// @Arquivo no existe
-use Muleta\Traits\Models\ValidatingTrait;
-// @todo Add Essa lib Trait 'Spatie\EloquentSortable\SortableTrait' not found
-use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+// // // @Arquivo no existe
+use Muleta\Traits\Models\HasSlug;
+// // // @Arquivo no existe
+use Muleta\Traits\Models\HasTranslations;
+// // @Arquivo no existe
+use Muleta\Traits\Models\ValidatingTrait;
+// @Arquivo no existe
+use Spatie\EloquentSortable\Sortable;
+// @Arquivo no existe
+use Spatie\EloquentSortable\SortableTrait;
+// @todo Add Essa lib Trait 'Spatie\EloquentSortable\SortableTrait' not found
+use Spatie\Sluggable\SlugOptions;
+use Support\Recursos\Cacheable\CacheableEloquent;
 
 /**
  * Pedreiro\Models\Attribute.
@@ -53,7 +53,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|\Pedreiro\Models\Attribute whereUpdatedAt($value)
  * @mixin  \Eloquent
  */
-class Attribute extends Model// implements Sortable
+class Attribute extends Model // implements Sortable
 {
     use HasSlug;
     use SortableTrait;
@@ -242,7 +242,8 @@ class Attribute extends Model// implements Sortable
                     array_map(
                         function ($entity) {
                             return ['entity_type' => $entity];
-                        }, $entities
+                        },
+                        $entities
                     )
                 );
             }

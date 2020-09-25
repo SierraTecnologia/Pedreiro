@@ -10,12 +10,8 @@ namespace Pedreiro\Services;
  */
 class ConfigService
 {
-
-
     public function __construct()
     {
-        
-        
     }
     public function get($config, $default = false)
     {

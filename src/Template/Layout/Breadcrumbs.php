@@ -2,9 +2,9 @@
 
 namespace Pedreiro\Template\Layout;
 
-use URL;
 use Request;
 use Support\Routing\Wildcard;
+use URL;
 
 /**
  * Generate default breadcrumbs and provide a store where they can be
@@ -58,7 +58,7 @@ class Breadcrumbs
 
         // Loop through them in blocks of 2: [list, detail]
         $url = $segments[0];
-        for ($i=1; $i<count($segments); $i+=2) {
+        for ($i = 1; $i < count($segments); $i += 2) {
 
             // If an action URL, you're at the end of the URL
             if (in_array($segments[$i], ['edit'])) {
@@ -70,7 +70,7 @@ class Breadcrumbs
             $url .= '/' . $segments[$i];
             $router = new Wildcard($segments[0], 'GET', $url);
             
-            if (!($controller = $router->detectController())) {
+            if (! ($controller = $router->detectController())) {
                 continue;
             }
             $controller = new $controller;
@@ -79,17 +79,17 @@ class Breadcrumbs
             $breadcrumbs[URL::to($url)] = strip_tags($controller->title(), '<img>');
 
             // Add a detail if it exists
-            if (!isset($segments[$i+1])) {
+            if (! isset($segments[$i + 1])) {
                 break;
             }
-            $id = $segments[$i+1];
+            $id = $segments[$i + 1];
 
             // On a "new" page
             if ($id == 'create') {
                 $url .= '/' . $id;
                 $breadcrumbs[URL::to($url)] = __('facilitador::breadcrumbs.new');
 
-                // On an edit page
+            // On an edit page
             } elseif (is_numeric($id)) {
                 $url .= '/' . $id;
                 $item = $this->find($controller, $id);
@@ -107,7 +107,7 @@ class Breadcrumbs
      * trashed models in case the controller should show trashed models
      *
      * @param  Controller\Base $controller
-     * @param  integer         $id
+     * @param  int         $id
      * @return Model
      */
     public function find($controller, $id)

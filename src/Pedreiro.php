@@ -2,24 +2,14 @@
 
 namespace Pedreiro;
 
-use App\Models\User;
-use Arrilot\Widgets\Facade as Widget;
 use Bkwld\Library;
 use Config;
-use Crypto;
-use Facilitador\Models\Menu;
-use Facilitador\Models\MenuItem;
-use Facilitador\Models\Permission;
-use Facilitador\Models\Role;
 use Facilitador\Models\Setting;
-use Facilitador\Models\Translation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Pedreiro\Elements\FormFields\After\HandlerInterface as AfterHandlerInterface;
 use Pedreiro\Elements\FormFields\HandlerInterface;
@@ -30,14 +20,8 @@ use Pedreiro\Template\Actions\ViewAction;
 use ReflectionClass;
 use Request;
 use Session;
-use Siravel\Models\Blog\Category;
-use Siravel\Models\Blog\Post;
 use Siravel\Models\Negocios\Page;
 use Support\Events\AlertsCollection;
-use Support\Models\Application\DataRelationship;
-use Support\Models\Application\DataRow;
-use Support\Models\Application\DataType;
-use Translation\Traits\HasTranslations;
 use View;
 
 class Pedreiro
@@ -81,17 +65,18 @@ class Pedreiro
 
     public function getUrlSection()
     {
-        if (!$this->urlSection) {
+        if (! $this->urlSection) {
             $urlSection = Request::segment(1);
-            if (!in_array($urlSection, $this->urlSectionOptions)) {
+            if (! in_array($urlSection, $this->urlSectionOptions)) {
                 $urlSection = Session::get('url_section');
             }
-            if (!$urlSection) {
+            if (! $urlSection) {
                 $urlSection = $this->urlSectionOptions[0];
             }
             $this->urlSection = $urlSection;
             Session::put('url_section', $this->urlSection);
         }
+
         return $this->urlSection;
     }
 
@@ -106,7 +91,7 @@ class Pedreiro
 
     public function onLoadingView($name, \Closure $closure)
     {
-        if (!isset($this->viewLoadingEvents[$name])) {
+        if (! isset($this->viewLoadingEvents[$name])) {
             $this->viewLoadingEvents[$name] = [];
         }
 
@@ -238,7 +223,7 @@ class Pedreiro
         );
 
         // Replace non-facilitador controller's with the standard model namespace
-        if (!$is_facilitador && !$is_support && !$is_admin && !$is_other) {
+        if (! $is_facilitador && ! $is_support && ! $is_admin && ! $is_other) {
             $namespace = ucfirst(Config::get('application.routes.main'));
             $model = str_replace('App\Http\Controllers\\'.$namespace.'\\', 'App\\', $model);
         } else {
@@ -252,6 +237,7 @@ class Pedreiro
 
         // Make it singular
         $offset = strrpos($model, '\\') + 1;
+
         return substr($model, 0, $offset).Str::singular(substr($model, $offset));
     }
 
@@ -267,13 +253,14 @@ class Pedreiro
         $controller = str_replace('Facilitador\Models', 'Facilitador\Http\Controllers\Admin', $model, $is_facilitador);
 
         // Replace non-facilitador controller's with the standard model namespace
-        if (!$is_facilitador) {
+        if (! $is_facilitador) {
             $namespace = ucfirst(Config::get('application.routes.main'));
             $controller = str_replace('App\\', 'App\Http\Controllers\\'.$namespace.'\\', $controller);
         }
 
         // Make it plural
         $offset = strrpos($controller, '\\') + 1;
+
         return substr($controller, 0, $offset).Str::plural(substr($controller, $offset));
     }
 
@@ -348,7 +335,7 @@ class Pedreiro
 
     public function alerts()
     {
-        if (!$this->alertsCollected) {
+        if (! $this->alertsCollected) {
             event(new AlertsCollection($this->alerts));
 
             $this->alertsCollected = true;
@@ -359,7 +346,7 @@ class Pedreiro
 
     protected function findVersion()
     {
-        if (!is_null($this->version)) {
+        if (! is_null($this->version)) {
             return;
         }
 
@@ -373,6 +360,7 @@ class Pedreiro
                 foreach ($file->packages as $package) {
                     if ($package->name == 'facilitador') {
                         $this->version = $package->version;
+
                         break;
                     }
                 }
@@ -387,7 +375,7 @@ class Pedreiro
      */
     public function translatable($model)
     {
-        if (!config('sitec.facilitador.multilingual.enabled')) {
+        if (! config('sitec.facilitador.multilingual.enabled')) {
             return false;
         }
 
@@ -399,7 +387,7 @@ class Pedreiro
             $model = $model->first();
         }
 
-        if (!is_subclass_of($model, Model::class)) {
+        if (! is_subclass_of($model, Model::class)) {
             return false;
         }
 
@@ -551,9 +539,9 @@ class Pedreiro
     {
         // Date formats
         $date_formats = [
-            'date'     => FORMAT_DATE,
+            'date' => FORMAT_DATE,
             'datetime' => FORMAT_DATETIME,
-            'time'     => FORMAT_TIME,
+            'time' => FORMAT_TIME,
         ];
 
         // Convert the item to an array so I can test for values
@@ -645,7 +633,7 @@ class Pedreiro
      * Check if the Element key exists
      *
      * @param  string $key
-     * @return boolean
+     * @return bool
      */
     public function hasEl($key)
     {
@@ -677,7 +665,7 @@ class Pedreiro
         // Return the current locale or default to first one.  Store it in a local var
         // so that multiple calls don't have to do any complicated work.  We're assuming
         // the locale won't change within a single request.
-        if (!$this->locale) {
+        if (! $this->locale) {
             $this->locale = Session::get('locale', $this->defaultLocale());
         }
 

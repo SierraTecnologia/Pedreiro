@@ -39,18 +39,20 @@ class Checkbox extends Input
     public function setValue($value)
     {
         if (is_bool($value) && $value === true) {
-            $this->value   = $this->getCheckedValue();
+            $this->value = $this->getCheckedValue();
             $this->checked = true;
+
             return;
         }
 
         if ($value == $this->getCheckedValue()) {
-            $this->value   = $this->getCheckedValue();
+            $this->value = $this->getCheckedValue();
             $this->checked = true;
+
             return;
         }
 
-        $this->value   = $value;
+        $this->value = $value;
         $this->checked = false;
     }
 
@@ -62,6 +64,6 @@ class Checkbox extends Input
         parent::onPreRender($view);
 
         $view->checkedValue = $this->getCheckedValue();
-        $view->checked      = $this->checked;
+        $view->checked = $this->checked;
     }
 }

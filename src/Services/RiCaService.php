@@ -2,17 +2,17 @@
 
 namespace Pedreiro\Services;
 
+use Crypto;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-use Crypto;
+use Siravel\Repositories\ImageRepository;
 use Siravel\Traits\Services\DefaultModuleServiceTrait;
 use Siravel\Traits\Services\MenuServiceTrait;
 use Siravel\Traits\Services\ModuleServiceTrait;
-use Siravel\Repositories\ImageRepository;
 
 class RiCaService
 {
@@ -39,7 +39,7 @@ class RiCaService
      */
     public function asset($path, $contentType = 'null', $fullURL = true)
     {
-        if (!$fullURL) {
+        if (! $fullURL) {
             return base_path(__DIR__.'/../Assets/'.$path);
         }
 
@@ -219,10 +219,10 @@ class RiCaService
      *
      * @return string
      */
-    public function editBtn($type = null, $id = null, $class="btn-outline-secondary")
+    public function editBtn($type = null, $id = null, $class = "btn-outline-secondary")
     {
         if (Gate::allows('siravel', Auth::user())) {
-            if (!is_null($id)) {
+            if (! is_null($id)) {
                 return '<a href="'.url($this->backendRoute.'/'.$type.'/'.$id.'/edit').'" class="btn btn-sm '.$class.'"><span class="fa fa-edit"></span> Edit</a>';
             } else {
                 return '<a href="'.url($this->backendRoute.'/'.$type).'" class="btn btn-sm '.$class.'"><span class="fa fa-edit"></span> Edit</a>';
@@ -295,7 +295,7 @@ class RiCaService
     {
         $changelog = @file_get_contents(__DIR__.'/../../changelog.md');
 
-        if (!$changelog) {
+        if (! $changelog) {
             return 'unknown version';
         }
 
@@ -314,7 +314,8 @@ class RiCaService
     {
         $itemCollection = [];
         $modules = config(
-            'site-mapped-modules', [
+            'site-mapped-modules',
+            [
             'blog' => 'Siravel\Repositories\BlogRepository',
             'page' => 'Siravel\Repositories\PageRepository',
             'events' => 'Siravel\Repositories\EventRepository',

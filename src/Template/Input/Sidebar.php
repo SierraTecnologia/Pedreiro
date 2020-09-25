@@ -70,7 +70,7 @@ class Sidebar
     /**
      * Return whether the sidebar is empty or not
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty()
     {
@@ -95,14 +95,17 @@ class Sidebar
 
                 // Anything else will be converted to a string in the next step
                 return $item;
-            }, array_merge($this->items, $this->ending_items)
+            },
+            array_merge($this->items, $this->ending_items)
         );
 
         // Combine all listing items into a single string and return
         return array_reduce(
-            $items, function ($carry, $item) {
+            $items,
+            function ($carry, $item) {
                 return $carry.$item;
-            }, ''
+            },
+            ''
         );
     }
 }

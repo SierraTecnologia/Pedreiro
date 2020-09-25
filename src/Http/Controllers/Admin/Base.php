@@ -25,12 +25,12 @@ use Pedreiro\Template\Input\Search;
 use Pedreiro\Template\Input\Sidebar;
 use Redirect;
 use Response;
+use stdClass;
 use SupportURL;
 use Translation\Template\Localize;
 use URL;
 use Validator;
 use View;
-use stdClass;
 
 /**
  * The base controller is gives Decoy most of the magic/for-free mojo

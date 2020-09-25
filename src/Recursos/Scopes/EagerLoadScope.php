@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Support\Recursos\Scopes;
 
-use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Entity;
+use Illuminate\Database\Eloquent\Scope;
 
 class EagerLoadScope implements Scope
 {
