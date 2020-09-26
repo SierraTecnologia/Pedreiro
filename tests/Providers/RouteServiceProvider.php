@@ -19,20 +19,26 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace], function ($router) {
-            $router->get('/', function () {
-                return 'home';
-            });
+        $router->group(
+            ['namespace' => $this->namespace], function ($router) {
+                $router->get(
+                    '/', function () {
+                        return 'home';
+                    }
+                );
 
-            $router->group(['middleware' => 'web'], function ($router) {
-                $router->resource('/post', 'PostController');
-                $router->put('/post/{post}/restore', 'PostController@restore');
-            });
-        });
+                $router->group(
+                    ['middleware' => 'web'], function ($router) {
+                        $router->resource('/post', 'PostController');
+                        $router->put('/post/{post}/restore', 'PostController@restore');
+                    }
+                );
+            }
+        );
     }
 }

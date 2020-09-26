@@ -35,7 +35,7 @@ class RelationBuilder
      * Generate the entity attribute relation closure.
      *
      * @param \Illuminate\Database\Eloquent\Model $entity
-     * @param \Pedreiro\Models\Attribute       $attribute
+     * @param \Pedreiro\Models\Attribute          $attribute
      *
      * @return \Closure
      */

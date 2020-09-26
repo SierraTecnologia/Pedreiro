@@ -870,8 +870,8 @@ abstract class Base extends Model //Ardent
      * Get the admin edit URL assuming you know the controller and whether it's
      * being listed as a many to many
      *
-     * @param  string  $controller   ex: Admin\ArticlesController
-     * @param  bool $many_to_many
+     * @param  string $controller   ex: Admin\ArticlesController
+     * @param  bool   $many_to_many
      * @return string
      */
     public function getAdminEditUri($controller, $many_to_many = false)

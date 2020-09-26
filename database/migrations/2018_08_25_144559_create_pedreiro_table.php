@@ -8,12 +8,14 @@ class CreatePedreiroTable extends Migration
 {
     public function up()
     {
-        Schema::create('pedreiro_table', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create(
+            'pedreiro_table', function (Blueprint $table) {
+                $table->bigIncrements('id');
 
-            // add fields
+                // add fields
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            }
+        );
     }
 }

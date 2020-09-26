@@ -26,7 +26,9 @@ class SystemMount
             \Audit\AuditProvider::class,
             \Tracking\TrackingProvider::class,
 
+            \Pedreiro\PedreiroServiceProvider::class,
             \Integrations\IntegrationsProvider::class,
+            \Porteiro\PorteiroProvider::class,
             \Transmissor\TransmissorProvider::class,
             \Market\MarketProvider::class,
             \Bancario\BancarioProvider::class,

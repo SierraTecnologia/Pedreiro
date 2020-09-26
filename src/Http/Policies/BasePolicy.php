@@ -49,8 +49,8 @@ class BasePolicy
      * Check if user has an associated permission.
      *
      * @param \Porteiro\Contracts\User $user
-     * @param object                      $model
-     * @param string                      $action
+     * @param object                   $model
+     * @param string                   $action
      *
      * @return bool
      */
