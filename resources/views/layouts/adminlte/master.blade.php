@@ -64,6 +64,7 @@
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">0</span>
         </a>
+      @if (Route::has('profile.transmissor.messages.index'))
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <?php /*
           <a href="#" class="dropdown-item">
@@ -118,6 +119,8 @@
           <a href="{{ route('profile.transmissor.messages.index') }}" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
+      @endif
+      @if (Route::has('profile.transmissor.notifications.index'))
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
           <i class="far fa-bell"></i>
@@ -145,6 +148,7 @@
           <a href="{{ route('profile.transmissor.notifications.index') }}" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
+      @endif
     {!! \Translation::menuAdminLte() !!}
 @stop
 

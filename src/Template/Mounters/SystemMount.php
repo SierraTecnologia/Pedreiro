@@ -17,6 +17,7 @@ class SystemMount
     {
         return [
             \Support\SupportServiceProvider::class,
+            \Porteiro\PorteiroProvider::class,
             \Informate\InformateProvider::class,
             \Translation\TranslationProvider::class,
             \Locaravel\LocaravelProvider::class,
