@@ -17,12 +17,12 @@
     ],
     "require": {
         "php": "^7.4",
-        "sierratecnologia/former": "dev-master",
-        "ricardosierra/minify": "dev-master",
-        "ricardosierra/validate": "dev-master",
+        "sierratecnologia/former": "^0.4.0",
+        "ricardosierra/minify": "^0.4.0",
+        "ricardosierra/validate": "^0.4.0",
         "ricardosierra/changelog": "~1.4",
-        "sierratecnologia/crudmaker": "dev-master",
-        "sierratecnologia/locaravel": "dev-master",
+        "sierratecnologia/crudmaker": "^0.4.0",
+        "sierratecnologia/locaravel": "^0.4.0",
         "google/recaptcha": "^1.2.4",
         "kartik-v/bootstrap-fileinput": "dev-master",
         "hieu-le/active": "^8.0",
@@ -76,7 +76,6 @@
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
-    "repositories": [{"type": "path","url":"../**","options":{"symlink": true}}],
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
