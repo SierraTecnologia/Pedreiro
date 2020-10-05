@@ -339,7 +339,7 @@ class PedreiroBaseController extends Base
 
         return $redirect->with(
             [
-            'message' => __('facilitador::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+            'message' => __('pedreiro::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
             'alert-type' => 'success',
             ]
         );
@@ -421,7 +421,7 @@ class PedreiroBaseController extends Base
 
             return $redirect->with(
                 [
-                    'message' => __('facilitador::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+                    'message' => __('pedreiro::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
                     'alert-type' => 'success',
                 ]
             );
@@ -474,11 +474,11 @@ class PedreiroBaseController extends Base
         $res = $data->destroy($ids);
         $data = $res
             ? [
-                'message' => __('facilitador::generic.successfully_deleted')." {$displayName}",
+                'message' => __('pedreiro::generic.successfully_deleted')." {$displayName}",
                 'alert-type' => 'success',
             ]
             : [
-                'message' => __('facilitador::generic.error_deleting')." {$displayName}",
+                'message' => __('pedreiro::generic.error_deleting')." {$displayName}",
                 'alert-type' => 'error',
             ];
 
@@ -510,11 +510,11 @@ class PedreiroBaseController extends Base
         $res = $data->restore($id);
         $data = $res
             ? [
-                'message' => __('facilitador::generic.successfully_restored')." {$displayName}",
+                'message' => __('pedreiro::generic.successfully_restored')." {$displayName}",
                 'alert-type' => 'success',
             ]
             : [
-                'message' => __('facilitador::generic.error_restoring')." {$displayName}",
+                'message' => __('pedreiro::generic.error_restoring')." {$displayName}",
                 'alert-type' => 'error',
             ];
 
@@ -557,7 +557,7 @@ class PedreiroBaseController extends Base
 
             // Check if field exists
             if (! isset($data->{$field})) {
-                throw new Exception(__('facilitador::generic.field_does_not_exist'), 400);
+                throw new Exception(__('pedreiro::generic.field_does_not_exist'), 400);
             }
 
             // Check permission
@@ -566,7 +566,7 @@ class PedreiroBaseController extends Base
             if (@json_decode($multi)) {
                 // Check if valid json
                 if (is_null(@json_decode($data->{$field}))) {
-                    throw new Exception(__('facilitador::json.invalid'), 500);
+                    throw new Exception(__('pedreiro::json.invalid'), 500);
                 }
 
                 // Decode field value
@@ -589,7 +589,7 @@ class PedreiroBaseController extends Base
 
                 // Check if file was found in array
                 if (is_null($key) || $key === false) {
-                    throw new Exception(__('facilitador::media.file_does_not_exist'), 400);
+                    throw new Exception(__('pedreiro::media.file_does_not_exist'), 400);
                 }
 
                 $fileToRemove = $fieldData[$key];
@@ -605,7 +605,7 @@ class PedreiroBaseController extends Base
 
                     $data->{$field} = null;
                 } else {
-                    throw new Exception(__('facilitador::media.file_does_not_exist'), 400);
+                    throw new Exception(__('pedreiro::media.file_does_not_exist'), 400);
                 }
             }
 
@@ -635,13 +635,13 @@ class PedreiroBaseController extends Base
                 [
                 'data' => [
                    'status' => 200,
-                   'message' => __('facilitador::media.file_removed'),
+                   'message' => __('pedreiro::media.file_removed'),
                 ],
                 ]
             );
         } catch (Exception $e) {
             $code = 500;
-            $message = __('facilitador::generic.internal_error');
+            $message = __('pedreiro::generic.internal_error');
 
             if ($e->getCode()) {
                 $code = $e->getCode();
@@ -869,7 +869,7 @@ class PedreiroBaseController extends Base
                 if (! $row->required && ! $search) {
                     $results[] = [
                         'id' => '',
-                        'text' => __('facilitador::generic.none'),
+                        'text' => __('pedreiro::generic.none'),
                     ];
                 }
 

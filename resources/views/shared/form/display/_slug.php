@@ -22,6 +22,6 @@ $url_link = '<a href="'.$url.'" target="_blank">URI</a>';
 $prepend = preg_replace('#/[\w-\.]+$#', '/', parse_url(rtrim($url, '/'), PHP_URL_PATH));
 
 // Render the field
-echo Former::text('slug', __('facilitador::display.slug.label'))
-    ->blockHelp(__('facilitador::display.slug.help', ['url_link' => $url_link]))
+echo Former::text('slug', __('pedreiro::display.slug.label'))
+    ->blockHelp(__('pedreiro::display.slug.help', ['url_link' => $url_link]))
     ->prepend($prepend);

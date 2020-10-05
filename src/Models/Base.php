@@ -283,7 +283,7 @@ abstract class Base extends Model //Ardent
                 },
                 $this->titleAttributes()
             )
-        ) ?: __('facilitador::base.untitled');
+        ) ?: __('pedreiro::base.untitled');
     }
 
     /**
@@ -835,7 +835,7 @@ abstract class Base extends Model //Ardent
             '<a class="visibility js-tooltip" data-placement="left" title="%s">
                 <span class="glyphicon glyphicon-eye-%s"></span>
             </a>',
-            $public ? __('facilitador::base.standard_list.private') : __('facilitador::base.standard_list.publish'),
+            $public ? __('pedreiro::base.standard_list.private') : __('pedreiro::base.standard_list.publish'),
             $public ? 'open' : 'close'
         );
     }
@@ -860,8 +860,8 @@ abstract class Base extends Model //Ardent
             </a>',
             $this->getAdminEditUri($controller, $many_to_many), // URL
             $editable ? // Label
-                __('facilitador::base.action.edit') :
-                __('facilitador::base.action.read'),
+                __('pedreiro::base.action.edit') :
+                __('pedreiro::base.action.read'),
             $editable ? 'pencil' : 'zoom-in' // Icon
         );
     }
@@ -897,7 +897,7 @@ abstract class Base extends Model //Ardent
 
         return sprintf(
             '<a href="%s" target="_blank" class="action-view js-tooltip"
-            data-placement="left" title="' . __('facilitador::base.action.view') . '">
+            data-placement="left" title="' . __('pedreiro::base.action.view') . '">
                 <span class="glyphicon glyphicon-bookmark"></span>
             </a>',
             $uri
@@ -930,10 +930,10 @@ abstract class Base extends Model //Ardent
 
         // Make the label
         $label = $many_to_many ?
-            __('facilitador::base.action.remove') :
+            __('pedreiro::base.action.remove') :
             ($with_trashed ?
-                __('facilitador::base.action.soft_delete') :
-                __('facilitador::base.action.delete'));
+                __('pedreiro::base.action.soft_delete') :
+                __('pedreiro::base.action.delete'));
 
         // Return markup
         return sprintf(

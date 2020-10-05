@@ -36,7 +36,7 @@ class Date extends Field
         $attributes = array_merge(
             [
             'maxlength' => 10,
-            'placeholder' => __('facilitador::form.date.placeholder'),
+            'placeholder' => __('pedreiro::form.date.placeholder'),
             'id' => null, // We don't want to conflict on the id
             ],
             (array) $attributes
@@ -50,7 +50,7 @@ class Date extends Field
         // or populated data.  If there is a value now (or if there was before), make
         // it human readable.  This assumes it WAS a MYSQL timestamp.
         if ($this->value) {
-            $this->value = date(__('facilitador::form.date.format'), strtotime($this->value));
+            $this->value = date(__('pedreiro::form.date.format'), strtotime($this->value));
         }
 
         // Apend the button that the calendar selector hooks into
@@ -64,7 +64,7 @@ class Date extends Field
      */
     public function value($value)
     {
-        return parent::value(date(__('facilitador::form.date.format'), strtotime($value)));
+        return parent::value(date(__('pedreiro::form.date.format'), strtotime($value)));
     }
 
     /**
@@ -82,7 +82,7 @@ class Date extends Field
 
         // Convert the value to a mysql friendly format or leave null.
         $mysql_date = $this->value ?
-            \DateTime::createFromFormat(__('facilitador::form.date.format'), $this->value)
+            \DateTime::createFromFormat(__('pedreiro::form.date.format'), $this->value)
             ->format(Library\Utils\Constants::MYSQL_DATE) : null;
 
         // Add a hidden field that will contain the mysql value, for storing in db

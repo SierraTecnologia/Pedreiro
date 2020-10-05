@@ -42,8 +42,8 @@ class RedirectRule extends Base
     public static function getCodes()
     {
         return [
-            '301' => __('facilitador::redirect_rules.model.301'),
-            '302' => __('facilitador::redirect_rules.model.302'),
+            '301' => __('pedreiro::redirect_rules.model.301'),
+            '302' => __('pedreiro::redirect_rules.model.302'),
         ];
     }
 

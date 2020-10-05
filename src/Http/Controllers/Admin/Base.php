@@ -966,17 +966,17 @@ class Base extends BaseController
         }
 
         // Render the message
-        $message = __('facilitador::base.success_message', ['model' => Str::singular($this->title), 'title' => $title, 'verb' => __("facilitador::base.verb.$verb")]);
+        $message = __('pedreiro::base.success_message', ['model' => Str::singular($this->title), 'title' => $title, 'verb' => __("facilitador::base.verb.$verb")]);
 
         // Add extra messaging for copies
         if ($verb == 'duplicated') {
             $url = preg_replace('#/duplicate#', '/edit', Request::url());
-            $message .= __('facilitador::base.success_duplicated', ['url' => $url]);
+            $message .= __('pedreiro::base.success_duplicated', ['url' => $url]);
         }
 
         // Add extra messaging if the creation was begun from the localize UI
         if ($verb == 'duplicated' && is_a($input, '\Pedreiro\Models\Base') && ! empty($input->locale)) {
-            $message .= __('facilitador::base.success_localized', ['locale' => \Illuminate\Support\Facades\Config::get('sitec.site.locales')[$input->locale]]);
+            $message .= __('pedreiro::base.success_localized', ['locale' => \Illuminate\Support\Facades\Config::get('sitec.site.locales')[$input->locale]]);
         }
 
         // Return message

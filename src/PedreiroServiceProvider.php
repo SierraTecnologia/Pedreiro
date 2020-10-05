@@ -311,7 +311,7 @@ class PedreiroServiceProvider extends ServiceProvider
         // // Change Former's required field HTML
         // Config::set(
         //     'former.required_text', ' <span class="glyphicon glyphicon-exclamation-sign js-tooltip required" title="' .
-        //     __('facilitador::login.form.required') . '"></span>'
+        //     __('pedreiro::login.form.required') . '"></span>'
         // );
 
         // Make pushed checkboxes have an empty string as their value
