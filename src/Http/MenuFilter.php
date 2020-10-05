@@ -19,7 +19,7 @@ class MenuFilter implements FilterInterface
             return false;
         }
 
-        if (isset($item['config']) && !config($item['config'], false)) {
+        if (isset($item['config']) && ! config($item['config'], false)) {
             Log::warning('Menu desabilitado: '.$item['config']);
 
             return false;
