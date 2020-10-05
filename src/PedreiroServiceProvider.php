@@ -99,6 +99,7 @@ class PedreiroServiceProvider extends ServiceProvider
     
     public function boot(Router $router, Dispatcher $event)
     {
+        $this->loadTranslations();
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
@@ -182,6 +183,9 @@ class PedreiroServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   
+
+        // Register Migrations
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         /**
          * Load Active https://github.com/letrunghieu/active
@@ -316,5 +320,18 @@ class PedreiroServiceProvider extends ServiceProvider
         // Add Facilitador's custom Fields to Former so they can be invoked using the "Former::"
         // namespace and so we can take advantage of sublassing Former's Field class.
         $this->app['former.dispatcher']->addRepository('Support\\Elements\\Fields\\');
+    }
+    protected function loadTranslations()
+    {
+        // Publish lanaguage files
+        $this->publishes(
+            [
+            $this->getResourcesPath('lang') => resource_path('lang/vendor/support')
+            ],
+            ['lang',  'sitec', 'sitec-lang', 'translations']
+        );
+
+        // Load translations
+        $this->loadTranslationsFrom($this->getResourcesPath('lang'), 'support');
     }
 }
