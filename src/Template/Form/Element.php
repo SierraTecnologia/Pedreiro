@@ -41,7 +41,7 @@ abstract class Element
      */
     public function __construct($name = null)
     {
-        if (!is_null($name)) {
+        if (! is_null($name)) {
             $this->setName($name);
         }
     }
@@ -71,7 +71,7 @@ abstract class Element
      */
     public function getId()
     {
-        return !$this->id
+        return ! $this->id
             ? ('element-' . $this->name)
             : $this->id;
     }
@@ -168,18 +168,18 @@ abstract class Element
     public function render($viewFile = null)
     {
         if (is_null($viewFile)) {
-            $class    = explode('\\', get_called_class());
+            $class = explode('\\', get_called_class());
             $viewFile = end($class);
         }
 
         $view = new View('Form/' . $viewFile);
 
-        $view->name           = $this->getName();
-        $view->id             = $this->getId();
-        $view->label          = $this->getLabel();
-        $view->class          = $this->getClass();
+        $view->name = $this->getName();
+        $view->id = $this->getId();
+        $view->label = $this->getLabel();
+        $view->class = $this->getClass();
         $view->containerClass = $this->getContainerClass();
-        $view->parent         = $this->parent;
+        $view->parent = $this->parent;
 
         $this->onPreRender($view);
 

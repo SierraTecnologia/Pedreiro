@@ -72,7 +72,7 @@ class PedreiroServiceProvider extends ServiceProvider
              */
             \Laravel\Tinker\TinkerServiceProvider::class,
 
-            \Pedreiro\RoutesExplorerServiceProvider::class
+            \Pedreiro\RoutesExplorerServiceProvider::class,
         ];
     
     public static $menuItens = [

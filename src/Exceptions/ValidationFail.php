@@ -17,7 +17,7 @@ class ValidationFail extends Exception
     /**
      * @param Illuminate\Validation\Validator $validation
      * @param string                          $message
-     * @param integer                         $code
+     * @param int                         $code
      */
     public function __construct(Validator $validation, $message = null, $code = 0)
     {

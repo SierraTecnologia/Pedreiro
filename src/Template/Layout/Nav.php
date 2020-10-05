@@ -2,8 +2,8 @@
 
 namespace Pedreiro\Template\Layout;
 
-use URL;
 use Config;
+use URL;
 
 /**
  * Generate an array for the nav that is more easily parsed in a frontend view
@@ -53,20 +53,20 @@ class Nav
         $page = [
             'label' => $menuItem['text'],
             'active' => false,
-            'diviser' => false
+            'diviser' => false,
         ];
         if (isset($menuItem['icon'])) {
             $page['icon'] = $menuItem['icon'];
         }
         if (isset($menuItem['url'])) {
             $page['url'] = $menuItem['url'];
-        } else if (isset($menuItem['route'])) {
+        } elseif (isset($menuItem['route'])) {
             // if (!empty($menuItem['route']) && !Route::has($menuItem['route'])) {
             $page['url'] = route($menuItem['route']);
         }
 
         // If menuItem is an array, make a drop down menu
-        if (is_array($menuItem) && isset($menuItem['submenu']) && !empty($menuItem['submenu'])) {
+        if (is_array($menuItem) && isset($menuItem['submenu']) && ! empty($menuItem['submenu'])) {
             $page['children'] = [];
             // Loop through children (we only support one level deep) and
             // add each as a child
@@ -75,8 +75,9 @@ class Nav
             }
             // See if any of the children are active and set the pulldown to active
             foreach ($page['children'] as $child) {
-                if (!empty($child->active)) {
+                if (! empty($child->active)) {
                     $page['active'] = true;
+
                     break;
                 }
             }
@@ -117,8 +118,9 @@ class Nav
 
                 // See if any of the children are active and set the pulldown to active
                 foreach ($page['children'] as $child) {
-                    if (!empty($child->active)) {
+                    if (! empty($child->active)) {
                         $page['active'] = true;
+
                         break;
                     }
                 }
@@ -126,7 +128,7 @@ class Nav
                 // Add the pulldown to the list of pages
                 $massaged[] = (object) $page;
 
-                // The page is a simple (non pulldown) link
+            // The page is a simple (non pulldown) link
             } else {
                 $massaged[] = $this->makePage($key, $val);
             }

@@ -19,7 +19,7 @@ class EloquentHasErrorException extends CoderException
     /**
      * @param string  $className
      * @param string  $message
-     * @param integer $code
+     * @param int $code
      */
     public function __construct(string $className, $message = null, $code = 0)
     {

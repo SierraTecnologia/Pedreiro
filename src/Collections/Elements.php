@@ -5,9 +5,9 @@ namespace Pedreiro\Collections;
 // Deps
 use App;
 use Bkwld\Library\Utils;
+use Cache;
 use Facilitador\Exceptions\Exception;
 use Facilitador\Models\Element;
-use Cache;
 use Illuminate\Database\Eloquent\Collection as ModelCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -37,7 +37,7 @@ class Elements extends Collection
     /**
      * Store whether this collection includes extra config from the YAML
      *
-     * @var boolean
+     * @var bool
      */
     protected $has_extra = false;
 
@@ -78,7 +78,9 @@ class Elements extends Collection
 
                     // Add the key as an attribute
                     return new $this->model(array_merge($element, ['key' => $key]));
-                }, $this->all(), array_keys($this->items)
+                },
+                $this->all(),
+                array_keys($this->items)
             )
         );
     }
@@ -111,6 +113,7 @@ class Elements extends Collection
         // Otherwise, like if key doesn't exist and running on production,
         // return an empty Element, whose ->toString() will return an empty string.
         Log::error("Element key '{$key}' is not declared in elements.yaml.");
+
         return new $this->model();
     }
 
@@ -150,6 +153,7 @@ class Elements extends Collection
                         // Handle models returned from BelongsTo fields
                         if (is_a($value, Base::class)) {
                             $func = [$value, 'withDefaultImage'];
+
                             return call_user_func_array($func, $crops[$crop_key]);
                         }
 
@@ -168,9 +172,10 @@ class Elements extends Collection
         // from the  keys.  Then return it.
         $multi = [];
         $len = strlen($prefix);
-        foreach($dotted as $key => $val) {
+        foreach ($dotted as $key => $val) {
             array_set($multi, trim(substr($key, $len), '.'), $val);
         }
+
         return $multi;
     }
 
@@ -198,20 +203,22 @@ class Elements extends Collection
     {
         // If including extra YAML config vars, neither use the cache NOR allow
         // the cache to be saved with it
-        if ($include_extra && !$this->has_extra) {
+        if ($include_extra && ! $this->has_extra) {
             $this->has_extra = true;
             $this->items = $this->mergeSources();
+
             return $this;
         }
 
         // If already hydrated, do nothing
-        if (!$this->isEmpty()) {
+        if (! $this->isEmpty()) {
             return $this;
         }
 
         // If running locally, don't use or store the cache
         if (App::isLocal()) {
             $this->items = $this->mergeSources();
+
             return $this;
         }
 
@@ -300,13 +307,13 @@ class Elements extends Collection
     /**
      * Massage the YAML config file into a single, flat associative array
      *
-     * @param  boolean $include_extra Include attibutes that are only needed by Admin UIs
+     * @param  bool $include_extra Include attibutes that are only needed by Admin UIs
      * @return array
      */
     public function assocConfig($include_extra = false)
     {
         // Load the config data if it isn't already
-        if (!$this->config) {
+        if (! $this->config) {
             $this->loadConfig();
         }
 
@@ -417,8 +424,9 @@ class Elements extends Collection
 
                 return $ar;
 
-                // .. from a dictionary of ALL elements for the locale
-            }, $query->get()->getDictionary()
+            // .. from a dictionary of ALL elements for the locale
+            },
+            $query->get()->getDictionary()
         );
 
         // Store the keys of all these elements so we can keep track of which
@@ -436,7 +444,7 @@ class Elements extends Collection
      */
     public function getConfig()
     {
-        if (!$this->config) {
+        if (! $this->config) {
             $this->loadConfig();
         }
 
@@ -462,7 +470,7 @@ class Elements extends Collection
         if (is_dir($dir.'elements')) {
             $files = array_merge($files, glob($dir.'elements/*.yaml'));
         }
-        if (!count($files)) {
+        if (! count($files)) {
             return;
         }
 
@@ -484,7 +492,7 @@ class Elements extends Collection
      * Check if a key has been stored in the database
      *
      * @param  string $key The key of an element
-     * @return boolean
+     * @return bool
      */
     public function keyUpdated($key)
     {
@@ -504,7 +512,8 @@ class Elements extends Collection
     public function onlyPages($pages)
     {
         $this->items = array_filter(
-            $this->items, function ($element) use ($pages) {
+            $this->items,
+            function ($element) use ($pages) {
                 return in_array(Str::slug($element['page_label']), $pages);
             }
         );
@@ -543,8 +552,10 @@ class Elements extends Collection
             array_map(
                 function ($key) {
                     return str_replace('.', '|', $key);
-                }, $this->keys()->all()
-            ), $this->pluck('value')->all()
+                },
+                $this->keys()->all()
+            ),
+            $this->pluck('value')->all()
         );
     }
 

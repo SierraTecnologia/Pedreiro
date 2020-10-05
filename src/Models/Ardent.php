@@ -3,24 +3,25 @@
 namespace Pedreiro\Models;
 
 use Closure;
+use Facilitador\Models\Builder;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as DatabaseCapsule;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Hashing\BcryptHasher;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\DatabasePresenceVerifier;
 use Illuminate\Validation\Factory as ValidationFactory;
+use Muleta\Traits\Models\ValidatingTrait;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
-use Facilitador\Models\Builder;
-use Muleta\Traits\Models\ValidatingTrait;
+
 /**
  * Ardent - Self-validating Eloquent model base class
  */
@@ -35,21 +36,21 @@ abstract class Ardent extends Model
      *
      * @var array
      */
-    public $rules = array();
+    public $rules = [];
 
     /**
      * The array of custom error messages.
      *
      * @var array
      */
-    public static $customMessages = array();
+    public static $customMessages = [];
 
     /**
      * The array of custom attributes.
      *
      * @var array
      */
-    public static $customAttributes = array();
+    public static $customAttributes = [];
 
     /**
      * The validator object in case you need it externally (say, for a form builder).
@@ -113,7 +114,7 @@ abstract class Ardent extends Model
      *
      * @var array
      */
-    protected $purgeFilters = array();
+    protected $purgeFilters = [];
 
     protected $purgeFiltersInitialized = false;
 
@@ -122,7 +123,7 @@ abstract class Ardent extends Model
      *
      * @var array
      */
-    public static $passwordAttributes = array('password');
+    public static $passwordAttributes = ['password'];
 
     /**
      * If set to true, the model will automatically replace all plain-text passwords
@@ -191,22 +192,22 @@ abstract class Ardent extends Model
      *
      * @var array
      */
-    protected static $relationsData = array();
+    protected static $relationsData = [];
 
     /**
- * This class "has one model" if its ID is an FK in that model 
+ * This class "has one model" if its ID is an FK in that model
 */
     const HAS_ONE = 'hasOne';
 
     /**
- * This class "has many models" if its ID is an FK in those models 
+ * This class "has many models" if its ID is an FK in those models
 */
     const HAS_MANY = 'hasMany';
 
     const HAS_MANY_THROUGH = 'hasManyThrough';
 
     /**
- * This class "belongs to a model" if it has a FK from that model 
+ * This class "belongs to a model" if it has a FK from that model
 */
     const BELONGS_TO = 'belongsTo';
 
@@ -227,12 +228,12 @@ abstract class Ardent extends Model
      *
      * @var array
      */
-    protected static $relationTypes = array(
+    protected static $relationTypes = [
         self::HAS_ONE, self::HAS_MANY, self::HAS_MANY_THROUGH,
         self::BELONGS_TO, self::BELONGS_TO_MANY,
         self::MORPH_TO, self::MORPH_ONE, self::MORPH_MANY,
-        self::MORPH_TO_MANY, self::MORPHED_BY_MANY
-    );
+        self::MORPH_TO_MANY, self::MORPHED_BY_MANY,
+    ];
 
     /**
      * Create a new Ardent model instance.
@@ -240,7 +241,7 @@ abstract class Ardent extends Model
      * @param  array $attributes
      * @return \Pedreiro\Models\Ardent
      */
-    public function __construct(array $attributes = array())
+    public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->validationErrors = new MessageBag;
@@ -257,9 +258,9 @@ abstract class Ardent extends Model
     {
         parent::boot();
 
-        $myself   = get_called_class();
-        $hooks    = array('before' => 'ing', 'after' => 'ed');
-        $radicals = array('sav', 'validat', 'creat', 'updat', 'delet');
+        $myself = get_called_class();
+        $hooks = ['before' => 'ing', 'after' => 'ed'];
+        $radicals = ['sav', 'validat', 'creat', 'updat', 'delet'];
 
         foreach ($radicals as $rad) {
             foreach ($hooks as $hook => $event) {
@@ -280,7 +281,7 @@ abstract class Ardent extends Model
     {
         return array_merge(
             parent::getObservableEvents(),
-            array('validating', 'validated')
+            ['validating', 'validated']
         );
     }
 
@@ -297,17 +298,17 @@ abstract class Ardent extends Model
      */
     protected function handleRelationalArray($relationName)
     {
-        $relation     = static::$relationsData[$relationName];
+        $relation = static::$relationsData[$relationName];
         $relationType = $relation[0];
-        $errorHeader  = "Relation '$relationName' on model '".get_called_class();
+        $errorHeader = "Relation '$relationName' on model '".get_called_class();
 
-        if (!in_array($relationType, static::$relationTypes)) {
+        if (! in_array($relationType, static::$relationTypes)) {
             throw new \InvalidArgumentException(
                 $errorHeader.
                 ' should have as first param one of the relation constants of the Ardent class.'
             );
         }
-        if (!isset($relation[1]) && $relationType != self::MORPH_TO) {
+        if (! isset($relation[1]) && $relationType != self::MORPH_TO) {
             throw new \InvalidArgumentException(
                 $errorHeader.
                 ' should have at least two params: relation type and classname.'
@@ -320,12 +321,12 @@ abstract class Ardent extends Model
             );
         }
 
-        $verifyArgs = function (array $opt, array $req = array()) use ($relationName, &$relation, $errorHeader) {
-            $missing = array('req' => array(), 'opt' => array());
+        $verifyArgs = function (array $opt, array $req = []) use ($relationName, &$relation, $errorHeader) {
+            $missing = ['req' => [], 'opt' => []];
 
-            foreach (array('req', 'opt') as $keyType) {
+            foreach (['req', 'opt'] as $keyType) {
                 foreach ($$keyType as $key) {
-                    if (!array_key_exists($key, $relation)) {
+                    if (! array_key_exists($key, $relation)) {
                         $missing[$keyType][] = $key;
                     }
                 }
@@ -348,42 +349,50 @@ abstract class Ardent extends Model
         case self::HAS_ONE:
         case self::HAS_MANY:
             $verifyArgs(['foreignKey', 'localKey']);
+
             return $this->$relationType($relation[1], $relation['foreignKey'], $relation['localKey']);
 
         case self::HAS_MANY_THROUGH:
             $verifyArgs(['firstKey', 'secondKey', 'localKey'], ['through']);
+
             return $this->$relationType($relation[1], $relation['through'], $relation['firstKey'], $relation['secondKey'], $relation['localKey']);
 
         case self::BELONGS_TO:
             $verifyArgs(['foreignKey', 'otherKey', 'relation']);
+
             return $this->$relationType($relation[1], $relation['foreignKey'], $relation['otherKey'], $relation['relation']);
 
         case self::BELONGS_TO_MANY:
             $verifyArgs(['table', 'foreignKey', 'otherKey', 'relation']);
             $relationship = $this->$relationType($relation[1], $relation['table'], $relation['foreignKey'], $relation['otherKey'], $relation['relation']);
-            if(isset($relation['pivotKeys']) && is_array($relation['pivotKeys'])) {
+            if (isset($relation['pivotKeys']) && is_array($relation['pivotKeys'])) {
                 $relationship->withPivot($relation['pivotKeys']);
             }
-            if(isset($relation['timestamps']) && $relation['timestamps']) {
+            if (isset($relation['timestamps']) && $relation['timestamps']) {
                 $relationship->withTimestamps();
             }
+
             return $relationship;
 
         case self::MORPH_TO:
             $verifyArgs(['name', 'type', 'id']);
+
             return $this->$relationType($relation['name'], $relation['type'], $relation['id']);
 
         case self::MORPH_ONE:
         case self::MORPH_MANY:
             $verifyArgs(['type', 'id', 'localKey'], ['name']);
+
             return $this->$relationType($relation[1], $relation['name'], $relation['type'], $relation['id'], $relation['localKey']);
 
         case self::MORPH_TO_MANY:
             $verifyArgs(['table', 'foreignKey', 'otherKey', 'inverse'], ['name']);
+
             return $this->$relationType($relation[1], $relation['name'], $relation['table'], $relation['foreignKey'], $relation['otherKey'], $relation['inverse']);
 
         case self::MORPHED_BY_MANY:
             $verifyArgs(['table', 'foreignKey', 'otherKey'], ['name']);
+
             return $this->$relationType($relation[1], $relation['name'], $relation['table'], $relation['foreignKey'], $relation['otherKey']);
         }
     }
@@ -494,6 +503,7 @@ abstract class Ardent extends Model
             $camelKey = camel_case($key);
             if (array_key_exists($camelKey, static::$relationsData)) {
                 $this->relations[$key] = $this->$camelKey()->getResults();
+
                 return $this->relations[$key];
             }
         }
@@ -526,7 +536,8 @@ abstract class Ardent extends Model
         $translator->addResource(
             'file_loader',
             dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR.$lang.
-            DIRECTORY_SEPARATOR.'validation.php', $lang
+            DIRECTORY_SEPARATOR.'validation.php',
+            $lang
         );
 
         self::$external = true;
@@ -563,7 +574,7 @@ abstract class Ardent extends Model
      * @return bool
      * @throws InvalidModelException
      */
-    public function validate(array $rules = array(), array $customMessages = array(), array $customAttributes = array())
+    public function validate(array $rules = [], array $customMessages = [], array $customAttributes = [])
     {
         if ($this->fireModelEvent('validating') === false) {
             if ($this->throwOnValidation) {
@@ -595,7 +606,7 @@ abstract class Ardent extends Model
 
             // perform validation
             $this->validator = static::makeValidator($data, $rules, $customMessages, $customAttributes);
-            $success   = $this->validator->passes();
+            $success = $this->validator->passes();
 
             if ($success) {
                 // if the model is valid, unset old errors
@@ -607,7 +618,7 @@ abstract class Ardent extends Model
                 $this->validationErrors = $this->validator->messages();
 
                 // stash the input to the current session
-                if (!self::$external && Input::hasSession()) {
+                if (! self::$external && Input::hasSession()) {
                     Input::flash();
                 }
             }
@@ -615,7 +626,7 @@ abstract class Ardent extends Model
 
         $this->fireModelEvent('validated', false);
 
-        if (!$success && $this->throwOnValidation) {
+        if (! $success && $this->throwOnValidation) {
             throw new InvalidModelException($this);
         }
 
@@ -631,14 +642,15 @@ abstract class Ardent extends Model
      * @param Closure $beforeSave
      * @param Closure $afterSave
      * @param bool    $force          Forces saving invalid data.
-     * 
+     *
      * @return bool
      * @see    Ardent::save()
      * @see    Ardent::forceSave()
      */
-    protected function internalSave(array $rules = array(),
-        array $customMessages = array(),
-        array $options = array(),
+    protected function internalSave(
+        array $rules = [],
+        array $customMessages = [],
+        array $options = [],
         Closure $beforeSave = null,
         Closure $afterSave = null,
         $force = false
@@ -671,9 +683,10 @@ abstract class Ardent extends Model
      * @return bool
      * @see    Ardent::forceSave()
      */
-    public function save(array $rules = array(),
-        array $customMessages = array(),
-        array $options = array(),
+    public function save(
+        array $rules = [],
+        array $customMessages = [],
+        array $options = [],
         Closure $beforeSave = null,
         Closure $afterSave = null
     ) {
@@ -691,9 +704,10 @@ abstract class Ardent extends Model
      * @return bool
      * @see    Ardent::save()
      */
-    public function forceSave(array $rules = array(),
-        array $customMessages = array(),
-        array $options = array(),
+    public function forceSave(
+        array $rules = [],
+        array $customMessages = [],
+        array $options = [],
         Closure $beforeSave = null,
         Closure $afterSave = null
     ) {
@@ -740,22 +754,21 @@ abstract class Ardent extends Model
      * @param  array $array Input array
      * @return array
      */
-    protected function purgeArray(array $array = array())
+    protected function purgeArray(array $array = [])
     {
-
-        $result = array();
-        $keys   = array_keys($array);
+        $result = [];
+        $keys = array_keys($array);
 
         $this->addBasicPurgeFilters();
 
-        if (!empty($keys) && !empty($this->purgeFilters)) {
+        if (! empty($keys) && ! empty($this->purgeFilters)) {
             foreach ($keys as $key) {
                 $allowed = true;
 
                 foreach ($this->purgeFilters as $filter) {
                     $allowed = $filter($key);
 
-                    if (!$allowed) {
+                    if (! $allowed) {
                         break;
                     }
                 }
@@ -778,7 +791,6 @@ abstract class Ardent extends Model
      */
     protected function performSave(array $options)
     {
-
         if ($this->autoPurgeRedundantAttributes) {
             $this->attributes = $this->purgeArray($this->getAttributes());
         }
@@ -819,17 +831,15 @@ abstract class Ardent extends Model
      * @param  array $passwordAttributes
      * @return array
      */
-    protected function hashPasswordAttributes(array $attributes = array(), array $passwordAttributes = array())
+    protected function hashPasswordAttributes(array $attributes = [], array $passwordAttributes = [])
     {
-
         if (empty($passwordAttributes) || empty($attributes)) {
             return $attributes;
         }
 
-        $result = array();
+        $result = [];
         foreach ($attributes as $key => $value) {
-
-            if (in_array($key, $passwordAttributes) && !is_null($value)) {
+            if (in_array($key, $passwordAttributes) && ! is_null($value)) {
                 if ($value != $this->getOriginal($key)) {
                     $result[$key] = $this->hashPassword($value);
                 }
@@ -852,10 +862,9 @@ abstract class Ardent extends Model
      * @param  array $rules
      * @return array Rules with exclusions applied
      */
-    public function buildUniqueExclusionRules(array $rules = array())
+    public function buildUniqueExclusionRules(array $rules = [])
     {
-      
-        if (!count($rules)) {
+        if (! count($rules)) {
             $rules = static::$rules;
         }
 
@@ -863,7 +872,7 @@ abstract class Ardent extends Model
             // If $ruleset is a pipe-separated string, switch it to array
             $ruleset = (is_string($ruleset))? explode('|', $ruleset) : $ruleset;
 
-            if (!is_array($ruleset)) {
+            if (! is_array($ruleset)) {
                 continue;
             }
 
@@ -872,7 +881,7 @@ abstract class Ardent extends Model
                     // Stop splitting at 4 so final param will hold optional where clause
                     $params = explode(',', $rule, 4);
 
-                    $uniqueRules = array();
+                    $uniqueRules = [];
 
                     // Append table name if needed
                     $table = explode(':', $params[0]);
@@ -921,9 +930,10 @@ abstract class Ardent extends Model
      * @param  Closure $afterSave
      * @return bool
      */
-    public function updateUniques(array $rules = array(),
-        array $customMessages = array(),
-        array $options = array(),
+    public function updateUniques(
+        array $rules = [],
+        array $customMessages = [],
+        array $options = [],
         Closure $beforeSave = null,
         Closure $afterSave = null
     ) {
@@ -940,9 +950,10 @@ abstract class Ardent extends Model
      * @return bool
      * @see    Ardent::validate()
      */
-    public function validateUniques(array $rules = array(), array $customMessages = array())
+    public function validateUniques(array $rules = [], array $customMessages = [])
     {
         $rules = $this->buildUniqueExclusionRules($rules);
+
         return $this->validate($rules, $customMessages);
     }
 
@@ -954,7 +965,7 @@ abstract class Ardent extends Model
      * @param  array $columns
      * @return Ardent|Collection
      */
-    public static function find($id, $columns = array('*'))
+    public static function find($id, $columns = ['*'])
     {
         $debug = debug_backtrace(false);
 

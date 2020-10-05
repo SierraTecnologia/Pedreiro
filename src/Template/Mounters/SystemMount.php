@@ -48,7 +48,7 @@ class SystemMount
 
     public function loadMenuForAdminlte($event)
     {
-        if (!config('siravel.packagesMenu', false)) {
+        if (! config('siravel.packagesMenu', false)) {
             return ;
         }
 
@@ -91,7 +91,7 @@ class SystemMount
                 $this->getProviders()
             )->reject(
                 function ($class) {
-                    return !class_exists($class) || !is_array($class::$menuItens) || empty($class::$menuItens);
+                    return ! class_exists($class) || ! is_array($class::$menuItens) || empty($class::$menuItens);
                 }
             )->map(
                 function ($class) {

@@ -11,7 +11,7 @@ class ApiCallsCountCollector implements DataCollectorInterface
     {
         $apiCall = new ApiCallsCount(
             [
-            'url' => $request->route()->uri()
+            'url' => $request->route()->uri(),
             ]
         );
 

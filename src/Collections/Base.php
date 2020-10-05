@@ -3,8 +3,8 @@
 namespace Pedreiro\Collections;
 
 use Illuminate\Database\Eloquent\Collection;
-use Muleta\Traits\Models\SerializeWithImages;
 use Muleta\Traits\Models\CanSerializeTransform;
+use Muleta\Traits\Models\SerializeWithImages;
 
 /**
  * The collection that is returned from queries on models that extend from
@@ -14,5 +14,4 @@ class Base extends Collection
 {
     use CanSerializeTransform,
         SerializeWithImages;
-
 }

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Pedreiro\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Support\Recursos\Cacheable\CacheableEloquent;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Muleta\Traits\Models\ValidatingTrait;
 use Pedreiro\Support\ValueCollection;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Support\Recursos\Cacheable\CacheableEloquent;
 
 abstract class Value extends Model
 {

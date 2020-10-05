@@ -93,9 +93,9 @@ class Active
         if ($route) {
             $this->action = $route->getActionName();
 
-            $actionSegments   = Str::parseCallback($this->action, null);
+            $actionSegments = Str::parseCallback($this->action, null);
             $this->controller = head($actionSegments);
-            $this->method     = last($actionSegments);
+            $this->method = last($actionSegments);
         }
     }
 
@@ -122,7 +122,7 @@ class Active
      */
     public function checkUri($uris)
     {
-        if (!$this->request) {
+        if (! $this->request) {
             return false;
         }
 
@@ -144,7 +144,7 @@ class Active
      */
     public function checkUriPattern($patterns)
     {
-        if (!$this->request) {
+        if (! $this->request) {
             return false;
         }
 
@@ -171,7 +171,7 @@ class Active
      */
     public function checkQuery($key, $value)
     {
-        if (!$this->request) {
+        if (! $this->request) {
             return false;
         }
 
@@ -200,7 +200,7 @@ class Active
      */
     public function checkRoute($routeNames)
     {
-        if (!$this->route) {
+        if (! $this->route) {
             return false;
         }
 
@@ -222,7 +222,7 @@ class Active
      */
     public function checkRoutePattern($patterns)
     {
-        if (!$this->route) {
+        if (! $this->route) {
             return false;
         }
 
@@ -251,7 +251,7 @@ class Active
      */
     public function checkRouteParam($param, $value)
     {
-        if (!$this->route) {
+        if (! $this->route) {
             return false;
         }
 
@@ -275,7 +275,7 @@ class Active
      */
     public function checkAction($actions)
     {
-        if (!$this->action) {
+        if (! $this->action) {
             return false;
         }
 
@@ -295,7 +295,7 @@ class Active
      */
     public function checkController($controllers)
     {
-        if (!$this->controller) {
+        if (! $this->controller) {
             return false;
         }
 
@@ -335,5 +335,4 @@ class Active
     {
         return $this->controller ?: "";
     }
-
 }

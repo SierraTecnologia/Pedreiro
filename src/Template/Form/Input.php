@@ -40,7 +40,7 @@ class Input extends Element
     protected $customError = false;
 
     /**
-     * @var DataTransformerInterface 
+     * @var DataTransformerInterface
      */
     protected $dataTransformator;
 
@@ -66,7 +66,7 @@ class Input extends Element
      */
     public function getValue()
     {
-        if (!empty($this->getDataTransformator())) {
+        if (! empty($this->getDataTransformator())) {
             return $this->getDataTransformator()->reverseTransform($this->value);
         }
 
@@ -80,7 +80,7 @@ class Input extends Element
      */
     public function setValue($value)
     {
-        if (!empty($this->getDataTransformator())) {
+        if (! empty($this->getDataTransformator())) {
             $this->value = $this->getDataTransformator()->transform($value);
         } else {
             $this->value = $value;
@@ -158,10 +158,11 @@ class Input extends Element
     {
         if ($this->getRequired() && empty($this->getValue())) {
             $this->error = $this->getLabel() . ' is required.';
+
             return false;
         }
 
-        if ($this->getPattern() && !preg_match('/' . $this->getPattern() . '/', $this->getValue())) {
+        if ($this->getPattern() && ! preg_match('/' . $this->getPattern() . '/', $this->getValue())) {
             $this->error = 'Invalid value entered.';
 
             return false;
@@ -194,7 +195,7 @@ class Input extends Element
     public function setError($message)
     {
         $this->customError = true;
-        $this->error       = $message;
+        $this->error = $message;
 
         return $this;
     }
@@ -204,9 +205,9 @@ class Input extends Element
      */
     protected function onPreRender(View &$view)
     {
-        $view->value    = $this->getValue();
-        $view->error    = $this->error;
-        $view->pattern  = $this->pattern;
+        $view->value = $this->getValue();
+        $view->error = $this->error;
+        $view->pattern = $this->pattern;
         $view->required = $this->required;
     }
 

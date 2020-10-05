@@ -45,7 +45,7 @@ class FieldSet extends Element
             if ($field instanceof FieldSet) {
                 $fieldName = $field->getName();
 
-                if (empty($fieldName) || !isset($values[$fieldName])) {
+                if (empty($fieldName) || ! isset($values[$fieldName])) {
                     $field->setValues($values);
                 } else {
                     $field->setValues($values[$fieldName]);
@@ -77,7 +77,7 @@ class FieldSet extends Element
         $rtn = true;
 
         foreach ($this->children as $child) {
-            if (!$child->validate()) {
+            if (! $child->validate()) {
                 $rtn = false;
             }
         }

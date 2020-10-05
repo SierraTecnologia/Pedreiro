@@ -2,12 +2,12 @@
 
 namespace Pedreiro\Template\Input;
 
-use DB;
+use Bkwld\Library\Utils\Text;
 use Carbon\Carbon;
 use Config;
-use Request;
-use Bkwld\Library\Utils\Text;
+use DB;
 use Facilitador\Exceptions\Exception;
+use Request;
 
 /**
  * This class contains logic related to searching from controller
@@ -31,7 +31,9 @@ class Search
                 array_map(
                     function ($input, $field) {
                         return [$field, '=', $input];
-                    }, $terms, array_keys($terms)
+                    },
+                    $terms,
+                    array_keys($terms)
                 )
             )
         );
@@ -47,7 +49,7 @@ class Search
     public function apply($query, $config)
     {
         // Do nothing if no query in the input
-        if (!Request::has('query')) {
+        if (! Request::has('query')) {
             return $query;
         }
 
@@ -56,7 +58,7 @@ class Search
 
         // Deserialize the query
         $conditions = json_decode(request('query'));
-        if (!is_array($conditions)) {
+        if (! is_array($conditions)) {
             throw new Exception('Bad query');
         }
 
@@ -76,7 +78,7 @@ class Search
             if (isset($config[$field]['query'])) {
                 call_user_func($config[$field]['query'], $query, $comparison, $input);
 
-                // ... or one of the simple, standard ones
+            // ... or one of the simple, standard ones
             } else {
                 $this->condition($query, $field, $comparison, $input, $config[$field]['type']);
             }
@@ -117,6 +119,7 @@ class Search
         case '!%*%':
             $comparison = substr($comparison, 1);
             $input = str_replace('*', $input, $comparison);
+
             return $query->where($field, 'NOT LIKE', $input);
 
             // Like
@@ -124,6 +127,7 @@ class Search
         case '%*':
         case '%*%':
             $input = str_replace('*', $input, $comparison);
+
             return $query->where($field, 'LIKE', $input);
 
             // Defaults
@@ -141,11 +145,10 @@ class Search
      */
     protected function convertDateField($field)
     {
-        switch(DB::getDriverName())
-        {
-        case 'sqlsrv': 
+        switch (DB::getDriverName()) {
+        case 'sqlsrv':
             return DB::raw("CONVERT(date, [{$field}])");
-        default: 
+        default:
             return DB::raw("DATE(`{$field}`)");
         }
     }
@@ -163,23 +166,31 @@ class Search
     {
         // Make SQL safe values
         $safe_field = $this->makeSafeField($field);
-        $safe_input = $input  == '' ?
+        $safe_input = $input == '' ?
         'NULL' : DB::connection()->getPdo()->quote($input);
 
         // Different engines have different APIs
-        switch(DB::getDriverName())
-        {
-        case 'mysql': 
+        switch (DB::getDriverName()) {
+        case 'mysql':
             return $this->applyMysqlEquality(
-                $comparison, $query, $safe_field, $safe_input
+                $comparison,
+                $query,
+                $safe_field,
+                $safe_input
             );
-        case 'sqlite': 
+        case 'sqlite':
             return $this->applySqliteEquality(
-                $comparison, $query, $safe_field, $safe_input
+                $comparison,
+                $query,
+                $safe_field,
+                $safe_input
             );
-        case 'sqlsrv': 
+        case 'sqlsrv':
             return $this->applySqlServerEquality(
-                $comparison, $query, $safe_field, $safe_input
+                $comparison,
+                $query,
+                $safe_field,
+                $safe_input
             );
         }
     }
@@ -193,11 +204,10 @@ class Search
      */
     protected function makeSafeField($field)
     {
-        switch(DB::getDriverName())
-        {
-        case 'sqlsrv': 
+        switch (DB::getDriverName()) {
+        case 'sqlsrv':
             return is_string($field) ? "[{$field}]" : $field;
-        default: 
+        default:
             return is_string($field) ? "`{$field}`" : $field;
         }
     }
@@ -214,13 +224,14 @@ class Search
      */
     protected function applyMysqlEquality($comparison, $query, $field, $input)
     {
-        switch($comparison)
-        {
+        switch ($comparison) {
         case '=':
             $sql = sprintf('%s <=> %s', $field, $input);
+
             return $query->whereRaw($sql);
         case '!=':
             $sql = sprintf('NOT(%s <=> %s)', $field, $input);
+
             return $query->whereRaw($sql);
         }
     }
@@ -237,13 +248,14 @@ class Search
      */
     protected function applySqliteEquality($comparison, $query, $field, $input)
     {
-        switch($comparison)
-        {
+        switch ($comparison) {
         case '=':
             $sql = sprintf('%s IS %s', $field, $input);
+
             return $query->whereRaw($sql);
         case '!=':
             $sql = sprintf('%s IS NOT %s', $field, $input);
+
             return $query->whereRaw($sql);
         }
     }
@@ -260,13 +272,14 @@ class Search
      */
     protected function applySqlServerEquality($comparison, $query, $field, $input)
     {
-        switch($comparison)
-        {
+        switch ($comparison) {
         case '=':
             $sql = sprintf("COALESCE(%s, '') = COALESCE(%s, '')", $field, $input);
+
             return $query->whereRaw($sql);
         case '!=':
             $sql = sprintf("COALESCE(%s, '') != COALESCE(%s, '')", $field, $input);
+
             return $query->whereRaw($sql);
         }
     }
@@ -290,15 +303,15 @@ class Search
                     'options' => Config::get('site.site.locales'),
                 ];
 
-                // Not associative assume it's a text field
+            // Not associative assume it's a text field
             } elseif (is_numeric($key)) {
                 $search[$val] = ['type' => 'text', 'label' => Text::titleFromKey($val)];
 
-                // If value isn't an array, make a default label
-            } elseif (!is_array($val)) {
+            // If value isn't an array, make a default label
+            } elseif (! is_array($val)) {
                 $search[$key] = ['type' => $val, 'label' => Text::titleFromKey($key)];
 
-                // Add the meta array
+            // Add the meta array
             } else {
 
                 // Make a default label
@@ -307,9 +320,9 @@ class Search
                 }
 
                 // Support class static method or variable as options for a select
-                if (!empty($val['type'])
+                if (! empty($val['type'])
                     && $val['type'] == 'select'
-                    && !empty($val['options'])
+                    && ! empty($val['options'])
                     && is_string($val['options'])
                 ) {
                     $val['options'] = $this->longhandOptions($val['options']);
@@ -358,32 +371,34 @@ class Search
      */
     public function makeSoftDeletesCondition($controller)
     {
-        if (!$controller->withTrashed()) { return [];
+        if (! $controller->withTrashed()) {
+            return [];
         }
+
         return [
             'deleted_at' => [
                 'type' => 'select',
                 'label' => 'status',
                 'options' => [
                     'exists' => 'exists',
-                    'deleted' => 'deleted'
+                    'deleted' => 'deleted',
                 ],
                 'query' => function ($query, $condition, $input) {
 
                     // If not deleted...
-                    if (($input == 'exists' && $condition == '=') 
+                    if (($input == 'exists' && $condition == '=')
                         || ($input == 'deleted' && $condition == '!=')
                     ) {
                         $query->whereNull('deleted_at');
 
-                        // If deleted...
-                    } else if (($input == 'deleted' && $condition == '=') 
+                    // If deleted...
+                    } elseif (($input == 'deleted' && $condition == '=')
                         || ($input == 'exists' && $condition == '!=')
                     ) {
                         $query->whereNotNull('deleted_at');
                     }
                 },
-            ]
+            ],
         ];
     }
 }

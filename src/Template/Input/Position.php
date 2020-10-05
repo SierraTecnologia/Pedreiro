@@ -2,8 +2,8 @@
 
 namespace Pedreiro\Template\Input;
 
-use Request;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Request;
 
 /**
  * Handle drag-and-drop position updates
@@ -36,7 +36,7 @@ class Position
      */
     public function has()
     {
-        if (!Request::has('position')) {
+        if (! Request::has('position')) {
             return false;
         }
 
@@ -44,7 +44,7 @@ class Position
             return true;
         }
 
-        if (!empty($this->pivot) && isset($this->pivot->position)) {
+        if (! empty($this->pivot) && isset($this->pivot->position)) {
             return true;
         }
 
@@ -61,7 +61,7 @@ class Position
             $this->pivot->position = request('position');
             $this->pivot->save();
 
-            // Write position value to the item
+        // Write position value to the item
         } elseif (isset($this->item->position)) {
 
             // Visiblity may be set at the same time and would be ignored otherwise

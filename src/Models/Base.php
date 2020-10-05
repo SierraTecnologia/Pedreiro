@@ -10,8 +10,8 @@ use Bkwld\Upchuck\SupportsUploads;
 use Config;
 use DB;
 use Event;
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Log;
@@ -27,8 +27,8 @@ use Pedreiro\Collections\Base as BaseCollection;
 use Pedreiro\Exceptions\Exception;
 
 use Session;
-use SupportURL;
 use Support\Services\ModelService;
+use SupportURL;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use URL;
 

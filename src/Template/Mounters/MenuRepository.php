@@ -5,16 +5,15 @@
 
 namespace Pedreiro\Template\Mounters;
 
-use Illuminate\Support\Str;
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * MenuRepository helper to make table and object form mapping easy.
  */
 class MenuRepository
 {
-
     protected $menus = [];
 
 
@@ -23,7 +22,7 @@ class MenuRepository
         $mergeByCode = [];
         foreach ($menus as $menu) {
             if ($menu) {
-                if (!isset($mergeByCode[$menu->getCode()])) {
+                if (! isset($mergeByCode[$menu->getCode()])) {
                     $mergeByCode[$menu->getCode()] = $menu;
                 } else {
                     $mergeByCode[$menu->getCode()]->mergeWithMenu($menu);
@@ -50,7 +49,7 @@ class MenuRepository
         if (isset($byGroup[$parent])) {
             foreach ($byGroup[$parent] as $menu) {
                 $menuArray = $menu->toArray();
-                if (!empty($byGroup[$menu->getAddressSlugGroup()])) {
+                if (! empty($byGroup[$menu->getAddressSlugGroup()])) {
                     if (is_string($menuArray)) {
                         $menuArrayList[] = $menuArray;
                         $menuArray = $this->getTreeInArray($menu->getAddressSlugGroup());
@@ -78,14 +77,16 @@ class MenuRepository
                     return $a->getOrder() > $b->getOrder();
                 }
             );
+
             return $arrayMenu;
         }
 
 
         $columns = array_column($arrayMenu, 'order');
-        if (count($columns)==count($arrayMenu)) {
+        if (count($columns) == count($arrayMenu)) {
             array_multisort($columns, SORT_ASC, $arrayMenu);
         }
+
         return $arrayMenu;
     }
 
@@ -95,7 +96,7 @@ class MenuRepository
         $getFunction = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
 
         foreach ($this->menus as $menu) {
-            if (!isset($byGroup[$menu->{$getFunction}()])) {
+            if (! isset($byGroup[$menu->{$getFunction}()])) {
                 $byGroup[$menu->{$getFunction}()] = [];
             }
             $byGroup[$menu->{$getFunction}()][] = $menu;
@@ -122,7 +123,7 @@ class MenuRepository
     {
         $mergeArray = [];
 
-        if (!self::isArraysFromMenus($array) && !empty($array)) {
+        if (! self::isArraysFromMenus($array) && ! empty($array)) {
             foreach ($array as $value) {
                 $mergeArray = array_merge($mergeArray, self::mergeDinamicGroups($value));
             }
@@ -139,7 +140,7 @@ class MenuRepository
             return $array;
         }
         
-        if (!is_array($array)) {
+        if (! is_array($array)) {
             throw new Exception('Deveria ser um array aqui no mergeDinamicGroups do MenuRepository');
         };
 
@@ -147,17 +148,18 @@ class MenuRepository
         foreach ($array as $indice => $values) {
             $group = $groupParent;
             if (is_string($indice)) {
-                if (!empty($group)) {
+                if (! empty($group)) {
                     $tempArrayToMerge = [
                         'text' => explode('|', $indice)[0],
-                        'group' => $group
+                        'group' => $group,
                     ];
                     if (isset(explode('|', $indice)[1])) {
                         $tempArrayToMerge['order'] = explode('|', $indice)[1];
                     }
                     $mergeArray = array_merge(
-                        $mergeArray, [
-                            $tempArrayToMerge
+                        $mergeArray,
+                        [
+                            $tempArrayToMerge,
                         ]
                     );
                     $group .= '.';
@@ -168,18 +170,18 @@ class MenuRepository
                 $group .= Str::slug(explode('|', $indice)[0], '-');
             }
             if (Menu::isArrayMenu($values, $indice)) {
-                if (!empty($group)) {
-                    if (!isset($values['group'])) {
+                if (! empty($group)) {
+                    if (! isset($values['group'])) {
                         $values['group'] = $group;
                     } else {
                         $values['group'] = $group . '.' . $values[$indice]['group'];
                     }
                 }
                 $values = [$values];
-            } else if (self::isArraysFromMenus($values)) {
-                if (!empty($group)) {
+            } elseif (self::isArraysFromMenus($values)) {
+                if (! empty($group)) {
                     foreach ($values as $indice => $value) {
-                        if (!isset($value['group'])) {
+                        if (! isset($value['group'])) {
                             $values[$indice]['group'] = $group;
                         } else {
                             $values[$indice]['group'] = $group . '.' . $values[$indice]['group'];
@@ -202,18 +204,16 @@ class MenuRepository
             return false;
         }
 
-        if (!is_array($arrayMenu)) {
+        if (! is_array($arrayMenu)) {
             return false;
         }
 
         foreach ($arrayMenu as $indice => $values) {
-            if (!Menu::isArrayMenu($values, $indice)) {
+            if (! Menu::isArrayMenu($values, $indice)) {
                 return false;
             }
         }
 
         return true;
     }
-
-    
 }

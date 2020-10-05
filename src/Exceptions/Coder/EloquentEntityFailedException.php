@@ -25,7 +25,7 @@ class EloquentEntityFailedException extends CoderException
     /**
      * @param EloquentRender $eloquentRender
      * @param string         $message
-     * @param integer        $code
+     * @param int        $code
      */
     public function __construct(EloquentRender $eloquentRender)
     {

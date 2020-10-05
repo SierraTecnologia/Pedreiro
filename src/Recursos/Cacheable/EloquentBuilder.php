@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Support\Recursos\Cacheable;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 /**
  * @mixin \Illuminate\Database\Query\Builder
@@ -66,8 +66,8 @@ class EloquentBuilder extends Builder
             // If the model has a mutator for the requested column, we will spin through
             // the results and mutate the values so that the mutated version of these
             // columns are returned as you would expect from these Eloquent models.
-            if (! $this->model->hasGetMutator($column) 
-                && ! $this->model->hasCast($column) 
+            if (! $this->model->hasGetMutator($column)
+                && ! $this->model->hasCast($column)
                 && ! in_array($column, $this->model->getDates())
             ) {
                 return $results;

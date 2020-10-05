@@ -5,5 +5,4 @@ use Pedreiro\Exceptions\Exception;
 
 class ParserException extends Exception
 {
-
 }

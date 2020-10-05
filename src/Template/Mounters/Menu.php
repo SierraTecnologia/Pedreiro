@@ -80,7 +80,7 @@ class Menu
             } else {
                 $data = explode('|', $data);
                 $instance->setText($data[0]);
-                if (!empty($data[1])) {
+                if (! empty($data[1])) {
                     $instance->setOrder($data[1]);
                 }
             }
@@ -97,7 +97,7 @@ class Menu
 
     public static function isArrayMenu($arrayMenu, $indice = false)
     {
-        if (is_string($arrayMenu) && !is_string($indice)) {
+        if (is_string($arrayMenu) && ! is_string($indice)) {
             return true;
         }
 
@@ -114,7 +114,7 @@ class Menu
         $divisory = $this->isDivisory;
 
         foreach ($this->getAttributes() as $attribute) {
-            if ($this->attributeIsDefault($attribute) && !$menu->attributeIsDefault($attribute)) {
+            if ($this->attributeIsDefault($attribute) && ! $menu->attributeIsDefault($attribute)) {
                 $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
                 $getMethodName = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
                 $this->{$methodName}(
@@ -139,7 +139,7 @@ class Menu
         }
 
         foreach ($this->getAttributes() as $attribute) {
-            if (!$this->attributeIsDefault($attribute)) {
+            if (! $this->attributeIsDefault($attribute)) {
                 $methodName = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
                 $array[$attribute] = $this->{$methodName}();
             }
@@ -190,7 +190,7 @@ class Menu
     {
         $group = '';
 
-        if (!$this->attributeIsDefault('group')) {
+        if (! $this->attributeIsDefault('group')) {
             $group = $this->getGroup() . '.';
         }
 
@@ -213,6 +213,7 @@ class Menu
         if ($this->attributeIsDefault('code')) {
             return $this->getAddressSlugGroup();
         }
+
         return $this->code;
     }
     public function setCode($value)
@@ -435,10 +436,12 @@ class Menu
      */
     public function validateAndReturn()
     {
-        if (!$this->isToDisplay()) {
+        if (! $this->isToDisplay()) {
             Log::info('Menu desabilitado: ' . $this->getError());
+
             return false;
         }
+
         return $this;
     }
 
@@ -449,10 +452,11 @@ class Menu
     protected function isToDisplay()
     {
         // Verify Route Exist
-        if (!empty($this->getRoute()) && !Route::has($this->getRoute())) {
+        if (! empty($this->getRoute()) && ! Route::has($this->getRoute())) {
             $this->setError(
                 'Rota ' . $this->getRoute() . ' não existe!'
             );
+
             return false;
         }
 
