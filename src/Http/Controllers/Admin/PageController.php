@@ -1,6 +1,6 @@
 <?php
 
-namespace Pedreiro\Http\Controllers;
+namespace Pedreiro\Http\Controllers\Admin;
 
 use Pedreiro\Services\VersionService;
 

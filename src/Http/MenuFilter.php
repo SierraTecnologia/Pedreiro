@@ -19,6 +19,12 @@ class MenuFilter implements FilterInterface
             return false;
         }
 
+        if (isset($item['config']) && !config($item['config'], false)) {
+            Log::warning('Menu desabilitado: '.$item['config']);
+
+            return false;
+        }
+
 
 
         // if (isset($item['permission']) && ! Laratrust::can($item['permission'])) {

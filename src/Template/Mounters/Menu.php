@@ -38,7 +38,8 @@ class Menu
     protected $group = null;
     protected $order = null;
 
-
+    // @todo nao lembro desse
+    protected $config = null;
 
 
     /**
@@ -170,6 +171,8 @@ class Menu
             'section',
             'dontSection',
             'order',
+
+            'config',
 
             'topnav',
             'topnav_user',
@@ -352,6 +355,14 @@ class Menu
     public function setOrder($value)
     {
         $this->order = $value;
+    }
+    public function getConfig()
+    {
+        return $this->config;
+    }
+    public function setConfig($value)
+    {
+        $this->config = $value;
     }
 
     public function getGroup()

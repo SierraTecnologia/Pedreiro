@@ -73,7 +73,6 @@ class Controller extends BaseController
     {
         $this->loadLayout();
         // $this->middleware('admin');
-        parent::__construct();
     }
     public function loadLayout()
     {
