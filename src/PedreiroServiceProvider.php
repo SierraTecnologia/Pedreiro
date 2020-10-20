@@ -94,7 +94,7 @@ class PedreiroServiceProvider extends ServiceProvider
         /**
          * Porteiro; Routes
          */
-        $this->loadRoutesForRiCa(__DIR__.'/../routes');
+        $this->loadRoutesForRiCa(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes');
     }
     
     public function boot(Router $router, Dispatcher $event)
@@ -110,7 +110,7 @@ class PedreiroServiceProvider extends ServiceProvider
 
             $this->publishes(
                 [
-                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/pedreiro'),
+                __DIR__ . '/../resources/views' => base_path('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'pedreiro'),
                 ],
                 'views'
             );
@@ -326,7 +326,7 @@ class PedreiroServiceProvider extends ServiceProvider
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang/vendor/support'),
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'support'),
             ],
             ['lang',  'sitec', 'sitec-lang', 'translations']
         );
