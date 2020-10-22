@@ -62,6 +62,7 @@ class PedreiroServiceProvider extends ServiceProvider
             \Bkwld\Upchuck\ServiceProvider::class,
     
             Translation\TranslationServiceProvider::class,
+            Locaravel\LocaravelProvider::class,
             /**
              * Helpers
              */
