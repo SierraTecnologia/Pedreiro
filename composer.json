@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.4",
-        "sierratecnologia/former": "^0.4.0",
+        "sierratecnologia/former": "^0.3",
         "ricardosierra/minify": "^0.4.0",
         "ricardosierra/validate": "^0.4.0",
         "ricardosierra/changelog": "~1.4",
@@ -48,9 +48,9 @@
         "ricardosierra/laravel-haml": "^2.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "orchestra/testbench": "^5.0",
-        "phpunit/phpunit": "^9.3",
+        "friendsofphp/php-cs-fixer": ">=2.16",
+        "orchestra/testbench": ">=5.0",
+        "phpunit/phpunit": ">=9.3",
         "psalm/plugin-laravel": "^1.2",
         "vimeo/psalm": "^4.0"
     },
