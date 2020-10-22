@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Facilitador\Http\Controllers\Admin\Base;
+use Pedreiro\Http\Controllers\Admin\Base;
 
 class {{controller}} extends Base
 {

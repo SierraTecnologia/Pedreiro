@@ -62,6 +62,7 @@ class PedreiroServiceProvider extends ServiceProvider
             \Bkwld\Upchuck\ServiceProvider::class,
     
             Translation\TranslationServiceProvider::class,
+            Locaravel\LocaravelProvider::class,
             /**
              * Helpers
              */
@@ -326,7 +327,7 @@ class PedreiroServiceProvider extends ServiceProvider
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang/vendor/support')
+            $this->getResourcesPath('lang') => resource_path('lang/vendor/support'),
             ],
             ['lang',  'sitec', 'sitec-lang', 'translations']
         );

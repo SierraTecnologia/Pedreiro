@@ -13,14 +13,14 @@ class RedirectRule extends Base
     /**
      * Don't allow cloning because the "from" is unique
      *
-     * @var boolean
+     * @var bool
      */
     public $cloneable = false;
 
     /**
      * Admins should not be localized
      *
-     * @var boolean
+     * @var bool
      */
     public static $localizable = false;
 
@@ -129,6 +129,7 @@ class RedirectRule extends Base
     {
         $query = Request::getQueryString();
         $path = ltrim(Request::path(), '/'); // ltrim fixes homepage
+
         return $query ? $path.'?'.$query : $path;
     }
 }
