@@ -25,15 +25,15 @@ trait CrudController
      */
     protected $indexFields = [];
 
-    /**
-     * The fields shown in forms as an array of arrays.
-     * Each field is an array with keys:
-     * name, label, type, relationship (if applicable).
-     * Type can be: text, textarea, email, url, password, date, select, select_multiple, checkbox, radio.
-     *
-     * @var array
-     */
-    protected $formFields = [];
+    // /**
+    //  * The fields shown in forms as an array of arrays.
+    //  * Each field is an array with keys:
+    //  * name, label, type, relationship (if applicable).
+    //  * Type can be: text, textarea, email, url, password, date, select, select_multiple, checkbox, radio.
+    //  *
+    //  * @var array
+    //  */
+    // public $formFields = [];
 
     /**
      * The model's relationships that the crud forms may need to use.
@@ -339,7 +339,10 @@ trait CrudController
     public function getFormFields()
     {
         // No fields declared. We have a table with only a name field.
-        if (0 == count($this->formFields)) {
+        if (!$this->formFields || 0 == count($this->formFields)) {
+            if (!is_array($this->formFields)) {
+                return [['name' => 'name', 'label' => 'Name', 'type' => 'text']];
+            }
             array_push($this->formFields, ['name' => 'name', 'label' => 'Name', 'type' => 'text']);
 
             return $this->formFields;
@@ -460,8 +463,8 @@ trait CrudController
     protected function getIndexFields()
     {
         // If none declared, use the first of the formFields.
-        if (0 == count($this->indexFields)) {
-            $this->indexFields = [$this->formFields[0]['name']];
+        if (!$this->indexFields || 0 == count($this->indexFields)) {
+            $this->indexFields = [$this->getFormFields()[0]['name']];
 
             return array_slice($this->getFormFields(), 0, 1);
         }
