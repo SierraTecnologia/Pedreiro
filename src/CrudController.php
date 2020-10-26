@@ -25,15 +25,15 @@ trait CrudController
      */
     protected $indexFields = [];
 
-    // /**
-    //  * The fields shown in forms as an array of arrays.
-    //  * Each field is an array with keys:
-    //  * name, label, type, relationship (if applicable).
-    //  * Type can be: text, textarea, email, url, password, date, select, select_multiple, checkbox, radio.
-    //  *
-    //  * @var array
-    //  */
-    // public $formFields = [];
+    /**
+     * The fields shown in forms as an array of arrays.
+     * Each field is an array with keys:
+     * name, label, type, relationship (if applicable).
+     * Type can be: text, textarea, email, url, password, date, select, select_multiple, checkbox, radio.
+     *
+     * @var array
+     */
+    public $formFields = [];
 
     /**
      * The model's relationships that the crud forms may need to use.
@@ -338,10 +338,15 @@ trait CrudController
      */
     public function getFormFields()
     {
+        if (empty($this->formFields)) {
+            $this->formFields = $this->model->formFields;
+        }
+
+
         // No fields declared. We have a table with only a name field.
         if (!$this->formFields || 0 == count($this->formFields)) {
             if (!is_array($this->formFields)) {
-                return [['name' => 'name', 'label' => 'Name', 'type' => 'text']];
+                return $this->formFields = [['name' => 'name', 'label' => 'Name', 'type' => 'text']];
             }
             array_push($this->formFields, ['name' => 'name', 'label' => 'Name', 'type' => 'text']);
 
@@ -378,7 +383,6 @@ trait CrudController
                 $this->relationships[] = $field['relationship'];
             }
         }
-
         return $this->relationships;
     }
 
@@ -462,6 +466,10 @@ trait CrudController
      */
     protected function getIndexFields()
     {
+        if (empty($this->indexFields)) {
+            $this->indexFields = $this->model->indexFields;
+        }
+
         // If none declared, use the first of the formFields.
         if (!$this->indexFields || 0 == count($this->indexFields)) {
             $this->indexFields = [$this->getFormFields()[0]['name']];
@@ -535,7 +543,7 @@ trait CrudController
      *
      * @param mixed $entities
      */
-    protected function loadModelRelationships($entities)
+    protected function loadModelRelationships(&$entities)
     {
         $relationships = $this->getRelationships();
 
