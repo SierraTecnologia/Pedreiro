@@ -50,6 +50,7 @@ class SystemMount
     {
         if (! config('siravel.packagesMenu', false)) {
             dd('oi');
+
             return ;
         }
 

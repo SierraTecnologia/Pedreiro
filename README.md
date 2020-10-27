@@ -104,7 +104,7 @@ If not defined, the default attribute to be used is `name`.
 
 ```php
 
-    public $formFields = [
+    protected $formFields = [
         [
             'name' => 'title',
             'label' => 'Title',

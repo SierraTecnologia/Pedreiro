@@ -33,7 +33,7 @@ trait CrudController
      *
      * @var array
      */
-    protected $formFields = [];
+    public $formFields = [];
 
     /**
      * The model's relationships that the crud forms may need to use.
@@ -338,8 +338,16 @@ trait CrudController
      */
     public function getFormFields()
     {
+        if (empty($this->formFields)) {
+            $this->formFields = $this->model->formFields;
+        }
+
+
         // No fields declared. We have a table with only a name field.
-        if (0 == count($this->formFields)) {
+        if (!$this->formFields || 0 == count($this->formFields)) {
+            if (!is_array($this->formFields)) {
+                return $this->formFields = [['name' => 'name', 'label' => 'Name', 'type' => 'text']];
+            }
             array_push($this->formFields, ['name' => 'name', 'label' => 'Name', 'type' => 'text']);
 
             return $this->formFields;
@@ -375,7 +383,6 @@ trait CrudController
                 $this->relationships[] = $field['relationship'];
             }
         }
-
         return $this->relationships;
     }
 
@@ -459,9 +466,13 @@ trait CrudController
      */
     protected function getIndexFields()
     {
+        if (empty($this->indexFields)) {
+            $this->indexFields = $this->model->indexFields;
+        }
+
         // If none declared, use the first of the formFields.
-        if (0 == count($this->indexFields)) {
-            $this->indexFields = [$this->formFields[0]['name']];
+        if (!$this->indexFields || 0 == count($this->indexFields)) {
+            $this->indexFields = [$this->getFormFields()[0]['name']];
 
             return array_slice($this->getFormFields(), 0, 1);
         }
@@ -532,7 +543,7 @@ trait CrudController
      *
      * @param mixed $entities
      */
-    protected function loadModelRelationships($entities)
+    protected function loadModelRelationships(&$entities)
     {
         $relationships = $this->getRelationships();
 

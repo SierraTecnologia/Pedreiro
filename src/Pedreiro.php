@@ -399,8 +399,8 @@ class Pedreiro
     public function getLocales()
     {
         $appLocales = [];
-        if ($this->filesystem->exists(resource_path('lang/vendor/facilitador'))) {
-            $appLocales = array_diff(scandir(resource_path('lang/vendor/facilitador')), ['..', '.']);
+        if ($this->filesystem->exists(resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'facilitador'))) {
+            $appLocales = array_diff(scandir(resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'facilitador')), ['..', '.']);
         }
 
         $vendorLocales = array_diff(scandir(realpath(__DIR__.'/../publishes/lang')), ['..', '.']);

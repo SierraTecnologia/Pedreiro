@@ -40,7 +40,7 @@ class PageController extends Controller
     {
         $this->subTitle = 'Ajuda';
 
-        return view('support::pages.help');
+        return view('pedreiro::pages.help');
     }
 
     public function changelog(VersionService $versionService)
@@ -48,6 +48,6 @@ class PageController extends Controller
         $this->subTitle = trans('words.changelog');
         $releases = $versionService->getReleases();
 
-        return view('support::pages.releases', compact('releases'));
+        return view('pedreiro::pages.releases', compact('releases'));
     }
 }
