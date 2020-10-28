@@ -344,8 +344,8 @@ trait CrudController
 
 
         // No fields declared. We have a table with only a name field.
-        if (!$this->formFields || 0 == count($this->formFields)) {
-            if (!is_array($this->formFields)) {
+        if (! $this->formFields || 0 == count($this->formFields)) {
+            if (! is_array($this->formFields)) {
                 return $this->formFields = [['name' => 'name', 'label' => 'Name', 'type' => 'text']];
             }
             array_push($this->formFields, ['name' => 'name', 'label' => 'Name', 'type' => 'text']);
@@ -383,6 +383,7 @@ trait CrudController
                 $this->relationships[] = $field['relationship'];
             }
         }
+
         return $this->relationships;
     }
 
@@ -471,7 +472,7 @@ trait CrudController
         }
 
         // If none declared, use the first of the formFields.
-        if (!$this->indexFields || 0 == count($this->indexFields)) {
+        if (! $this->indexFields || 0 == count($this->indexFields)) {
             $this->indexFields = [$this->getFormFields()[0]['name']];
 
             return array_slice($this->getFormFields(), 0, 1);
