@@ -29,8 +29,8 @@
         @yield('page_title')
     @else 
         <?php if (isset($title)) {
-    echo $title;
-} ?>
+            echo $title;
+        } ?>
         @stack('title')
         @yield('title')
     @endif

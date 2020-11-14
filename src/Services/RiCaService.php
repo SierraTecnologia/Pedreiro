@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-use Siravel\Repositories\ImageRepository;
-use Siravel\Traits\Services\DefaultModuleServiceTrait;
-use Siravel\Traits\Services\MenuServiceTrait;
-use Siravel\Traits\Services\ModuleServiceTrait;
+use MediaManager\Repositories\ImageRepository;
+use Templeiro\Services\Traits\DefaultModuleServiceTrait;
+use Templeiro\Services\Traits\MenuServiceTrait;
+use Templeiro\Services\Traits\ModuleServiceTrait;
 
 class RiCaService
 {
