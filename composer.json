@@ -18,8 +18,8 @@
     "require": {
         "php": "^7.4",
         "sierratecnologia/former": "^0.3",
-        "ricardosierra/minify": "^0.4.0",
-        "ricardosierra/validate": "^0.4.0",
+        "ricardosierra/minify": "^0.3.0 | ^0.4.0",
+        "ricardosierra/validate": "^0.2.0",
         "ricardosierra/changelog": "~1.4",
         "sierratecnologia/crudmaker": "^0.4.0",
         "sierratecnologia/locaravel": "^0.4.0",
