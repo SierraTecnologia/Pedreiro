@@ -18,7 +18,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 // @todo Add Essa lib Trait 'Spatie\EloquentSortable\SortableTrait' not found
 use Spatie\Sluggable\SlugOptions;
-use Support\Recursos\Cacheable\CacheableEloquent;
+use Muleta\Recursos\Cacheable\CacheableEloquent;
 
 /**
  * Pedreiro\Models\Attribute.

@@ -14,13 +14,13 @@ class MenuFilter implements FilterInterface
     public function transform($item)
     {
         if (isset($item['route']) && ! \Route::has($item['route'])) {
-            Log::warning('Menu não existe: '.$item['route']);
+            Log::info('Menu não existe: '.$item['route']);
 
             return false;
         }
 
         if (isset($item['config']) && ! config($item['config'], false)) {
-            Log::warning('Menu desabilitado: '.$item['config']);
+            Log::info('Menu desabilitado: '.$item['config']);
 
             return false;
         }

@@ -61,7 +61,7 @@ class Menu
     /**
      *  'text'    => 'Finder',
      * 'icon'    => 'cog',
-     * 'nivel' => \App\Models\Role::$GOOD,
+     * 'nivel' => \Porteiro\Models\Role::$GOOD,
      * 'submenu' => \Finder\Services\MenuService::getAdminMenu(),
      */
     public static function createFromArray($data)

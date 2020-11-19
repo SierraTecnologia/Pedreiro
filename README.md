@@ -48,7 +48,9 @@ The trait provides all the required methods for a Resource Controller, as well a
 If for example you have a `Post` model, you would define the routes:
 
 ```php
-Route::resource('/posts', 'PostController');
+Route::resource('posts', 'PostController')->parameters([
+    'posts' => 'id'
+]);
 ```
 
 ### Controller

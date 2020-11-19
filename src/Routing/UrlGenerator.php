@@ -45,7 +45,7 @@ class UrlGenerator
      * as the function arguments
      *
      * @param  string  $action The action we're linking to: index/edit/etc
-     * @param  integer $id     Optional id that we're linking to.  Required for actions like edit.
+     * @param  int $id     Optional id that we're linking to.  Required for actions like edit.
      * @param  string  $child  The name (or full class) of a child controller
      *                         of the current path: 'slides', 'Admin\SlidesController'
      * @return string  '/admin/articles'
@@ -66,7 +66,7 @@ class UrlGenerator
         $path = preg_replace($pattern, '', $path);
 
         // If there is an id and we're not linking to a child, add that id
-        if (!$child && $id) {
+        if (! $child && $id) {
             $path .= '/'.$id;
         }
 
@@ -118,7 +118,7 @@ class UrlGenerator
      * as if the controller is in the root level; as if it has no parents.
      *
      * @param  string  $controller ex: Facilitador\Http\Controllers\Admin\Admins@create
-     * @param  integer $id
+     * @param  int $id
      * @return string  ex: http://admin/admins/create
      */
     public function action($controller = null, $id = null)
@@ -192,19 +192,20 @@ class UrlGenerator
      */
     public static function managerRoute($slug, $page = '', $data = false)
     {
-        if (!empty($page)) {
+        if (! empty($page)) {
             $page = '/'.$page;
         }
         if ($data) {
             $page = '/'.Crypto::shareableEncrypt($data).$page;
         }
+
         return url(\Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
     }
 
     public static function routeForSlug($slug, $page = 'index', $data = false)
     {
         $route = 'facilitador.'.$slug.'.'.$page.'';
-        if (!Route::has($route)) {
+        if (! Route::has($route)) {
             return static::managerRoute($slug, $page, $data);
             // return dd('Gerando UrlGenerator',
             //     $route,
@@ -220,6 +221,7 @@ class UrlGenerator
         if (Crypto::isCrypto($name)) {
             $name = Crypto::shareableDecrypt($name);
         }
+
         return ucfirst(urldecode(ClasserExtractor::getClassName($name)));
     }
 }

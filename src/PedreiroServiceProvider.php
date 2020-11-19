@@ -23,6 +23,8 @@ use Pedreiro\Elements\FormFields\MultipleImagesWithAttrsFormField;
 use Pedreiro\Events\FormFieldsRegistered;
 use Pedreiro\Facades\Form;
 use Support\Facades\Support as SupportFacade;
+use Pedreiro\Services\RiCaService;
+use Pedreiro\Http\Middleware\isAjax;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
@@ -129,6 +131,7 @@ class PedreiroServiceProvider extends ServiceProvider
                 ]
             );
         }
+        $router->aliasMiddleware('isAjax', isAjax::class);
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pedreiro');
 
@@ -181,6 +184,14 @@ class PedreiroServiceProvider extends ServiceProvider
             }
         );
         // $this->app->bind('pedreiro', Pedreiro::class);
+        $loader->alias('Siravel', \Pedreiro\Facades\RiCaServiceFacade::class);
+        $loader->alias('RiCaService', \Pedreiro\Facades\RiCaServiceFacade::class);
+        $this->app->bind(
+            'RiCaService', function ($app) {
+                return new RiCaService();
+            }
+        );
+
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   
@@ -205,7 +216,7 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->app->singleton(
             'form-maker',
             function () {
-                return new \Grafite\Forms\Services\FormMaker();
+                return new \SierraTecnologia\FormMaker\Services\FormMaker();
             }
         );
 

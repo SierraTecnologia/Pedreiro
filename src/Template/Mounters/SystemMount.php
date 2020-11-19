@@ -18,11 +18,14 @@ class SystemMount
         return [
             \Support\SupportServiceProvider::class,
             \Porteiro\PorteiroProvider::class,
+            \Pedreiro\PedreiroProvider::class,
+            
             \Informate\InformateProvider::class,
             \Translation\TranslationProvider::class,
             \Locaravel\LocaravelProvider::class,
             \Populate\PopulateProvider::class,
             \Telefonica\TelefonicaProvider::class,
+            \MediaManager\MediaManagerProvider::class,
             \Stalker\StalkerProvider::class,
             \Audit\AuditProvider::class,
             \Tracking\TrackingProvider::class,
@@ -49,7 +52,6 @@ class SystemMount
     public function loadMenuForAdminlte($event)
     {
         if (! config('siravel.packagesMenu', false)) {
-            dd('oi');
 
             return ;
         }
