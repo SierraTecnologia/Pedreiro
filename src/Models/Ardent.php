@@ -60,12 +60,12 @@ abstract class Ardent extends Model
      */
     protected $validator;
 
-    /**
-     * The message bag instance containing validation error messages
-     *
-     * @var \Illuminate\Support\MessageBag
-     */
-    public $validationErrors;
+    // /**
+    //  * The message bag instance containing validation error messages
+    //  *
+    //  * @var \Illuminate\Support\MessageBag
+    //  */
+    // public $validationErrors;
 
     /**
      * Makes the validation procedure throw an {@link InvalidModelException} instead of returning

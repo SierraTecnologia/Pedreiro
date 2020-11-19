@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pedreiro\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Support\Recursos\Cacheable\CacheableEloquent;
+use Muleta\Recursos\Cacheable\CacheableEloquent;
 
 /**
  * Facilitador\Models\AttributeEntity.

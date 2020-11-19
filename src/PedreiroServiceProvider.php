@@ -24,6 +24,7 @@ use Pedreiro\Events\FormFieldsRegistered;
 use Pedreiro\Facades\Form;
 use Support\Facades\Support as SupportFacade;
 use Pedreiro\Services\RiCaService;
+use Pedreiro\Http\Middleware\isAjax;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
@@ -130,6 +131,7 @@ class PedreiroServiceProvider extends ServiceProvider
                 ]
             );
         }
+        $router->aliasMiddleware('isAjax', isAjax::class);
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pedreiro');
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Muleta\Traits\Models\ValidatingTrait;
 use Pedreiro\Support\ValueCollection;
-use Support\Recursos\Cacheable\CacheableEloquent;
+use Muleta\Recursos\Cacheable\CacheableEloquent;
 
 abstract class Value extends Model
 {

@@ -59,12 +59,12 @@
 @stop
 
 @section('content_top_nav_right')
-<li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">0</span>
-        </a>
       @if (Route::has('profile.transmissor.messages.index'))
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">199</span>
+        </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <?php /*
           <a href="#" class="dropdown-item">
