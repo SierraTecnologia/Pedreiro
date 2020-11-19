@@ -52,7 +52,6 @@ class SystemMount
     public function loadMenuForAdminlte($event)
     {
         if (! config('siravel.packagesMenu', false)) {
-
             return ;
         }
 

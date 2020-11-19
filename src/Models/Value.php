@@ -7,9 +7,9 @@ namespace Pedreiro\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Muleta\Recursos\Cacheable\CacheableEloquent;
 use Muleta\Traits\Models\ValidatingTrait;
 use Pedreiro\Support\ValueCollection;
-use Muleta\Recursos\Cacheable\CacheableEloquent;
 
 abstract class Value extends Model
 {

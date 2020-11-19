@@ -22,9 +22,9 @@ use Pedreiro\Elements\FormFields\KeyValueJsonFormField;
 use Pedreiro\Elements\FormFields\MultipleImagesWithAttrsFormField;
 use Pedreiro\Events\FormFieldsRegistered;
 use Pedreiro\Facades\Form;
-use Support\Facades\Support as SupportFacade;
-use Pedreiro\Services\RiCaService;
 use Pedreiro\Http\Middleware\isAjax;
+use Pedreiro\Services\RiCaService;
+use Support\Facades\Support as SupportFacade;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
@@ -187,7 +187,8 @@ class PedreiroServiceProvider extends ServiceProvider
         $loader->alias('Siravel', \Pedreiro\Facades\RiCaServiceFacade::class);
         $loader->alias('RiCaService', \Pedreiro\Facades\RiCaServiceFacade::class);
         $this->app->bind(
-            'RiCaService', function ($app) {
+            'RiCaService',
+            function ($app) {
                 return new RiCaService();
             }
         );

@@ -7,18 +7,18 @@ namespace Pedreiro\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 // // // @Arquivo no existe
-use Muleta\Traits\Models\HasSlug;
+use Muleta\Recursos\Cacheable\CacheableEloquent;
 // // // @Arquivo no existe
-use Muleta\Traits\Models\HasTranslations;
+use Muleta\Traits\Models\HasSlug;
 // // @Arquivo no existe
+use Muleta\Traits\Models\HasTranslations;
+// @Arquivo no existe
 use Muleta\Traits\Models\ValidatingTrait;
 // @Arquivo no existe
 use Spatie\EloquentSortable\Sortable;
-// @Arquivo no existe
-use Spatie\EloquentSortable\SortableTrait;
 // @todo Add Essa lib Trait 'Spatie\EloquentSortable\SortableTrait' not found
+use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\SlugOptions;
-use Muleta\Recursos\Cacheable\CacheableEloquent;
 
 /**
  * Pedreiro\Models\Attribute.
