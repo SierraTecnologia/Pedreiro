@@ -27,7 +27,6 @@ use Pedreiro\Collections\Base as BaseCollection;
 use Pedreiro\Exceptions\Exception;
 
 use Session;
-use Support\Services\ModelService;
 use SupportURL;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use URL;
@@ -593,6 +592,15 @@ abstract class Base extends Model //Ardent
         return false;
     }
 
+    public static function firstOrCreateAndAssociate($data, $associate = false): self
+    {
+        $entity = static::firstOrCreate($data);
+        if ($associate) {
+            static::associate($entity, $associate);
+        }
+
+        return $entity;
+    }
     /**
      *
      */
@@ -608,16 +616,16 @@ abstract class Base extends Model //Ardent
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
 
-        if (! $eloquentEntityForModel = ModelService::make(static::class)) {
-            dd('Nao deeria cair aqui debug');
-            $entity = static::firstOrCreate($data);
-            if ($associate) {
-                static::associate($entity, $associate);
+        // Caso não tenho o Support ModelService
+        if (!class_exists(\Support\Services\ModelService::class) || !$eloquentEntityForModel = \Support\Services\ModelService::make(static::class)) {
+
+            // Temp - Caso seja a 2 condicao da erro
+            if (class_exists(\Support\Services\ModelService::class) && !$eloquentEntityForModel) {
+                dd('Nao deeria cair aqui debug');
             }
 
-            return $entity;
+            return static::firstOrCreateAndAssociate($data, $associate);
         }
-        
 
         $data = DbalInclusor::includeDataFromEloquentEntity($eloquentEntityForModel, $data, $keyName);
 
@@ -662,12 +670,7 @@ abstract class Base extends Model //Ardent
             return $entity;
         }
 
-        $entity = static::firstOrCreate($data);
-        if ($associate) {
-            static::associate($entity, $associate);
-        }
-
-        return $entity;
+        return static::firstOrCreateAndAssociate($data, $associate);
     }
 
 
