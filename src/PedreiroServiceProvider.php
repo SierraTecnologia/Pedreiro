@@ -38,7 +38,12 @@ class PedreiroServiceProvider extends ServiceProvider
 
         'Flash' => \Laracasts\Flash\Flash::class,
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+
+        /**
+         * Listagens
+         */
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        
         'Active' => HieuLe\Active\Facades\Active::class,
 
         'Translation' => Translation\Facades\Translation::class,
@@ -57,6 +62,12 @@ class PedreiroServiceProvider extends ServiceProvider
             \Laracasts\Flash\FlashServiceProvider::class,
     
             JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
+
+            /**
+             * Listagens
+             */
+            \Yajra\DataTables\DataTablesServiceProvider::class,
+
             /**
              * VEio pelo Facilitador
              **/
