@@ -143,7 +143,7 @@ $('.preview-toggle').bind('click', function () {
     }
 });
 
-$('#frame').load(function () {
+$('#frame').on('load',function(){
     var frameBody = $('#frame').contents().find('body');
     $('a', frameBody).click(function(e){
         e.preventDefault();

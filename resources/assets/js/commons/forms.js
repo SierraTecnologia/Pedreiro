@@ -36,7 +36,7 @@ var _redactorConfig = {
     ]
 };
 
-$(window).load(function() {
+$(window).on('load',function(){
 
     $('.pull-down').each(function() {
         var height = 300 - $(this).siblings('.thumbnail').height() - $(this).height() - 48;

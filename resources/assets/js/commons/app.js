@@ -2,7 +2,6 @@
 require('./cms');
 require('./forms');
 require('./modules');
-require('./dashboard-chart');
 require('./dropzone-custom');
 require('./slugify');
 

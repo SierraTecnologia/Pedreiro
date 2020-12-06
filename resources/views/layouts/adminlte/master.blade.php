@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
     
+
+    <script type="text/javascript">
+        var _token = '{!! csrf_token() !!}';
+        var _url = '{!! url("/") !!}';
+        var _cms = '{!! url("/") !!}';
+        var _pixabayKey = '{!! config('cms.pixabay', '') !!}';
+        var _appTimeZone = '{!! config('app.timezone', 'UTC') !!}';
+        var _apiKey = '{!! config("cms.api-key") !!}';
+        var _apiToken = '{!! config("cms.api-token") !!}';
+    </script>
 @endpush
 
 @section('js')

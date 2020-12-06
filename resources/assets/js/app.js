@@ -1,5 +1,4 @@
-
-
+require('./includes/redactor.min.js');
 
 require('./commons/app');
 
