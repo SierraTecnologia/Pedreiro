@@ -18,20 +18,20 @@ trait TemplateControllerTrait
      */
     public $controller;
 
-    // /**
-    //  * The HTML title, shown in header of the vie. Ex: News Posts
-    //  *
-    //  * @var string
-    //  */
-    // public $title;
+    /**
+     * The HTML title, shown in header of the vie. Ex: News Posts
+     *
+     * @var string
+     */
+    public $title;
 
-    // /**
-    //  * The text description of what this controller manages, shown in the header.
-    //  * Ex: "Relevant news about the brand"
-    //  *
-    //  * @var string
-    //  */
-    // public $description;
+    /**
+     * The text description of what this controller manages, shown in the header.
+     * Ex: "Relevant news about the brand"
+     *
+     * @var string
+     */
+    public $description;
 
     //---------------------------------------------------------------------------
     // Constructing
