@@ -1,4 +1,7 @@
 <?php
+/**
+ * Arquivo destinado a criar o crud nos controllers
+ */
 
 namespace Pedreiro;
 
@@ -12,6 +15,7 @@ trait CrudController
 {
     use \Muleta\Traits\Controllers\Exportable;
     use \Pedreiro\Traits\CrudModelUtilsTrait;
+    use \Pedreiro\Traits\TemplateControllerTrait;
 
     /**
      * The model's relationships that the crud forms may need to use.
