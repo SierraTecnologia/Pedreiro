@@ -45,14 +45,14 @@ class MenuRepository
 
     public static function createFromArray(array $array): MenuRepository
     {
-        $arrayFromMenuEntitys = [];
+        $arrayFromMenuEntities = [];
         foreach ($array as $value) {
             if ($createMenuArray = Menu::createFromArray($value)) {
-                $arrayFromMenuEntitys[] = $createMenuArray;
+                $arrayFromMenuEntities[] = $createMenuArray;
             }
         }
 
-        return new self($arrayFromMenuEntitys);
+        return new self($arrayFromMenuEntities);
     }
 
     public static function createFromMultiplosArray(Collection $array): MenuRepository
