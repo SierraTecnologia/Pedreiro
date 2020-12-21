@@ -91,7 +91,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        dd($exception);
+        // Caso não esteja em desenvolvimento não dispara erro
+        if (config('app.env') == 'development' || config('app.env') == 'local' || config('app.env') == 'dev') {
+            dd($exception);
+        }
+
         // Check for custom handling
         if ($response = $this->handle404s($request, $exception)) {
             return $response;
