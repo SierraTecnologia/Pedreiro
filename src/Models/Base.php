@@ -617,10 +617,10 @@ abstract class Base extends Model //Ardent
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
 
         // Caso não tenho o Support ModelService
-        if (!class_exists(\Support\Services\ModelService::class) || !$eloquentEntityForModel = \Support\Services\ModelService::make(static::class)) {
+        if (! class_exists(\Support\Services\ModelService::class) || ! $eloquentEntityForModel = \Support\Services\ModelService::make(static::class)) {
 
             // Temp - Caso seja a 2 condicao da erro
-            if (class_exists(\Support\Services\ModelService::class) && !$eloquentEntityForModel) {
+            if (class_exists(\Support\Services\ModelService::class) && ! $eloquentEntityForModel) {
                 dd('Nao deeria cair aqui debug');
             }
 

@@ -2,9 +2,8 @@
 
 namespace Pedreiro\Traits;
 
-use Illuminate\View\View;
-use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 
 trait CrudModelUtilsTrait
 {

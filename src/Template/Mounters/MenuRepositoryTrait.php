@@ -5,8 +5,6 @@
 
 namespace Pedreiro\Template\Mounters;
 
-use Exception;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
@@ -14,7 +12,6 @@ use Illuminate\Support\Str;
  */
 trait MenuRepositoryTrait
 {
-
     public static function generateMergeMenus($mergeArray, $groupParent = '', $indice, $values)
     {
         $group = $groupParent;
@@ -58,6 +55,7 @@ trait MenuRepositoryTrait
                     $values['group'] = $group . '.' . $values[$indice]['group'];
                 }
             }
+
             return [$values];
         }
         
@@ -71,6 +69,7 @@ trait MenuRepositoryTrait
                     }
                 }
             }
+
             return $values;
         }
 
