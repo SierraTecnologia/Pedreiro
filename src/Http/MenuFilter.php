@@ -34,9 +34,9 @@ class MenuFilter implements FilterInterface
         // dd($item);
         $user = Auth::user();
 
-        if (! $this->verifySection($item, $user)) {
-            return false;
-        }
+        // if (! $this->verifySection($item, $user)) {
+        //     return false;
+        // }
         
         // if (!$this->verifyLevel($item, $user)) {
         //     return false;
