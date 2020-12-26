@@ -5,6 +5,7 @@ namespace Pedreiro\Template\Layout;
 use Request;
 use Support\Routing\Wildcard;
 use URL;
+use Illuminate\Support\Facades\App;
 
 /**
  * Generate default breadcrumbs and provide a store where they can be
@@ -73,7 +74,7 @@ class Breadcrumbs
             if (! ($controller = $router->detectController())) {
                 continue;
             }
-            $controller = new $controller;
+            $controller = App::make($controller);
 
             // Add controller to breadcrumbs
             $breadcrumbs[URL::to($url)] = strip_tags($controller->title(), '<img>');

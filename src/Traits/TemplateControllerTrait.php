@@ -1,4 +1,9 @@
 <?php
+/**
+ * @todo
+ * 
+ * acho que ta repetido
+ */
 
 namespace Pedreiro\Traits;
 
