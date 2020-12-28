@@ -2,10 +2,10 @@
 
 namespace Pedreiro\Template\Layout;
 
+use Illuminate\Support\Facades\App;
 use Request;
 use Support\Routing\Wildcard;
 use URL;
-use Illuminate\Support\Facades\App;
 
 /**
  * Generate default breadcrumbs and provide a store where they can be

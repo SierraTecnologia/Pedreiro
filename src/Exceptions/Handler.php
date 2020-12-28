@@ -147,7 +147,7 @@ class Handler extends ExceptionHandler
             dd('Error Handler', $exception);
         }
         // Caso não esteja em desenvolvimento não dispara erro
-        else if (config('app.env') == 'development' || config('app.env') == 'local' || config('app.env') == 'dev') {
+        elseif (config('app.env') == 'development' || config('app.env') == 'local' || config('app.env') == 'dev') {
             dd($exception);
         }
 

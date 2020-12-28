@@ -39,7 +39,7 @@ class MenuFilter implements FilterInterface
         }
         
         // @todo
-        if (!$this->verifyLevel($item, $user)) {
+        if (! $this->verifyLevel($item, $user)) {
             return false;
         }
 
