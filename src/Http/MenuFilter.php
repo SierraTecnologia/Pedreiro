@@ -39,9 +39,9 @@ class MenuFilter implements FilterInterface
         }
         
         // @todo
-        // if (!$this->verifyLevel($item, $user)) {
-        //     return false;
-        // }
+        if (!$this->verifyLevel($item, $user)) {
+            return false;
+        }
 
         // if (!$this->verifySpace($item, $user)) {
         //     return false;
