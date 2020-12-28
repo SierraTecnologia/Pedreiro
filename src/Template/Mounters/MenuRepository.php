@@ -7,7 +7,6 @@ namespace Pedreiro\Template\Mounters;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * MenuRepository helper to make table and object form mapping easy.
@@ -159,5 +158,4 @@ class MenuRepository
         // dd($byGroup, $this->menus);
         return $byGroup;
     }
-
 }

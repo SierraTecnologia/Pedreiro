@@ -2,13 +2,10 @@
 
 namespace Pedreiro\Services;
 
-use Yajra\DataTables\Services\DataTable;
-use Illuminate\Database\Eloquent\Collection;
-
 use Yajra\DataTables\Html\Button;
+
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Services\DataTable;
 
 class DataTableService extends DataTable
 {
@@ -115,7 +112,6 @@ class DataTableService extends DataTable
     {
         $returnColumns = [];
         foreach ($this->getIndexFields() as $column) {
-
             $returnColumns[] = Column::make($column['name']);
             // Column::make('id'),
             // Column::make('name'),
@@ -128,6 +124,7 @@ class DataTableService extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center');
+
         return $returnColumns;
     }
 
@@ -174,5 +171,4 @@ class DataTableService extends DataTable
     // </script>";
     //     return $html;
     // }
-
 }
