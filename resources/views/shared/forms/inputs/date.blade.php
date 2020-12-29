@@ -1,7 +1,7 @@
-@include('crud-forms::inputs.label')
+@include('pedreiro::inputs.label')
 
 <div class="input-group date">
-    @if (\Illuminate\Support\Facades\Config::get('crud-forms.button_icons'))
+    @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>

@@ -8,7 +8,7 @@ if (old($field['name'])) {
 
 ?>
 
-@include('crud-forms::inputs.label')
+@include('pedreiro::inputs.label')
 
 <select class="form-control select2"
         multiple="multiple"

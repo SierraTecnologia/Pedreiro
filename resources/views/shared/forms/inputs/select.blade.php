@@ -8,7 +8,7 @@ if (old($field['name'])) {
 
 ?>
 
-@include('crud-forms::inputs.label')
+@include('pedreiro::inputs.label')
 
 <select class="form-control select2" id="{{ $field['name'] }}" placeholder="Select..." name="{{ $field['name'] }}">
     @foreach($relationshipOptions["{$field['relationship']}"] as $key=>$val)

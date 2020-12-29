@@ -1,4 +1,4 @@
-@include('crud-forms::inputs.label')
+@include('pedreiro::inputs.label')
 
 <input type="text"
        id="{{ $field['name'] }}"
