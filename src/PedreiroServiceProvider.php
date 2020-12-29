@@ -350,12 +350,12 @@ class PedreiroServiceProvider extends ServiceProvider
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'support'),
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'pedreiro'),
             ],
             ['lang',  'sitec', 'sitec-lang', 'translations']
         );
 
         // Load translations
-        $this->loadTranslationsFrom($this->getResourcesPath('lang'), 'support');
+        $this->loadTranslationsFrom($this->getResourcesPath('lang'), 'pedreiro');
     }
 }

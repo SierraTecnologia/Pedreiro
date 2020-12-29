@@ -30,7 +30,7 @@
                         {{-- Cancel and go back to resource show --}}
                         <div class="col-sm-2">
                             <a href="{{ route("$route.show", ['id' => $entity]) }}" class="btn btn-warning btn-block">
-                                <i class='fa fa-ban'></i> Cancel
+                                <i class='fa fa-ban'></i> {{ __('pedreiro::generic.cancel') }}
                             </a>
                         </div>
 

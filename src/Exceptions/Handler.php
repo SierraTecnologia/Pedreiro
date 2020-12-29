@@ -146,10 +146,10 @@ class Handler extends ExceptionHandler
         } elseif (config('app.debug') && $this->shouldReport($exception)) {
             dd('Error Handler', $exception);
         }
-        // Caso não esteja em desenvolvimento não dispara erro
-        elseif (config('app.env') == 'development' || config('app.env') == 'local' || config('app.env') == 'dev') {
-            dd($exception);
-        }
+        // // Caso não esteja em desenvolvimento não dispara erro
+        // elseif (config('app.env') == 'development' || config('app.env') == 'local' || config('app.env') == 'dev') {
+        //     dd($exception);
+        // }
 
 
         return parent::render($request, $exception);
