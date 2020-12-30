@@ -8,7 +8,7 @@ if (old($field['name'])) {
 
 ?>
 
-@include('pedreiro::inputs.label')
+@include('pedreiro::shared.forms.inputs.label')
 
 <select class="form-control select2" id="{{ $field['name'] }}" placeholder="Select..." name="{{ $field['name'] }}">
     @foreach($relationshipOptions["{$field['relationship']}"] as $key=>$val)

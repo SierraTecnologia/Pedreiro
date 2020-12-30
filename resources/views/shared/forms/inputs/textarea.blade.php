@@ -1,4 +1,4 @@
-@include('pedreiro::inputs.label')
+@include('pedreiro::shared.forms.inputs.label')
 
 <textarea id="{{ $field['name'] }}"
           class="form-control"

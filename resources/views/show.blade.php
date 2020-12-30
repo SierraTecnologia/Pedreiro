@@ -13,7 +13,7 @@
                         @foreach ($fields as $field)
                             <li>
                                 <strong>{{ $field['label'] }}</strong>:
-                                @include( "pedreiro::displays.{$field['type']}")
+                                @include( "pedreiro::shared.forms.displays.{$field['type']}")
                             </li>
 
                         @endforeach

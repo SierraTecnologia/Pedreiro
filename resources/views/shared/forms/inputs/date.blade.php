@@ -1,4 +1,4 @@
-@include('pedreiro::inputs.label')
+@include('pedreiro::shared.forms.inputs.label')
 
 <div class="input-group date">
     @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
