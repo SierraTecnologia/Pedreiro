@@ -87,6 +87,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if ($withPagination && $withPagination != 0)
+                    {{ $entities->links() }}
+                @endif
             </div>
         </div>
     </div>

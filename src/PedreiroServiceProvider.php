@@ -7,7 +7,7 @@ use Config;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Events\RouteMatched;
-
+use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
@@ -113,6 +113,12 @@ class PedreiroServiceProvider extends ServiceProvider
     
     public function boot(Router $router, Dispatcher $event)
     {
+        // Paginator Bootstrap
+        // @todo tava dando erro
+        // syntax error, unexpected ''pagination.previous'' (T_CONSTANT_ENCAPSED_STRING), expecting ';' or ',' (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php) (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php)
+        // Paginator::useBootstrap();
+
+
         $this->loadTranslations();
         if ($this->app->runningInConsole()) {
             $this->publishes(

@@ -28,10 +28,16 @@ class Menu
 
     protected $url = null;
     protected $route = null;
+
+    /**
+     * Somente ira aparecer para as features selecionadas
+     */
     protected $feature = null;
+
     protected $space = null;
     protected $section = null;
     protected $dontSection = null;
+    
     /**
      *
      */
@@ -57,6 +63,12 @@ class Menu
 
 
 
+    /**
+     * 0 -> Desabilitado
+     * 1 -> Habilitado
+     * 2 -> Em Desenvolvimento
+     */
+    protected $dev_status = 1;
 
     /**
      *  'text'    => 'Finder',
@@ -179,6 +191,8 @@ class Menu
             'topnav_right',
             'data',
             'active',
+
+            'dev_status',
         ];
     }
 
@@ -426,6 +440,15 @@ class Menu
     public function setActive($value)
     {
         $this->active = $value;
+    }
+
+    public function getDevStatus(): int
+    {
+        return $this->dev_status;
+    }
+    public function setDevStatus(int $value)
+    {
+        $this->dev_status = $value;
     }
 
     

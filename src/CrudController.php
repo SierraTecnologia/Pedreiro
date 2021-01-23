@@ -51,6 +51,13 @@ trait CrudController
      * @var bool
      */
     protected $withTrashed = false;
+    
+    /**
+     * If equals ZERO then not have pagination
+     *
+     * @var integer
+     */
+    protected int $withPagination = 0;
 
     /**
      * Validation rules.
@@ -94,9 +101,17 @@ trait CrudController
     public function index(Request $request)
     {
         if ($this->withTrashed) {
-            $entities = $this->model->withTrashed()->get();
+            if ($this->withPagination && $this->withPagination != 0) {
+                $entities = $this->model->withTrashed()->paginate($this->withPagination);
+            } else {
+                $entities = $this->model->withTrashed()->get();
+            }
         } else {
-            $entities = $this->model->all();
+            if ($this->withPagination && $this->withPagination != 0) {
+                $entities = $this->model->paginate($this->withPagination);
+            } else {
+                $entities = $this->model->all();
+            }
         }
 
         $this->loadModelRelationships($entities);
@@ -107,6 +122,8 @@ trait CrudController
         $withTrashed = $this->withTrashed;
         $bladeLayout = $this->bladeLayout;
 
+        $withPagination = $this->withPagination;
+
         return view(
             'pedreiro::index',
             compact(
@@ -115,6 +132,7 @@ trait CrudController
                 'title',
                 'route',
                 'withTrashed',
+                'withPagination',
                 'bladeLayout'
             )
         );
