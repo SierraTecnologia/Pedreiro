@@ -55,7 +55,7 @@ trait CrudController
     /**
      * If equals ZERO then not have pagination
      *
-     * @var integer
+     * @var int
      */
     protected int $withPagination = 0;
 
