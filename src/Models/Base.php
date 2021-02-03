@@ -25,7 +25,7 @@ use Muleta\Utils\Modificators\ArrayModificator;
 use Pedreiro;
 use Pedreiro\Collections\Base as BaseCollection;
 use Pedreiro\Exceptions\Exception;
-
+use Illuminate\Database\Eloquent\Builder;
 use Session;
 use SupportURL;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -989,6 +989,21 @@ abstract class Base extends Model //Ardent
      * Gatinho para funcionar o ordered pra quem nao tem ordenacao
      */
     public function scopeOrderedForce($query)
+    {
+        if ($this->usesTimestamps()) {
+            $query->orderBy($this->getTable().'.created_at', 'desc');
+        }
+
+        return $query;
+    }
+
+    /**
+     * Orders instances of this model in the admin
+     *
+     * @param  Illuminate\Database\Query\Builder $query
+     * @return void
+     */
+    public function scopeOrdered(Builder $query, string $direction = 'asc')
     {
         if ($this->usesTimestamps()) {
             $query->orderBy($this->getTable().'.created_at', 'desc');

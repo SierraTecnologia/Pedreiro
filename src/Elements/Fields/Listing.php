@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Request;
 use Support;
-use Support\Http\Controllers\Admin\Base;
+use Pedreiro\Http\Controllers\Admin\Base;
 use SupportURL;
 use URL;
 use View;

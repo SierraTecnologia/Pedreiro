@@ -38,10 +38,14 @@ class MenuFilter implements FilterInterface
             return false;
         }
         
-        // // @todo
-        // if (! $this->verifyLevel($item, $user)) {
-        //     return false;
-        // }
+        //
+        if (\Illuminate\Support\Facades\Config::get('app.env')=='production' && !$this->verifyLevel($item, $user)) {
+            return false;
+        }
+
+        if ($this->isInDevelopment($item, $user)) {
+            return false;
+        }
 
         // if (!$this->verifySpace($item, $user)) {
         //     return false;
@@ -71,6 +75,18 @@ class MenuFilter implements FilterInterface
         }
 
         return true;
+    }
+
+    private function isInDevelopment($item, $user)
+    {
+        if (isset($item['dev_status']) && $item['dev_status'] == 0) {
+            return true;
+        }
+        if (isset($item['dev_status']) && $item['dev_status'] == 2 && \Illuminate\Support\Facades\Config::get('app.env')=='production') {
+            return true;
+        }
+
+        return false;
     }
 
     private function verifySpace($item, $user)
