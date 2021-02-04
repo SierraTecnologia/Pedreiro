@@ -18,7 +18,7 @@ class SystemMount
         return [
             \Support\SupportServiceProvider::class,
             \Porteiro\PorteiroProvider::class,
-            \Pedreiro\PedreiroProvider::class,
+            \Pedreiro\PedreiroServiceProvider::class,
             
             \Informate\InformateProvider::class,
             \Translation\TranslationProvider::class,

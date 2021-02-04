@@ -90,6 +90,34 @@ class PedreiroServiceProvider extends ServiceProvider
         ];
     
     public static $menuItens = [
+        [
+            'text'        => 'Painel',
+            'url'         => 'painel',
+            // 'dontSection'     => 'painel',
+            'topnav' => true,
+            'active' => ['painel', 'painel*', 'regex:@^painel/[0-9]+$@'],
+        ],
+        [
+            'text'        => 'Master',
+            'url'         => 'master',
+            // 'dontSection'     => 'master',
+            'topnav' => true,
+            'active' => ['master', 'master*', 'regex:@^master/[0-9]+$@'],
+        ],
+        [
+            'text'        => 'Administração',
+            'url'         => 'admin',
+            // 'dontSection'     => 'admin',
+            'topnav' => true,
+            'active' => ['admin', 'admin*', 'regex:@^admin/[0-9]+$@'],
+        ],
+        [
+            'text'        => 'RiCa',
+            'url'         => 'rica',
+            // 'dontSection'     => 'rica',
+            'topnav' => true,
+            'active' => ['rica', 'rica*', 'regex:@^rica/[0-9]+$@'],
+        ],
     ];
 
     
@@ -187,7 +215,24 @@ class PedreiroServiceProvider extends ServiceProvider
 
 
         $this->registerViewComposers();
+
+
+        $this->eloquentSvents();
     }
+    /**
+     * Delegate events to Decoy observers
+     *
+     * @return void
+     */
+    protected function eloquentSvents()
+    {
+        $this->app['events']->listen(
+            'eloquent.saved:*',
+            '\Pedreiro\Observers\ManyToManyChecklist'
+        );
+    }
+
+
 
     public function register()
     {
@@ -201,7 +246,7 @@ class PedreiroServiceProvider extends ServiceProvider
             }
         );
         // $this->app->bind('pedreiro', Pedreiro::class);
-        $loader->alias('Siravel', \Pedreiro\Facades\RiCaServiceFacade::class);
+        $loader->alias('Siravel', \Pedreiro\Facades\RiCaServiceFacade::class); // @todo ??? que porra é essa ?
         $loader->alias('RiCaService', \Pedreiro\Facades\RiCaServiceFacade::class);
         $this->app->bind(
             'RiCaService',
@@ -305,9 +350,9 @@ class PedreiroServiceProvider extends ServiceProvider
         $components = ['title', 'text', 'button'];
 
         foreach ($components as $component) {
-            $class = 'Support\\Elements\\Alert\\'.ucfirst(Str::camel($component)).'Component';
+            $class = 'Pedreiro\\Elements\\Alert\\'.ucfirst(Str::camel($component)).'Component';
 
-            $this->app->bind("facilitador.alert.components.{$component}", $class);
+            $this->app->bind("pedreiro.alert.components.{$component}", $class);
         }
     }
 
@@ -318,9 +363,9 @@ class PedreiroServiceProvider extends ServiceProvider
     {
         // Register alerts
         View::composer(
-            'support::*',
+            'pedreiro::*',
             function ($view) {
-                $view->with('alerts', SupportFacade::alerts());
+                $view->with('alerts', PedreiroFacade::alerts());
             }
         );
     }

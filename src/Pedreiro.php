@@ -21,7 +21,7 @@ use ReflectionClass;
 use Request;
 use Session;
 use Siravel\Models\Negocios\Page;
-use Support\Events\AlertsCollection;
+use Pedreiro\Events\AlertsCollection;
 use View;
 
 class Pedreiro
