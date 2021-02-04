@@ -39,7 +39,7 @@ class MenuFilter implements FilterInterface
         }
         
         //
-        if (\Illuminate\Support\Facades\Config::get('app.env')=='production' && !$this->verifyLevel($item, $user)) {
+        if (\Illuminate\Support\Facades\Config::get('app.env') == 'production' && ! $this->verifyLevel($item, $user)) {
             return false;
         }
 
@@ -82,7 +82,7 @@ class MenuFilter implements FilterInterface
         if (isset($item['dev_status']) && $item['dev_status'] == 0) {
             return true;
         }
-        if (isset($item['dev_status']) && $item['dev_status'] == 2 && \Illuminate\Support\Facades\Config::get('app.env')=='production') {
+        if (isset($item['dev_status']) && $item['dev_status'] == 2 && \Illuminate\Support\Facades\Config::get('app.env') == 'production') {
             return true;
         }
 

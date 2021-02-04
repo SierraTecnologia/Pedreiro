@@ -3,7 +3,6 @@ namespace Tests\Integration;
 
 use Facilitador;
 use Tests\TestCase;
-use Facilitador\Models\Element;
 
 class ElementsLocalizationTest extends TestCase
 {
@@ -49,8 +48,9 @@ class ElementsLocalizationTest extends TestCase
     public function testSavedValueQuarantined()
     {
         $response = $this->post(
-            'admin/elements/es', [
-            'homepage|marquee|title' => 'Spanish'
+            'admin/elements/es',
+            [
+            'homepage|marquee|title' => 'Spanish',
             ]
         );
 
@@ -70,8 +70,9 @@ class ElementsLocalizationTest extends TestCase
     public function testSavedValue()
     {
         $response = $this->post(
-            'admin/elements/es', [
-            'homepage|marquee|title' => 'Spanish'
+            'admin/elements/es',
+            [
+            'homepage|marquee|title' => 'Spanish',
             ]
         );
 
@@ -83,5 +84,4 @@ class ElementsLocalizationTest extends TestCase
         $element = (string) Facilitador::el('homepage.marquee.title');
         $this->assertEquals('Spanish', $element);
     }
-
 }

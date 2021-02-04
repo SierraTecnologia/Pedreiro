@@ -4,7 +4,6 @@ namespace Tests\Integration;
 use App\Article;
 use App\Recipe;
 use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
 
 class FileTest extends TestCase
 {
@@ -52,7 +51,6 @@ class FileTest extends TestCase
      */
     public function createRecipeData()
     {
-
         return [
             'title' => 'Test Recipe',
             'locale' => 'en',
@@ -70,6 +68,7 @@ class FileTest extends TestCase
     public function createImageOn($article)
     {
         $this->createVirtualFile('test.jpg');
+
         return $article->images()->create(
             [
             'file' => '/uploads/test.jpg',
@@ -141,12 +140,13 @@ class FileTest extends TestCase
 
         // Submit a save
         $response = $this->post(
-            'admin/articles/'.$article->id.'/edit', [
+            'admin/articles/'.$article->id.'/edit',
+            [
             'title' => 'Ok?',
             'images' => [
                 $image->id => [
-                    'name' => 'image'
-                ]
+                    'name' => 'image',
+                ],
             ],
             ]
         );
@@ -191,7 +191,7 @@ class FileTest extends TestCase
 
         $recipe = factory(Recipe::class)->create(
             [
-            'file' => '/uploads/test.jpg'
+            'file' => '/uploads/test.jpg',
             ]
         );
 
@@ -215,12 +215,13 @@ class FileTest extends TestCase
 
         // Submit a save
         $response = $this->post(
-            'admin/articles/'.$article->id.'/edit', [
+            'admin/articles/'.$article->id.'/edit',
+            [
             'images' => [
                 $image->id => [
                     'name' => '',
                     'file' => '',
-                ]
+                ],
             ],
             '_save' => 'save',
             ]
@@ -245,14 +246,15 @@ class FileTest extends TestCase
 
         $recipe = factory(Recipe::class)->create(
             [
-            'file' => '/uploads/test.jpg'
+            'file' => '/uploads/test.jpg',
             ]
         );
 
         $this->assertNotEmpty($recipe->file);
 
         $response = $this->post(
-            'admin/recipes/'.$recipe->id.'/edit', [
+            'admin/recipes/'.$recipe->id.'/edit',
+            [
             'file' => '',
             '_save' => 'save',
             ]
@@ -263,5 +265,4 @@ class FileTest extends TestCase
         $this->assertEmpty($recipe->fresh()->file);
         $this->assertFalse($this->disk->has($path));
     }
-
 }

@@ -3,9 +3,8 @@ namespace Tests\Integration;
 
 use App\Article;
 use App\Tag;
-use Tests\TestCase;
 use Pedreiro\Template\Input\Search;
-use Illuminate\Http\UploadedFile;
+use Tests\TestCase;
 
 class ListingTest extends TestCase
 {
@@ -44,11 +43,14 @@ class ListingTest extends TestCase
         list($first_article, $second_article) = $articles;
 
         $response = $this->json(
-            'PUT', 'admin/articles/' . $first_article->id, [
+            'PUT',
+            'admin/articles/' . $first_article->id,
+            [
             'id' => $first_article->id,
             'position' => 2,
-            'public' => true
-            ], $this->ajaxHeader()
+            'public' => true,
+            ],
+            $this->ajaxHeader()
         );
 
         $this->assertEquals(2, $first_article->fresh()->position);
@@ -77,16 +79,19 @@ class ListingTest extends TestCase
     {
         $article = factory(Article::class)->create(
             [
-            'public' => 0
+            'public' => 0,
             ]
         );
 
         $response = $this->json(
-            'PUT', 'admin/articles/' . $article->id, [
+            'PUT',
+            'admin/articles/' . $article->id,
+            [
             'id' => 1,
             'position' => 1,
-            'public' => true
-            ], $this->ajaxHeader()
+            'public' => true,
+            ],
+            $this->ajaxHeader()
         );
 
         $this->assertEquals(1, $article->fresh()->public);
@@ -102,11 +107,14 @@ class ListingTest extends TestCase
         $article = factory(Article::class)->create();
 
         $response = $this->json(
-            'PUT', 'admin/articles/' . $article->id, [
+            'PUT',
+            'admin/articles/' . $article->id,
+            [
             'id' => 1,
             'position' => 1,
-            'public' => false
-            ], $this->ajaxHeader()
+            'public' => false,
+            ],
+            $this->ajaxHeader()
         );
 
         $this->assertEquals(0, $article->fresh()->public);
@@ -175,5 +183,4 @@ class ListingTest extends TestCase
         // Checkt that the edit view is allowed
         $this->get('admin/tags/'.$tag->id.'/edit')->assertStatus(200);
     }
-
 }

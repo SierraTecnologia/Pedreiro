@@ -50,7 +50,7 @@ class ManyToManyChecklist
         // Make sure the relationship exists on the model.  This also prevents the
         // wrong model (who might also have an `saved` callback) from trying to have
         // this data saved on it
-        if (!method_exists($model, $relationship)) {
+        if (! method_exists($model, $relationship)) {
             return;
         }
 
@@ -58,7 +58,8 @@ class ManyToManyChecklist
         // is globally set for all of Decoy;
         $ids = request(self::PREFIX.$relationship);
         $ids = array_filter(
-            $ids, function ($id) {
+            $ids,
+            function ($id) {
                 return $id > 0;
             }
         );
