@@ -24,7 +24,7 @@ class RiCaService
 
     public function __construct()
     {
-        $this->imageRepo = app(ImageRepository::class);
+        // $this->imageRepo = app(ImageRepository::class); @todo @bug removi
         $this->backendRoute = config('siravel.backend-route-prefix', 'siravel');
     }
 
