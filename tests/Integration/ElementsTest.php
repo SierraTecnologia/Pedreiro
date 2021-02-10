@@ -1,9 +1,8 @@
 <?php
 namespace Tests\Integration;
 
-use Facilitador\Models\Element;
 use Facilitador;
-use Illuminate\Http\UploadedFile;
+use Facilitador\Models\Element;
 use Tests\TestCase;
 
 class ElementsTest extends TestCase
@@ -21,7 +20,8 @@ class ElementsTest extends TestCase
 
         // Disable localization for these tests
         \Illuminate\Support\Facades\Config::get()->set(
-            'facilitador.site.locales', [
+            'facilitador.site.locales',
+            [
             'en' => 'English',
             ]
         );
@@ -60,7 +60,8 @@ class ElementsTest extends TestCase
     public function testTextFieldSave()
     {
         $response = $this->post(
-            'admin/elements', [
+            'admin/elements',
+            [
             'homepage|marquee|title' => 'Test',
             'images' => [
                 '_xxxx' => [
@@ -109,7 +110,8 @@ class ElementsTest extends TestCase
 
         // Make a post request without changing the title
         $response = $this->post(
-            'admin/elements', [
+            'admin/elements',
+            [
             'images' => [
                 '_xxxx' => [
                     'name' => 'homepage|marquee|image',
@@ -130,7 +132,9 @@ class ElementsTest extends TestCase
     public function testImageFieldUpload()
     {
         $response = $this->call(
-            'POST', 'admin/elements', [
+            'POST',
+            'admin/elements',
+            [
             'images' => [
                 '_xxxx' => [
                     'name' => 'homepage|marquee|image',
@@ -153,14 +157,18 @@ class ElementsTest extends TestCase
     public function testFileFieldUpload()
     {
         $response = $this->call(
-            'POST', 'admin/elements', [
+            'POST',
+            'admin/elements',
+            [
             'images' => [
                 '_xxxx' => [
                     'name' => 'homepage|marquee|image',
                 ],
             ],
-            ], [], [
-            'homepage|marquee|file' => $this->createUploadedFile('file.jpg')
+            ],
+            [],
+            [
+            'homepage|marquee|file' => $this->createUploadedFile('file.jpg'),
             ]
         );
 
@@ -176,7 +184,6 @@ class ElementsTest extends TestCase
      */
     public function testImageFieldDelete()
     {
-
         $this->createUploadedFile('test.jpg');
 
         $element = factory(Element::class)->create(
@@ -198,14 +205,18 @@ class ElementsTest extends TestCase
         );
 
         $response = $this->call(
-            'POST', 'admin/elements', [
+            'POST',
+            'admin/elements',
+            [
             'images' => [
                 $image->id => [
                     'name' => 'homepage|marquee|image',
                     'file' => '',
                 ],
             ],
-            ], [], [
+            ],
+            [],
+            [
             'images' => [
                 $image->id => [
                     'file' => '',
@@ -238,7 +249,9 @@ class ElementsTest extends TestCase
         );
 
         $response = $this->call(
-            'POST', 'admin/elements', [
+            'POST',
+            'admin/elements',
+            [
             'homepage|marquee|file' => '',
             'images' => [
                 '_xxxx' => [
@@ -266,7 +279,8 @@ class ElementsTest extends TestCase
 
         // Check that image was created in elements table
         $this->assertDatabaseHas(
-            'elements', [
+            'elements',
+            [
             'key' => 'homepage.bukwild.logo',
             'type' => 'image',
             'value' => '/uploads/elements/logo.jpg',
@@ -275,7 +289,8 @@ class ElementsTest extends TestCase
 
         // Check that image was also created in images table
         $this->assertDatabaseHas(
-            'images', [
+            'images',
+            [
             'imageable_type' => 'Facilitador\Models\Element',
             'imageable_id' => 'homepage.bukwild.logo',
             'file' => '/uploads/elements/logo.jpg',
@@ -286,5 +301,4 @@ class ElementsTest extends TestCase
         $path = app('upchuck')->path('/uploads/elements/logo.jpg');
         $this->assertTrue($this->disk->has($path));
     }
-
 }

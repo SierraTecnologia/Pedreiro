@@ -1,8 +1,8 @@
 <?php
 namespace Tests\Integration;
 
-use Tests\TestCase;
 use Support\Models\RedirectRule;
+use Tests\TestCase;
 
 class RedirectTest extends TestCase
 {
@@ -34,7 +34,8 @@ class RedirectTest extends TestCase
         $to = '/test-redirected';
 
         $response = $this->post(
-            'admin/redirect-rules/create', [
+            'admin/redirect-rules/create',
+            [
             'from' => $from,
             'to' => $to,
             'code' => 301,
@@ -62,5 +63,4 @@ class RedirectTest extends TestCase
         $response->assertStatus(301);
         $response->assertRedirect('/redirected');
     }
-
 }

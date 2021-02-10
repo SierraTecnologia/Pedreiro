@@ -1,10 +1,9 @@
 <?php
 namespace Tests\Integration;
 
-use App\Slide;
 use App\Article;
+use App\Slide;
 use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
 
 class OneToManyTest extends TestCase
 {
@@ -21,7 +20,9 @@ class OneToManyTest extends TestCase
         $article = factory(Article::class)->create();
 
         $response = $this->call(
-            'POST', 'admin/articles/' . $article->id . '/slides/1/create', [
+            'POST',
+            'admin/articles/' . $article->id . '/slides/1/create',
+            [
             'title' => 'Test Slide',
             '_save' => 'save',
             ]

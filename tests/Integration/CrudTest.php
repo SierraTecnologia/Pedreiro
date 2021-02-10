@@ -3,7 +3,6 @@ namespace Tests\Integration;
 
 use App\Article;
 use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
 
 class CrudTest extends TestCase
 {
@@ -56,7 +55,9 @@ class CrudTest extends TestCase
     public function testStoreFailsValidation()
     {
         $response = $this->post(
-            'admin/articles/create', ['title' => ''], [
+            'admin/articles/create',
+            ['title' => ''],
+            [
             'HTTP_REFERER' => url('admin/articles/create'),
             ]
         );
@@ -72,8 +73,11 @@ class CrudTest extends TestCase
     public function testStore()
     {
         $response = $this->call(
-            'POST', 'admin/articles/create', array_merge(
-                $this->createData(), [
+            'POST',
+            'admin/articles/create',
+            array_merge(
+                $this->createData(),
+                [
                 '_save' => 'save',
                 ]
             )
@@ -109,7 +113,9 @@ class CrudTest extends TestCase
         $article = factory(Article::class)->create();
 
         $response = $this->call(
-            'POST', 'admin/articles/' . $article->id . '/edit', [
+            'POST',
+            'admin/articles/' . $article->id . '/edit',
+            [
             'title' => 'new article title',
             ]
         );
@@ -150,5 +156,4 @@ class CrudTest extends TestCase
         $this->assertNotEmpty($duplicate_article);
         $this->assertEquals($duplicate_article->slug, $new_article->slug . '-1');
     }
-
 }

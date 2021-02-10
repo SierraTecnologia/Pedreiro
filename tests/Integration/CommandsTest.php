@@ -3,7 +3,6 @@ namespace Tests\Integration;
 
 use Cache;
 use Carbon\Carbon;
-use Facilitador;
 use Tests\TestCase;
 
 class CommandsTest extends TestCase
@@ -52,7 +51,5 @@ class CommandsTest extends TestCase
 
         // Cache should be empty
         $this->assertEmpty(Cache::get('key'));
-
     }
-
 }

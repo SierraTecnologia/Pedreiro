@@ -4,7 +4,6 @@ namespace Tests\Integration;
 use App\Article;
 use App\Recipe;
 use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
 
 class LocalizationTest extends TestCase
 {
@@ -63,7 +62,9 @@ class LocalizationTest extends TestCase
     public function testStore()
     {
         $response = $this->call(
-            'POST', 'admin/recipes/create', [
+            'POST',
+            'admin/recipes/create',
+            [
             'title' => 'Tasty food',
             'directions' => '<p>Do it</p>',
             'public' => 1,
@@ -76,7 +77,6 @@ class LocalizationTest extends TestCase
 
         $this->assertEquals('en', Recipe::first()->locale);
         $this->assertNotEmpty(Recipe::first()->locale_group);
-
     }
 
     /**
@@ -145,14 +145,17 @@ class LocalizationTest extends TestCase
 
         // The localization call
         $response = $this->call(
-            'POST', 'admin/recipes/'.$recipe->id.'/duplicate', [
+            'POST',
+            'admin/recipes/'.$recipe->id.'/duplicate',
+            [
             'locale' => 'es',
             ]
         );
 
         // Test that simple fields were copied
         $this->assertDatabaseHas(
-            'recipes', [
+            'recipes',
+            [
             'title' => 'Title copy',
             'directions' => 'Directions',
             'locale' => 'es',
@@ -191,5 +194,4 @@ class LocalizationTest extends TestCase
         $response = $this->get('admin/recipes/'.$dupe->id.'/edit');
         $response->assertStatus(200);
     }
-
 }

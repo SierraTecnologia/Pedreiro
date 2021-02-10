@@ -24,7 +24,6 @@ use Pedreiro\Events\FormFieldsRegistered;
 use Pedreiro\Facades\Form;
 use Pedreiro\Http\Middleware\isAjax;
 use Pedreiro\Services\RiCaService;
-use Support\Facades\Support as SupportFacade;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
@@ -91,29 +90,29 @@ class PedreiroServiceProvider extends ServiceProvider
     
     public static $menuItens = [
         [
-            'text'        => 'Painel',
-            'url'         => 'painel',
+            'text' => 'Painel',
+            'url' => 'painel',
             // 'dontSection'     => 'painel',
             'topnav' => true,
             'active' => ['painel', 'painel*', 'regex:@^painel/[0-9]+$@'],
         ],
         [
-            'text'        => 'Master',
-            'url'         => 'master',
+            'text' => 'Master',
+            'url' => 'master',
             // 'dontSection'     => 'master',
             'topnav' => true,
             'active' => ['master', 'master*', 'regex:@^master/[0-9]+$@'],
         ],
         [
-            'text'        => 'Administração',
-            'url'         => 'admin',
+            'text' => 'Administração',
+            'url' => 'admin',
             // 'dontSection'     => 'admin',
             'topnav' => true,
             'active' => ['admin', 'admin*', 'regex:@^admin/[0-9]+$@'],
         ],
         [
-            'text'        => 'RiCa',
-            'url'         => 'rica',
+            'text' => 'RiCa',
+            'url' => 'rica',
             // 'dontSection'     => 'rica',
             'topnav' => true,
             'active' => ['rica', 'rica*', 'regex:@^rica/[0-9]+$@'],

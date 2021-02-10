@@ -2,11 +2,11 @@
 namespace Tests\Integration;
 
 use App\Article;
-use Facilitador\Models\Admin;
 use Carbon\Carbon;
 use DB;
-use Illuminate\Support\Str;
+use Facilitador\Models\Admin;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AdminTest extends TestCase
@@ -34,7 +34,8 @@ class AdminTest extends TestCase
                 'password' => 'pass',
                 'role' => 'viewer',
                 ]
-            ), 'facilitador'
+            ),
+            'facilitador'
         );
 
         $this->article = factory(Article::class)->create();
@@ -96,7 +97,9 @@ class AdminTest extends TestCase
     public function testResetPasswordSubmit()
     {
         $response = $this->call(
-            'POST', 'admin/forgot', [
+            'POST',
+            'admin/forgot',
+            [
             'email' => 'test@domain.com',
             ]
         );
@@ -141,7 +144,8 @@ class AdminTest extends TestCase
 
         // Post the reset form
         $response = $this->post(
-            'admin/password/reset/'.$token, [
+            'admin/password/reset/'.$token,
+            [
             'email' => 'test@domain.com',
             'password' => 'new_password',
             'password_confirmation' => 'new_password',
@@ -160,5 +164,4 @@ class AdminTest extends TestCase
                 ->where('email', 'test@domain.com')->get()
         );
     }
-
 }

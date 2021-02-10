@@ -27,10 +27,12 @@ class LoginTest extends TestCase
     public function testInvalidLogin()
     {
         $response = $this->post(
-            'admin', [
+            'admin',
+            [
             'email' => 'test@domain.com',
             'password' => 'pass',
-            ], [
+            ],
+            [
             'HTTP_REFERER' => url('admin'), // So it redirects back to self
             ]
         );
@@ -61,7 +63,8 @@ class LoginTest extends TestCase
 
         // Log in the user
         $response = $this->post(
-            'admin', [
+            'admin',
+            [
             'email' => 'test@domain.com',
             'password' => 'pass',
             ]
@@ -88,7 +91,6 @@ class LoginTest extends TestCase
         // Should redirect to the first route in the config
         $response = $this->get('admin');
         $response->assertRedirect('admin/articles');
-
     }
 
     /**
@@ -106,6 +108,5 @@ class LoginTest extends TestCase
         // Should redirect to the first route in the config
         $response = $this->get('admin');
         $response->assertRedirect('admin/something');
-
     }
 }

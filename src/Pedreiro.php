@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Pedreiro\Elements\FormFields\After\HandlerInterface as AfterHandlerInterface;
 use Pedreiro\Elements\FormFields\HandlerInterface;
+use Pedreiro\Events\AlertsCollection;
 use Pedreiro\Template\Actions\DeleteAction;
 use Pedreiro\Template\Actions\EditAction;
 use Pedreiro\Template\Actions\RestoreAction;
@@ -21,7 +22,6 @@ use ReflectionClass;
 use Request;
 use Session;
 use Siravel\Models\Negocios\Page;
-use Pedreiro\Events\AlertsCollection;
 use View;
 
 class Pedreiro
