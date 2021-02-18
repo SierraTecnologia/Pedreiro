@@ -57,7 +57,7 @@ trait CrudController
      *
      * @var int
      */
-    protected int $withPagination = 0;
+    protected int $withPagination = 30;
 
     /**
      * Validation rules.
