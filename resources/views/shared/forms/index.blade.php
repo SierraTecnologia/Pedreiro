@@ -30,7 +30,7 @@
                         @foreach ($entities as $entity)
                             <tr>
                                 @foreach ($fields as $field)
-                                    <td>@include( "crud-forms::displays.{$field['type']}")</td>
+                                    <td>@include( "pedreiro::displays.{$field['type']}")</td>
                                 @endforeach
 
                                 @if ($withTrashed)

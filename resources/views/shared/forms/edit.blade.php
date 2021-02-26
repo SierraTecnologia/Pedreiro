@@ -9,13 +9,13 @@
             </div>
 
             <div class="panel-body">
-                @include('crud-forms::_errors')
+                @include('pedreiro::_errors')
                 <form action="{{ route("$route.update", $entity->id) }}" method="POST">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-sm-12">
-                            @include('crud-forms::form')
+                            @include('pedreiro::form')
                         </div>
                     </div>
                     <hr>

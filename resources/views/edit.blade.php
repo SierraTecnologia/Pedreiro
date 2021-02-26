@@ -1,6 +1,7 @@
 @extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('pedreiro.blade_layout', 'layouts.app'))
 
 @section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
+
 <div class="row">
     <div class="col-sm-12 col-lg-10 col-lg-offset-1">
         <div class="panel panel-primary">

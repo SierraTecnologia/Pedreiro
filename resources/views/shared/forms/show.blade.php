@@ -13,7 +13,7 @@
                         @foreach ($fields as $field)
                             <li>
                                 <strong>{{ $field['label'] }}</strong>:
-                                @include( "crud-forms::displays.{$field['type']}")
+                                @include( "pedreiro::displays.{$field['type']}")
                             </li>
 
                         @endforeach

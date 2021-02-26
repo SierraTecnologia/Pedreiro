@@ -46,7 +46,7 @@ class TestCase extends Orchestra
 // use Pedreiro\Test\Models\Post;
 // use Pedreiro\Test\Models\Category;
 // use Illuminate\Database\Capsule\Manager as DB;
-// use Pedreiro\CrudFormsServiceProvider;
+// use Pedreiro\CrudControllerServiceProvider;
 // use Orchestra\Testbench\TestCase as OrchestraTestCase;
 // use Pedreiro\Test\Providers\RouteServiceProvider;
 
@@ -75,7 +75,7 @@ class TestCase extends Orchestra
 //     protected function getPackageProviders($app)
 //     {
 //         return [
-//             CrudFormsServiceProvider::class,
+//             CrudControllerServiceProvider::class,
 //             RouteServiceProvider::class,
 //         ];
 //     }

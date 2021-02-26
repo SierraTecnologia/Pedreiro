@@ -436,9 +436,12 @@ class Pedreiro
 
         return '<title>' . ($title ? "$title | $site" : $site) . '</title>';
     }
+    /**
+     * @todo Fazer DEscricao
+     */
     public function description()
     {
-        return 'descricao';
+        return 'description';
     }
 
     /**

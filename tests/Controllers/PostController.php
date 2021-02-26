@@ -6,13 +6,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
-use Pedreiro\CrudForms;
+use Pedreiro\CrudController;
 use Pedreiro\Test\Models\Post;
 
 class PostController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    use CrudForms;
+    use CrudController;
 
     public function __construct(Post $post)
     {
