@@ -12,7 +12,7 @@ class BoxComponent extends AbstractComponent
     protected $link;
 
     public function __construct($color, $number, $name, $icon, $linkText, $link)
-    { 
+    {
         $this->color = $color;
         $this->number = $number;
         $this->name = $name;
@@ -22,7 +22,7 @@ class BoxComponent extends AbstractComponent
     }
 
     public static function create($color, $number, $name, $icon, $linkText, $link)
-    { 
+    {
         return new self($color, $number, $name, $icon, $linkText, $link);
     }
 

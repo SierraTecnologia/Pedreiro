@@ -772,8 +772,8 @@ trait CrudController
 //      * The fields shown in forms as an array of arrays.
 //      * Each field is an array with keys:
 //      * name, label, type, relationship (if applicable).
-//      * Type can be: 
-//      *      text, textarea, email, url, password, date, integer, float, 
+//      * Type can be:
+//      *      text, textarea, email, url, password, date, integer, float,
 // *           select, select_multiple, checkbox, radio.
 //      *
 //      * @var array
@@ -1105,8 +1105,8 @@ trait CrudController
 //     public function getRelationships()
 //     {
 //         foreach ($this->getFormFields() as $field) {
-//             if (Arr::has($field, 'relationship') 
-//                 && !Arr::has($this->relationships, $field['relationship']) 
+//             if (Arr::has($field, 'relationship')
+//                 && !Arr::has($this->relationships, $field['relationship'])
 //                 && method_exists($this->model, $field['relationship'])
 //             ) {
 //                 $this->relationships[] = $field['relationship'];
