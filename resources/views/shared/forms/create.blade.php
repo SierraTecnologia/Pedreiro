@@ -27,7 +27,7 @@
                         {{-- Submit --}}
                         <div class="col-sm-9">
                             <button type="submit" class="btn btn-success btn-block">
-                                <i class='fa fa-check-circle'></i> Submit Form
+                                <i class='fa fa-check-circle'></i> {{ __('common.save') }}
                             </button>
                         </div>
                     </div>

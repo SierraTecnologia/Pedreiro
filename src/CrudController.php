@@ -419,8 +419,11 @@ trait CrudController
         if ($this->formTitle) {
             return $this->formTitle;
         }
-        // No title defined. We return the model name.
-        return Str::title(class_basename($this->model));
+        try {
+            return $this->model::$apresentationName;
+        } catch (\Throwable $th) {
+            return Str::title(class_basename($this->model));
+        }
     }
 
 

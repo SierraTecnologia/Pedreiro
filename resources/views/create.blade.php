@@ -21,13 +21,13 @@
                         {{-- Back to resource index --}}
                         <div class="col-sm-3">
                             <a href="{{ route("$route.index") }}" class="btn btn-secondary btn-block">
-                                <i class='fa fa-arrow-circle-left'></i> Back
+                                <i class='fa fa-arrow-circle-left'></i> {{ __('common.back') }}
                             </a>
                         </div>
                         {{-- Submit --}}
                         <div class="col-sm-9">
                             <button type="submit" class="btn btn-success btn-block">
-                                <i class='fa fa-check-circle'></i> Submit Form
+                                <i class='fa fa-check-circle'></i> {{ __('common.save') }}
                             </button>
                         </div>
                     </div>

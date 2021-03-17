@@ -11,7 +11,7 @@ use Session;
 
 class MenuFilter implements FilterInterface
 {
-    public $splitForSection = true;
+    public $splitForSection = false;
 
     public function transform($item)
     {

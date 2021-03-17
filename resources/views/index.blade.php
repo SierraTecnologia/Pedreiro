@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <div class="btn-group float-right">
                     <a href="{{ route("$route.create" ) }}" class="btn btn-secondary btn-xs float-right">
-                        <i class='fa fa-plus'></i> {{ __('pedreiro::media.add_new_folder') }} {{ $title }}
+                        <i class='fa fa-plus'></i> {{ __('common.add') }} {{ $title }}
                     </a>
                 </div>
                 <h3 class="panel-title">{{ Illuminate\Support\Str::plural($title) }} Index</h3>
@@ -22,7 +22,7 @@
                             @if ($withTrashed)
                                 <th>Deleted On</th>
                             @endif
-                            <th class="text-center" style="white-space: nowrap;">Actions</th>
+                            <th class="text-center" style="white-space: nowrap;">{{ __('common.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +43,7 @@
                                             @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                 <i class="fa fa-info-circle"></i>
                                             @else
-                                                show
+                                            {{ __('common.view') }}
                                             @endif
                                         </a>
 
@@ -52,7 +52,7 @@
                                             @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                 <i class="fa fa-edit"></i>
                                             @else
-                                                edit
+                                            {{ __('common.edit') }}
                                             @endif
                                         </a>
 
@@ -64,7 +64,7 @@
                                                 @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                     <i class="fa fa-remove"></i>
                                                 @else
-                                                    delete
+                                                {{ __('common.delete') }}
                                                 @endif
                                             </button>
                                         </form>

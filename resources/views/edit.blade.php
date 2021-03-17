@@ -6,7 +6,7 @@
     <div class="col-sm-12 col-lg-10 col-lg-offset-1">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Edit {{ $title }}</h3>
+                <h3 class="panel-title">{{ __('common.edit') }} {{ $title }}</h3>
             </div>
 
             <div class="panel-body">
@@ -24,7 +24,7 @@
                         {{-- Back to resource index --}}
                         <div class="col-sm-2">
                             <a href="{{ route("$route.index") }}" class="btn btn-secondary btn-block">
-                                <i class='fa fa-arrow-circle-left'></i> Back to Index
+                                <i class='fa fa-arrow-circle-left'></i> {{ __('common.back') }}
                             </a>
                         </div>
 
@@ -38,7 +38,7 @@
                         {{-- Submit --}}
                         <div class="col-sm-8">
                             <button type="submit" class="btn btn-success btn-block">
-                                <i class='fa fa-check-circle'></i> Submit Form
+                                <i class='fa fa-check-circle'></i> {{ __('common.save') }}
                             </button>
                         </div>
 
