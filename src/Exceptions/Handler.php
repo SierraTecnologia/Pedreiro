@@ -4,7 +4,6 @@ namespace Pedreiro\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
 use Pedreiro\Models\RedirectRule;
@@ -13,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
-class Handler extends ExceptionHandler
+class Handler extends \SiUtils\Exceptions\Handler
 {
     public static $DEFAULT_MESSAGE = 'Algo que não esta certo deu errado! Por favor, entre em contato conosco.';
 
@@ -48,6 +47,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        
         if (config('app.env') == 'production' && $this->shouldReport($exception)) {
             // Slack Report
             Log::channel('slack')->error($exception);

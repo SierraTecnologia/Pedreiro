@@ -11,6 +11,8 @@ use Session;
 
 class MenuFilter implements FilterInterface
 {
+    public $splitForSection = true;
+
     public function transform($item)
     {
         if (isset($item['route']) && ! \Route::has($item['route'])) {
@@ -34,12 +36,12 @@ class MenuFilter implements FilterInterface
         // dd($item);
         $user = Auth::user();
 
-        if (! $this->verifySection($item, $user)) {
+        if ($this->splitForSection && !$this->verifySection($item, $user)) {
             return false;
         }
         
         //
-        if (\Illuminate\Support\Facades\Config::get('app.env') == 'production' && ! $this->verifyLevel($item, $user)) {
+        if (\Illuminate\Support\Facades\Config::get('app.env') == 'production' && !$this->verifyLevel($item, $user)) {
             return false;
         }
 
@@ -62,7 +64,7 @@ class MenuFilter implements FilterInterface
         return $item;
     }
 
-    private function verifySection($item, $user)
+    private function verifySection($item, $user): bool
     {
         $actualSection = Request::segment(1);
         $section = null;
@@ -77,7 +79,7 @@ class MenuFilter implements FilterInterface
         return true;
     }
 
-    private function isInDevelopment($item, $user)
+    private function isInDevelopment($item, $user): bool
     {
         if (isset($item['dev_status']) && $item['dev_status'] == 0) {
             return true;
@@ -89,7 +91,7 @@ class MenuFilter implements FilterInterface
         return false;
     }
 
-    private function verifySpace($item, $user)
+    private function verifySpace($item, $user): bool
     {
         $space = null;
         if (isset($item['space'])) {
@@ -103,7 +105,7 @@ class MenuFilter implements FilterInterface
         return $space == app('support.router')->getRouteSpace(); //Session::get('space');
     }
 
-    private function verifyLevel($item, $user)
+    private function verifyLevel($item, $user): bool
     {
         $level = 0;
         if (isset($item['level'])) {

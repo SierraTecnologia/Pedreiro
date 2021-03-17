@@ -331,7 +331,7 @@ class Listing extends Field
         // then don't show a special message
         if ($this->layout == 'sidebar' && ! $this->parent_item) {
             return View::make(
-                'support::shared.list._pending',
+                'pedreiro::shared.list._pending',
                 [
                 'title' => $this->label_text,
                 'description' => $this->controller->description(),
@@ -372,7 +372,7 @@ class Listing extends Field
         }
 
         // Return the view, passing in a bunch of variables
-        return View::make('support::shared.list._standard', $vars)->render();
+        return View::make('pedreiro::shared.list._standard', $vars)->render();
     }
 
     /**

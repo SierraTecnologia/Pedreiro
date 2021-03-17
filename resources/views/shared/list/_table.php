@@ -83,7 +83,7 @@ if ($listing->count()) {
 
             <?php // Standard bulk actions ?>
         <?php else: ?>
-            <?php echo View::make('support::shared.list._bulk_actions')->render()?>
+            <?php echo View::make('pedreiro::shared.list._bulk_actions')->render()?>
         <?php endif ?>
 
         <?php
@@ -151,7 +151,7 @@ if ($listing->count()) {
         <?php 
         // Maybe there were no results found 
         ?>
-        <?php echo View::make('support::shared.list._no_results', $__data)->render()?>
+        <?php echo View::make('pedreiro::shared.list._no_results', $__data)->render()?>
 
     </tbody>
 </table>

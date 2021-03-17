@@ -11,11 +11,11 @@
     <?php
     // Create the page title for the sidebar layout
     if ($layout == 'sidebar') {
-        echo View::make('support::shared.list._sidebar_header', $__data)->render();
+        echo View::make('pedreiro::shared.list._sidebar_header', $__data)->render();
 
         // Create the page title for a full page layout
     } else if ($layout == 'full') {
-        echo View::make('support::shared.list._full_header', $__data)->render();
+        echo View::make('pedreiro::shared.list._full_header', $__data)->render();
     }
     ?>
 </div>
@@ -35,7 +35,7 @@
     // Render the full table.  This could be broken up into smaller chunks but
     // leaving it as is until the need arises
     echo '<div class="listing-wrapper">'
-    .View::make('support::shared.list._table', $__data)->render()
+    .View::make('pedreiro::shared.list._table', $__data)->render()
     .'</div>';
 
     // Add sidebar pagination
@@ -46,7 +46,7 @@
 
 <?php
 // Render pagination
-echo View::make('support::shared.pagination.index', $__data)->render();
+echo View::make('pedreiro::shared.pagination.index', $__data)->render();
 
 ?>
             </div>
