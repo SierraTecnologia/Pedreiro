@@ -7,7 +7,7 @@ use HtmlObject\Input as HtmlInput;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Support;
-use SupportURL;
+use PedreiroURL;
 
 /**
  * Create an autocomplete field that populates a foreign key in a
@@ -104,7 +104,7 @@ class BelongsTo extends Field
      */
     public function parent(Model $class)
     {
-        $this->route(Support::action(SupportURL::controllerForModel($class)));
+        $this->route(Support::action(PedreiroURL::controllerForModel($class)));
 
         return $this;
     }

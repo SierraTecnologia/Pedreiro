@@ -1,7 +1,7 @@
      
 <div class="standard-list <?php echo $layout!='form'?'fieldset':null?>"
     data-js-view="standard-list"
-    data-controller-route="<?php echo URL::to(SupportURL::action($controller))?>"
+    data-controller-route="<?php echo URL::to(PedreiroURL::action($controller))?>"
     data-position-offset="<?php echo $paginator_from?>"
     data-with-trashed="<?php echo $with_trashed?>"
     <?php if ($parent_controller) :?> data-parent-controller="<?php echo $parent_controller?><?php 
@@ -40,7 +40,7 @@
 
     // Add sidebar pagination
     if (!empty($layout) && $layout != 'full' && $count > count($listing)) : ?>
-        <a href="<?php echo SupportURL::relative('index', $parent_id, $controller)?>" class="btn btn-secondary btn-sm btn-block full-list"><?php echo __('pedreiro::list.standard.related', ['title' => title_case($title)]) ?></b></a>
+        <a href="<?php echo PedreiroURL::relative('index', $parent_id, $controller)?>" class="btn btn-secondary btn-sm btn-block full-list"><?php echo __('pedreiro::list.standard.related', ['title' => title_case($title)]) ?></b></a>
     <?php endif ?>
 
 

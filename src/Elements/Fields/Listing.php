@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Pedreiro\Http\Controllers\Admin\Base;
 use Request;
 use Support;
-use SupportURL;
+use PedreiroURL;
 use URL;
 use View;
 
@@ -163,7 +163,7 @@ class Listing extends Field
         // Instantiate a string controller
         if (is_string($controller)
             && class_exists($controller)
-            && is_subclass_of($controller, 'Support\Http\Controllers\Admin\Base')
+            && is_subclass_of($controller, 'Pedreiro\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = $controller;
             $this->controller = new $controller;
@@ -175,7 +175,7 @@ class Listing extends Field
 
             // Or, validate a passed controller instance
         } elseif (is_object($controller)
-            && is_a($controller, 'Support\Http\Controllers\Admin\Base')
+            && is_a($controller, 'Pedreiro\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = get_class($controller);
             $this->controller = $controller;
@@ -396,8 +396,8 @@ class Listing extends Field
     protected function getIndexURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            SupportURL::action($this->controller_name.'@index') :
-            SupportURL::relative('index', null, $this->controller_name);
+            PedreiroURL::action($this->controller_name.'@index') :
+            PedreiroURL::relative('index', null, $this->controller_name);
     }
 
     /**
@@ -408,8 +408,8 @@ class Listing extends Field
     protected function getCreateURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            SupportURL::action($this->controller_name.'@create') :
-            SupportURL::relative('create', null, $this->controller_name);
+            PedreiroURL::action($this->controller_name.'@create') :
+            PedreiroURL::relative('create', null, $this->controller_name);
     }
 
     /**

@@ -26,7 +26,7 @@ use Pedreiro\Template\Input\Sidebar;
 use Redirect;
 use Response;
 use stdClass;
-use SupportURL;
+use PedreiroURL;
 use Translation\Template\Localize;
 use URL;
 use Validator;
@@ -429,7 +429,7 @@ class Base extends BaseController
         if (Request::ajax()) {
             return Response::json(['id' => $item->id]);
         } else {
-            return Redirect::to(SupportURL::relative('edit', $item->id))
+            return Redirect::to(PedreiroURL::relative('edit', $item->id))
             ->with('success', $this->successMessage($item, 'created'));
         }
     }
@@ -542,7 +542,7 @@ class Base extends BaseController
         if (Request::ajax()) {
             return Response::json();
         } else {
-            return Redirect::to(SupportURL::relative('index'))
+            return Redirect::to(PedreiroURL::relative('index'))
                 ->with('success', $this->successMessage($item, 'deleted'));
         }
     }
@@ -593,7 +593,7 @@ class Base extends BaseController
         $new->save();
 
         // Save the new record and redirect to its edit view
-        return Redirect::to(SupportURL::relative('edit', $new->getKey()))
+        return Redirect::to(PedreiroURL::relative('edit', $new->getKey()))
             ->with('success', $this->successMessage($src, 'duplicated'));
     }
 

@@ -12,7 +12,7 @@
 		-# Download CSV
 		- if ($is_exportable)
 			:php
-				$url = SupportURL::relative('csv', null, $controller);
+				$url = PedreiroURL::relative('csv', null, $controller);
 				if (request()->has('query')) {
 					$url .= '?query='.request('query');
 				}

@@ -33,6 +33,8 @@ class PedreiroServiceProvider extends ServiceProvider
     const pathVendor = 'sierratecnologia/pedreiro';
 
     public static $aliasProviders = [
+        'PedreiroURL' => \Pedreiro\Facades\PedreiroURL::class,
+
         'Active' => \Pedreiro\Facades\Active::class,
 
         'Flash' => \Laracasts\Flash\Flash::class,
@@ -257,6 +259,14 @@ class PedreiroServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   
+
+        // Register URL Generators as "PedreiroURL".
+        $this->app->singleton(
+            'pedreiro.url',
+            function ($app) {
+                return new \Pedreiro\Routing\UrlGenerator($app['request']->path());
+            }
+        );
 
         // Register Migrations
         $this->loadMigrationsFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');

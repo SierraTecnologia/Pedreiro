@@ -27,7 +27,7 @@ use Pedreiro;
 use Pedreiro\Collections\Base as BaseCollection;
 use Pedreiro\Exceptions\Exception;
 use Session;
-use SupportURL;
+use PedreiroURL;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use URL;
 
@@ -880,10 +880,10 @@ abstract class Base extends Model //Ardent
     public function getAdminEditUri($controller, $many_to_many = false)
     {
         if ($many_to_many) {
-            return URL::to(SupportURL::action($controller.'@edit', $this->getKey()));
+            return URL::to(PedreiroURL::action($controller.'@edit', $this->getKey()));
         }
 
-        return URL::to(SupportURL::relative('edit', $this->getKey(), $controller));
+        return URL::to(PedreiroURL::relative('edit', $this->getKey(), $controller));
     }
 
     /**
