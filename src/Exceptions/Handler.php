@@ -47,7 +47,6 @@ class Handler extends \SiUtils\Exceptions\Handler
      */
     public function report(Throwable $exception)
     {
-        
         if (config('app.env') == 'production' && $this->shouldReport($exception)) {
             // Slack Report
             Log::channel('slack')->error($exception);
