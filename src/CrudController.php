@@ -419,6 +419,7 @@ trait CrudController
         if ($this->formTitle) {
             return $this->formTitle;
         }
+
         try {
             return $this->model::$apresentationName;
         } catch (\Throwable $th) {
