@@ -36,12 +36,12 @@ class MenuFilter implements FilterInterface
         // dd($item);
         $user = Auth::user();
 
-        if ($this->splitForSection && !$this->verifySection($item, $user)) {
+        if ($this->splitForSection && ! $this->verifySection($item, $user)) {
             return false;
         }
         
         //
-        if (\Illuminate\Support\Facades\Config::get('app.env') == 'production' && !$this->verifyLevel($item, $user)) {
+        if (\Illuminate\Support\Facades\Config::get('app.env') == 'production' && ! $this->verifyLevel($item, $user)) {
             return false;
         }
 
