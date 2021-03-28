@@ -210,6 +210,12 @@ class Pedreiro
             $is_support
         );
         $model = str_replace(
+            'Pedreiro\Http\Controllers\Admin',
+            'Pedreiro\Models',
+            $model,
+            $is_support
+        );
+        $model = str_replace(
             'App\Http\Controllers\Admin',
             'App\Models',
             $model,
