@@ -25,7 +25,7 @@ class Elements extends Collection
      *
      * @var string
      */
-    protected $cache_key = 'facilitador.elements.data';
+    protected $cache_key = 'pedreiro.elements.data';
 
     /**
      * The parse YAML contents

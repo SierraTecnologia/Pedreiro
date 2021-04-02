@@ -38,61 +38,64 @@ class PedreiroServiceProvider extends ServiceProvider
         'Active' => \Pedreiro\Facades\Active::class,
 
         'Flash' => \Laracasts\Flash\Flash::class,
-        'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'Gravatar' => \Creativeorange\Gravatar\Facades\Gravatar::class,
 
         /**
          * Listagens
          */
-        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
         
-        'Active' => HieuLe\Active\Facades\Active::class,
+        'Active' => \HieuLe\Active\Facades\Active::class,
 
-        'Translation' => Translation\Facades\Translation::class,
-        'TranslationCache' => Translation\Facades\TranslationCache::class,
+        'Translation' => \Translation\Facades\Translation::class,
+        'TranslationCache' => \Translation\Facades\TranslationCache::class,
         // Form field generation
         'Former' => \Former\Facades\Former::class,
     ];
 
     // public static $providers = [
     public static $providers = [
-            /**
-             * Layoults
-             */
-            \RicardoSierra\Minify\MinifyServiceProvider::class,
-            \Collective\Html\HtmlServiceProvider::class,
-            \Laracasts\Flash\FlashServiceProvider::class,
-    
-            JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
+        // HAML
+        \Bkwld\LaravelHaml\ServiceProvider::class,
+        /**
+         * Layoults
+         */
+        \RicardoSierra\Minify\MinifyServiceProvider::class,
+        \Collective\Html\HtmlServiceProvider::class,
+        \Laracasts\Flash\FlashServiceProvider::class,
 
-            /**
-             * Listagens
-             */
-            \Yajra\DataTables\DataTablesServiceProvider::class,
+        \JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
 
-            /**
-             * VEio pelo Facilitador
-             **/
-            \Former\FormerServiceProvider::class,
-            \Bkwld\Upchuck\ServiceProvider::class,
-    
-            Translation\TranslationServiceProvider::class,
-            Locaravel\LocaravelProvider::class,
-            /**
-             * Helpers
-             */
-            HieuLe\Active\ActiveServiceProvider::class,
-            Laracasts\Flash\FlashServiceProvider::class,
-            /**
-             * Outros
-             */
-            \Laravel\Tinker\TinkerServiceProvider::class,
+        /**
+         * Listagens
+         */
+        \Yajra\DataTables\DataTablesServiceProvider::class,
 
-            \Pedreiro\RoutesExplorerServiceProvider::class,
-        ];
+        /**
+         * VEio pelo Facilitador
+         **/
+        \Former\FormerServiceProvider::class,
+        \Bkwld\Upchuck\ServiceProvider::class,
+
+        \Translation\TranslationServiceProvider::class,
+        
+        /**
+         * Helpers
+         */
+        \HieuLe\Active\ActiveServiceProvider::class,
+        \Laracasts\Flash\FlashServiceProvider::class,
+        /**
+         * Outros
+         */
+        \Laravel\Tinker\TinkerServiceProvider::class,
+
+        \Pedreiro\RoutesExplorerServiceProvider::class,
+    ];
     
     public static $menuItens = [
         [
             'text' => 'Painel',
+            'order' => 501,
             'url' => 'painel',
             // 'dontSection'     => 'painel',
             'topnav' => true,
@@ -100,6 +103,7 @@ class PedreiroServiceProvider extends ServiceProvider
         ],
         [
             'text' => 'Master',
+            'order' => 1001,
             'url' => 'master',
             // 'dontSection'     => 'master',
             'topnav' => true,
@@ -107,6 +111,7 @@ class PedreiroServiceProvider extends ServiceProvider
         ],
         [
             'text' => 'Administração',
+            'order' => 2001,
             'url' => 'admin',
             // 'dontSection'     => 'admin',
             'topnav' => true,
@@ -114,6 +119,7 @@ class PedreiroServiceProvider extends ServiceProvider
         ],
         [
             'text' => 'RiCa',
+            'order' => 4001,
             'url' => 'rica',
             // 'dontSection'     => 'rica',
             'topnav' => true,
@@ -142,6 +148,18 @@ class PedreiroServiceProvider extends ServiceProvider
     
     public function boot(Router $router, Dispatcher $event)
     {
+
+        // Define constants that Decoy uses
+        if (!defined('FORMAT_DATE')) {
+            define('FORMAT_DATE', __('pedreiro::base.constants.format_date'));
+        }
+        if (!defined('FORMAT_DATETIME')) {
+            define('FORMAT_DATETIME', __('pedreiro::base.constants.format_datetime'));
+        }
+        if (!defined('FORMAT_TIME')) {
+            define('FORMAT_TIME', __('pedreiro::base.constants.format_time'));
+        }
+        
         // Paginator Bootstrap
         // @todo tava dando erro
         // syntax error, unexpected ''pagination.previous'' (T_CONSTANT_ENCAPSED_STRING), expecting ';' or ',' (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php) (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php)
@@ -219,6 +237,7 @@ class PedreiroServiceProvider extends ServiceProvider
 
 
         $this->eloquentSvents();
+        $this->setProviders();
     }
     /**
      * Delegate events to Decoy observers
@@ -237,6 +256,7 @@ class PedreiroServiceProvider extends ServiceProvider
 
     public function register()
     {
+        
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', Form::class);
         $loader->alias('Pedreiro', PedreiroFacade::class);
@@ -267,6 +287,18 @@ class PedreiroServiceProvider extends ServiceProvider
                 return new \Pedreiro\Routing\UrlGenerator($app['request']->path());
             }
         );
+        // Build the Breadcrumbs store
+        $this->app->singleton(
+            'rica.breadcrumbs',
+            function ($app) {
+                $breadcrumbs = new \Pedreiro\Template\Layout\Breadcrumbs();
+                $breadcrumbs->set($breadcrumbs->parseURL());
+
+                return $breadcrumbs;
+            }
+        );
+
+
 
         // Register Migrations
         $this->loadMigrationsFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
@@ -298,6 +330,13 @@ class PedreiroServiceProvider extends ServiceProvider
         PedreiroFacade::addFormField(MultipleImagesWithAttrsFormField::class);
         $this->registerFormFields();
 
+
+        // Build the Elements collection
+        $this->app->singleton(
+            'pedreiro.elements', function ($app) {
+                return with(new \Pedreiro\Collections\Elements)->setModel(\Support\Models\Element::class);
+            }
+        );
 
         // $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'pedreiro');
     }

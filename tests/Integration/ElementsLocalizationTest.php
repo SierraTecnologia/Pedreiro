@@ -55,10 +55,10 @@ class ElementsLocalizationTest extends TestCase
         );
 
         // Clear the cache
-        app('facilitador.elements')->reset();
+        app('pedreiro.elements')->reset();
 
         // Test that in english, we don't see the sapnish title
-        $element = (string) Facilitador::el('homepage.marquee.title');
+        $element = (string) Pedreiro::el('homepage.marquee.title');
         $this->assertEquals('Welcome to Decoy', $element);
     }
 
@@ -77,11 +77,11 @@ class ElementsLocalizationTest extends TestCase
         );
 
         // Clear the cache
-        app('facilitador.elements')->reset();
+        app('pedreiro.elements')->reset();
 
         // Set to spanish adn confirm the locale scene
         Facilitador::locale('es');
-        $element = (string) Facilitador::el('homepage.marquee.title');
+        $element = (string) Pedreiro::el('homepage.marquee.title');
         $this->assertEquals('Spanish', $element);
     }
 }

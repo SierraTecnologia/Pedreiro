@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Integration;
 
-use Support\Models\RedirectRule;
+use Pedreiro\Models\RedirectRule;
 use Tests\TestCase;
 
 class RedirectTest extends TestCase

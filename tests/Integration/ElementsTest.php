@@ -47,7 +47,7 @@ class ElementsTest extends TestCase
     public function testElementsShowDefault()
     {
         $default = 'Welcome to Decoy';
-        $element = Facilitador::el('homepage.marquee.title');
+        $element = Pedreiro::el('homepage.marquee.title');
 
         $this->assertEquals($default, $element);
     }
@@ -71,7 +71,7 @@ class ElementsTest extends TestCase
             ]
         );
 
-        $element = Facilitador::el('homepage.marquee.title');
+        $element = Pedreiro::el('homepage.marquee.title');
         $response->assertStatus(302);
         $this->assertEquals('Test', $element);
     }
@@ -86,7 +86,7 @@ class ElementsTest extends TestCase
         $create_element = factory(Element::class)->create();
         $database_value = Element::first()->value();
 
-        $element = Facilitador::el('homepage.marquee.title')->value();
+        $element = Pedreiro::el('homepage.marquee.title')->value();
 
         $this->assertEquals($database_value, $element);
     }
@@ -105,7 +105,7 @@ class ElementsTest extends TestCase
 
         // Check to verify the default element is being pulled
         $default_text = 'Welcome to Decoy';
-        $default_element = Facilitador::el('homepage.marquee.title');
+        $default_element = Pedreiro::el('homepage.marquee.title');
         $this->assertEquals($default_text, $default_element);
 
         // Make a post request without changing the title
@@ -144,7 +144,7 @@ class ElementsTest extends TestCase
             ]
         );
 
-        $element = Facilitador::el('homepage.marquee.image');
+        $element = Pedreiro::el('homepage.marquee.image');
         $response->assertStatus(302);
         $this->assertNotEmpty($element->crop(10, 10)->url);
     }
@@ -172,7 +172,7 @@ class ElementsTest extends TestCase
             ]
         );
 
-        $element = Facilitador::el('homepage.marquee.file');
+        $element = Pedreiro::el('homepage.marquee.file');
         $response->assertStatus(302);
         $this->assertNotEmpty($element->value());
     }

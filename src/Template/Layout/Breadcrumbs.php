@@ -28,6 +28,7 @@ class Breadcrumbs
      */
     public function set($links)
     {
+        dd($links);
         $this->links = $links;
     }
 
@@ -39,6 +40,7 @@ class Breadcrumbs
      */
     public function get()
     {
+        dd($this->links);
         return $this->links;
     }
 
@@ -59,6 +61,12 @@ class Breadcrumbs
 
         // Loop through them in blocks of 2: [list, detail]
         $url = $segments[0];
+        
+        // $nav = new Nav();
+        // dd($segments, $nav->generate());
+
+
+
         for ($i = 1; $i < count($segments); $i += 2) {
 
             // If an action URL, you're at the end of the URL

@@ -29,7 +29,7 @@ class Nav
             // dd($pages, $page);
             $massaged[] = $this->recursiveGenerate($page);
         }
-        // dd($massaged);
+        // dd($pages, $massaged);
         return $massaged;
     }
 

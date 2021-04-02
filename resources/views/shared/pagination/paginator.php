@@ -1,6 +1,12 @@
 <?php
-$controller = app('facilitador.wildcard')->detectController();
-if ($paginator->total() > $controller::$per_page) : ?>
+try {
+    $controller = app('facilitador.wildcard')->detectController();
+    $perPage = $controller::$per_page;
+} catch (\Throwable $th) {
+    $perPage = 15; // @todo Usar valor padrao
+}
+
+if ($paginator->total() > $perPage) : ?>
     <div class="pagination-wrapper">
 
         <?php // The list of pages ?>

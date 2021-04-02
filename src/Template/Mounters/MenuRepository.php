@@ -93,7 +93,7 @@ class MenuRepository
         return $mergeArray;
     }
     
-    public function getTreeInArray($parent = 'root')
+    public function getTreeInArray($parent = 'root', $order = null)
     {
         $menuArrayList = [];
 

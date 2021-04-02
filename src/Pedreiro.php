@@ -620,7 +620,7 @@ class Pedreiro
      */
     public function el($key)
     {
-        return app('facilitador.elements')->localize($this->locale())->get($key);
+        return app('pedreiro.elements')->localize($this->locale())->get($key);
     }
 
     /**
@@ -633,7 +633,7 @@ class Pedreiro
      */
     public function els($prefix, $crops = [])
     {
-        return app('facilitador.elements')
+        return app('pedreiro.elements')
             ->localize($this->locale())
             ->getMany($prefix, $crops);
     }
@@ -646,7 +646,7 @@ class Pedreiro
      */
     public function hasEl($key)
     {
-        return app('facilitador.elements')
+        return app('pedreiro.elements')
             ->localize($this->locale())
             ->hydrate()
             ->has($key);

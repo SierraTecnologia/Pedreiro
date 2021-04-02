@@ -27,6 +27,15 @@ class MenuFilter implements FilterInterface
             return false;
         }
 
+        // @todo @debug testar
+        if (
+            (!isset($item["submenu"]) || empty($item["submenu"]))
+            && isset($item["text"]) && 
+            (!isset($item["href"]))
+        ) {
+            Log::info('Sem filho, tirando fora: '.$item['config']);
+            return false;
+        }
 
 
         // if (isset($item['permission']) && ! Laratrust::can($item['permission'])) {
@@ -36,12 +45,12 @@ class MenuFilter implements FilterInterface
         // dd($item);
         $user = Auth::user();
 
-        if ($this->splitForSection && ! $this->verifySection($item, $user)) {
+        if ($this->splitForSection && config('siravel.habilityTopNav', true) && ! $this->verifySection($item, $user)) {
             return false;
         }
         
         //
-        if (\Illuminate\Support\Facades\Config::get('app.env') == 'production' && ! $this->verifyLevel($item, $user)) {
+        if (! $this->verifyLevel($item, $user)) {
             return false;
         }
 
@@ -73,6 +82,11 @@ class MenuFilter implements FilterInterface
         }
 
         if (isset($item['dontSection']) && $actualSection === $item['dontSection']) {
+            return false;
+        }
+
+        // Retira usuarios que nao tem acesso
+        if (isset($item['section']) && (!$user || !$user->hasAccessTo($item['section']))) {
             return false;
         }
 

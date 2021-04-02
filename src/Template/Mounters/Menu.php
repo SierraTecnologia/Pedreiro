@@ -80,28 +80,33 @@ class Menu
     {
         $instance = new Menu;
 
-        // Caso seja uma divisoria
-        if (is_string($data) || (is_array($data) && isset($data['divisory']))) {
-            $instance->isDivisory = true;
 
-            if (is_array($data)) {
-                $instance->setText($data['text']);
-                if (isset($data['order'])) {
-                    $instance->setOrder($data['order']);
-                }
-            } else {
-                $data = explode('|', $data);
-                $instance->setText($data[0]);
-                if (! empty($data[1])) {
-                    $instance->setOrder($data[1]);
-                }
+        // Caso seja uma divisoria String sempre é
+        // Ps: Caso habilityTopNav desativado entao nao mostra as divisorias
+        if (is_string($data)) {
+            if (!config('siravel.habilityTopNav', true)) {
+                Log::debug('habilityTopNav Ativado removendo o menu: ' . $data);
+                return false;
             }
-        } elseif // Caso seja um menu
-        (is_array($data)) {
-            foreach ($data as $attribute => $valor) {
-                $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
-                $array[$attribute] = $instance->{$methodName}($valor);
+            $instance->isDivisory = true;
+            $data = explode('|', $data);
+            $instance->setText($data[0]);
+            if (! empty($data[1])) {
+                $instance->setOrder($data[1]);
             }
+            return $instance->validateAndReturn();
+        }
+
+        // Personalizacao de Config
+        if (!config('siravel.habilityTopNav', true) && isset($data['topnav']) && $data['topnav']!==false) {            
+            $data['topnav'] = false;
+            $data['divisory'] = true;
+        } 
+
+        // Caso seja um menu normal, nao divis
+        foreach ($data as $attribute => $valor) {
+            $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+            $array[$attribute] = $instance->{$methodName}($valor);
         }
 
         return $instance->validateAndReturn();
@@ -451,6 +456,14 @@ class Menu
         $this->dev_status = $value;
     }
 
+    public function getDivisory(): bool
+    {
+        return $this->isDivisory;
+    }
+    public function setDivisory(bool $value)
+    {
+        $this->isDivisory = $value;
+    }
     
     /**
      * Caso nao seja pra exibir, cria log e retorna false.

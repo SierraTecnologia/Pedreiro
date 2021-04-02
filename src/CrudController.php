@@ -652,7 +652,7 @@ trait CrudController
 
             // Add properties for the columns mentioned in the list view within the
             // 'columns' property of this row in the response.  Use the same logic
-            // found in Support::renderListColumn();
+            // found in Pedreiro::renderListColumn();
             $item->columns = [];
             foreach ($this->columns() as $column) {
                 if (method_exists($row, $column)) {

@@ -9,6 +9,8 @@ namespace App\Contants;
  */
 final class Tables
 {
+    public const TABLE_ADDRESSES = 'addresses';
+    public const TABLE_LOCALIZATIONS = 'localizations';
     public const TABLE_COMMENTS = 'comments';
     public const TABLE_POSTS_COMMENTS = 'post_comments';
     public const TABLE_NOTIFICATIONS = 'notifications';
