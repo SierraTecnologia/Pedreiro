@@ -767,7 +767,7 @@ class PedreiroBaseController extends Base
                 ->route("facilitador.{$dataType->slug}.index")
                 ->with(
                     [
-                    'message' => __('support::cruds.bread.ordering_not_set'),
+                    'message' => __('bread.ordering_not_set'),
                     'alert-type' => 'error',
                     ]
                 );

@@ -13,7 +13,7 @@ use Translation;
  */
 class SystemMount
 {
-    public function getProviders()
+    public static function getProviders()
     {
         return [
             \Support\SupportServiceProvider::class,
@@ -91,7 +91,7 @@ class SystemMount
     {
         return MenuRepository::createFromMultiplosArray(
             collect(
-                $this->getProviders()
+                self::getProviders()
             )->reject(
                 function ($class) {
                     return ! class_exists($class) || ! is_array($class::$menuItens) || empty($class::$menuItens);

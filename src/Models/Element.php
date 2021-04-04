@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Models;
+namespace Pedreiro\Models;
 
 // Dependencies
 use Bkwld\Library\Utils\File;
@@ -93,7 +93,7 @@ class Element extends Base
      * @param  Illuminate\Database\Eloquent\Builder $query
      * @return Illuminate\Database\Eloquent\Builder
      */
-    protected function setKeysForSaveQuery(Builder $query)
+    protected function setKeysForSaveQuery($query)
     {
         parent::setKeysForSaveQuery($query);
         $query->where('locale', '=', $this->locale);
