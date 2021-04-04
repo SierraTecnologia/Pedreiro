@@ -9,6 +9,7 @@ namespace Pedreiro\Template\Mounters;
 use Illuminate\Support\Str;
 use Log;
 use Route;
+use Auth;
 
 /**
  * Menu helper to make table and object form mapping easy.
@@ -76,37 +77,43 @@ class Menu
      * 'nivel' => \Porteiro\Models\Role::$GOOD,
      * 'submenu' => \Finder\Services\MenuService::getAdminMenu(),
      */
-    public static function createFromArray($data)
+    public static function createFromArray($item)
     {
         $instance = new Menu;
 
 
         // Caso seja uma divisoria String sempre é
         // Ps: Caso habilityTopNav desativado entao nao mostra as divisorias
-        if (is_string($data)) {
+        if (is_string($item)) {
             if (!config('siravel.habilityTopNav', true)) {
-                Log::debug('habilityTopNav Ativado removendo o menu: ' . $data);
+                Log::debug('habilityTopNav Ativado removendo o menu: ' . $item);
                 return false;
             }
             $instance->isDivisory = true;
-            $data = explode('|', $data);
-            $instance->setText($data[0]);
-            if (! empty($data[1])) {
-                $instance->setOrder($data[1]);
+            $item = explode('|', $item);
+            $instance->setText($item[0]);
+            if (! empty($item[1])) {
+                $instance->setOrder($item[1]);
             }
             return $instance->validateAndReturn();
         }
 
         // Personalizacao de Config
-        if (!config('siravel.habilityTopNav', true) && isset($data['topnav']) && $data['topnav']!==false) {            
-            $data['topnav'] = false;
-            $data['divisory'] = true;
+        if (!config('siravel.habilityTopNav', true) && isset($item['topnav']) && $item['topnav']!==false) {            
+            $item['topnav'] = false;
+            $item['divisory'] = true;
+            if (isset($item['url'])) {
+                $item['section'] = $item['url'];
+            }
+            if (Auth::user() && !Auth::user()->hasAccessTo($item['section'])) {
+                return false;
+            }
         } 
 
         // Caso seja um menu normal, nao divis
-        foreach ($data as $attribute => $valor) {
+        foreach ($item as $attribute => $valor) {
             $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
-            $array[$attribute] = $instance->{$methodName}($valor);
+            $instance->{$methodName}($valor);
         }
 
         return $instance->validateAndReturn();

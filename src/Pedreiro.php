@@ -63,6 +63,27 @@ class Pedreiro
         $this->findVersion();
     }
 
+    /**
+     * 
+     */
+    public function loadRelativeView($view)
+    {
+        if (View::exists($view)) {
+            return $view;
+        }
+        if (View::exists('pedreiro::'.$view)) {
+            return 'pedreiro::'.$view;
+        }
+        $view = str_replace('layouts.', '', $view);
+        if (View::exists('pedreiro::'.$view)) {
+            return 'pedreiro::'.$view;
+        }
+        if (View::exists($view)) {
+            return $view;
+        }
+        throw new Exception('Não encontrado Relative View: '.$view);
+    }
+
     public function getUrlSection()
     {
         if (! $this->urlSection) {
@@ -381,7 +402,7 @@ class Pedreiro
      */
     public function translatable($model)
     {
-        if (! config('sitec.facilitador.multilingual.enabled')) {
+        if (! config('sitec.facilitador.multilingual.enabled', true)) {
             return false;
         }
 

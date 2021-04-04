@@ -125,6 +125,46 @@ class PedreiroServiceProvider extends ServiceProvider
             'topnav' => true,
             'active' => ['rica', 'rica*', 'regex:@^rica/[0-9]+$@'],
         ],
+        [
+            'text'        => 'Painel Dashboard',
+            'route'       => 'painel.porteiro.dashboard',
+            'icon'        => 'fas fa-fw fa-industry',
+            'icon_color'  => 'blue',
+            'label_color' => 'success',
+            'section'     => 'painel',
+            'order' => 502,
+            // 'access' => \Porteiro\Models\Role::$ADMIN
+        ],
+        [
+            'text'        => 'Master Dashboard',
+            'route'       => 'master.porteiro.dashboard',
+            'icon'        => 'fas fa-fw fa-industry',
+            'icon_color'  => 'blue',
+            'label_color' => 'success',
+            'section'     => 'master',
+            'order' => 1002,
+            // 'access' => \Porteiro\Models\Role::$ADMIN
+        ],
+        [
+            'text'        => 'Admin Dashboard',
+            'route'       => 'admin.porteiro.dashboard',
+            'icon'        => 'fas fa-fw fa-industry',
+            'icon_color'  => 'blue',
+            'label_color' => 'success',
+            'section'     => 'admin',
+            'order' => 2001,
+            // 'access' => \Porteiro\Models\Role::$ADMIN
+        ],
+        [
+            'text'        => 'RiCa Dashboard',
+            'route'       => 'rica.porteiro.dashboard',
+            'icon'        => 'fas fa-fw fa-industry',
+            'icon_color'  => 'blue',
+            'label_color' => 'success',
+            'section'     => 'rica',
+            'order' => 4002,
+            // 'access' => \Porteiro\Models\Role::$ADMIN
+        ],
     ];
 
     

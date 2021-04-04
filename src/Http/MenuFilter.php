@@ -8,6 +8,7 @@ use Laratrust;
 use Log;
 use Request;
 use Session;
+use Illuminate\Support\Str;
 
 class MenuFilter implements FilterInterface
 {
@@ -15,46 +16,58 @@ class MenuFilter implements FilterInterface
 
     public function transform($item)
     {
+        // Para debug
+        // if (isset($item['text']) && $item['text'] == 'Integrações') {
+        //     dd($item);
+        //     return false;
+        // }
+
+
         if (isset($item['route']) && ! \Route::has($item['route'])) {
-            Log::info('Menu não existe: '.$item['route']);
+            Log::debug('Menu não existe: '.$item['route']);
 
             return false;
         }
 
         if (isset($item['config']) && ! config($item['config'], false)) {
-            Log::info('Menu desabilitado: '.$item['config']);
+            Log::debug('Menu desabilitado: '.$item['config']);
 
             return false;
         }
 
-        // @todo @debug testar
+        // Remove Itens Sem Filhos
         if (
             (!isset($item["submenu"]) || empty($item["submenu"]))
             && isset($item["text"]) && 
-            (!isset($item["href"]))
+            (!isset($item["href"]) || $item["href"]=='#')
         ) {
-            Log::info('Sem filho, tirando fora: '.$item['config']);
+            Log::debug('Sem filho, tirando fora: '.$item['text']);
             return false;
         }
-
 
         // if (isset($item['permission']) && ! Laratrust::can($item['permission'])) {
         //     return false;
         // }
-        //         if (!isset($item['header']) && $item['text']!=="Dashboard" && $item['text']!=="Visitas" && $item['text']!=="Plugins" && $item['text']!=="Others" )
-        // dd($item);
         $user = Auth::user();
 
-        if ($this->splitForSection && config('siravel.habilityTopNav', true) && ! $this->verifySection($item, $user)) {
+        if (!$this->verifySection($item, $user)) {
             return false;
         }
         
         //
         if (! $this->verifyLevel($item, $user)) {
+            Log::debug('Sem level, tirando fora: '.$item['text']);
+            return false;
+        }
+
+        //
+        if (!$this->hasPermissionForUser($item, $user)) {
+            Log::debug('Sem permission, tirando fora: '.$item['text']);
             return false;
         }
 
         if ($this->isInDevelopment($item, $user)) {
+            Log::debug('Is in Development: '.$item['text']);
             return false;
         }
 
@@ -74,7 +87,17 @@ class MenuFilter implements FilterInterface
     }
 
     private function verifySection($item, $user): bool
-    {
+    {         
+        // Retira usuarios que nao tem acesso
+        if (isset($item['section']) && (!$user || !$user->hasAccessTo($item['section']))) {
+            return false;
+        }
+
+        // Se nao for pra dividir entre as sessões, então nao remove o menu, return true
+        if (!$this->splitForSection || !config('siravel.habilityTopNav', true)) {
+            return true;
+        }
+
         $actualSection = Request::segment(1);
         $section = null;
         if (isset($item['section']) && $actualSection !== $item['section']) {
@@ -82,11 +105,6 @@ class MenuFilter implements FilterInterface
         }
 
         if (isset($item['dontSection']) && $actualSection === $item['dontSection']) {
-            return false;
-        }
-
-        // Retira usuarios que nao tem acesso
-        if (isset($item['section']) && (!$user || !$user->hasAccessTo($item['section']))) {
             return false;
         }
 
@@ -140,4 +158,33 @@ class MenuFilter implements FilterInterface
 
         return true;
     }
+
+    private function hasPermissionForUser($item, $user): bool
+    {
+        $permissionsByUrl = [
+            'isRoot' => [
+                'rica',
+                'root'
+            ],
+            'isAdmin' => [
+                'admin',
+            ]
+        ];
+        
+        $actualSection = Request::segment(1);
+        foreach ($permissionsByUrl as $permission => $values) {
+            if (isset($item['route'])) {
+                if (Str::startsWith($item['route'], $values)) {
+                    return $user->{$permission}();
+                }
+            }
+            if (isset($item['url'])) {
+                if (Str::contains($item['url'], $values)) {
+                    return $user->{$permission}();
+                }
+            }
+        }
+        return true;
+    }
+
 }
