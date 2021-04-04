@@ -54,22 +54,22 @@ class MenuFilter implements FilterInterface
             return false;
         }
         
-        //
-        if (! $this->verifyLevel($item, $user)) {
-            Log::debug('Sem level, tirando fora: '.$item['text']);
-            return false;
-        }
+        // //
+        // if (! $this->verifyLevel($item, $user)) {
+        //     Log::debug('Sem level, tirando fora: '.$item['text']);
+        //     return false;
+        // }
 
-        //
-        if (!$this->hasPermissionForUser($item, $user)) {
-            Log::debug('Sem permission, tirando fora: '.$item['text']);
-            return false;
-        }
+        // //
+        // if (!$this->hasPermissionForUser($item, $user)) {
+        //     Log::debug('Sem permission, tirando fora: '.$item['text']);
+        //     return false;
+        // }
 
-        if ($this->isInDevelopment($item, $user)) {
-            Log::debug('Is in Development: '.$item['text']);
-            return false;
-        }
+        // if ($this->isInDevelopment($item, $user)) {
+        //     Log::debug('Is in Development: '.$item['text']);
+        //     return false;
+        // }
 
         // if (!$this->verifySpace($item, $user)) {
         //     return false;
@@ -88,11 +88,6 @@ class MenuFilter implements FilterInterface
 
     private function verifySection($item, $user): bool
     {         
-        // Retira usuarios que nao tem acesso
-        if (isset($item['section']) && (!$user || !$user->hasAccessTo($item['section']))) {
-            return false;
-        }
-
         // Se nao for pra dividir entre as sessões, então nao remove o menu, return true
         if (!$this->splitForSection || !config('siravel.habilityTopNav', true)) {
             return true;
@@ -161,6 +156,12 @@ class MenuFilter implements FilterInterface
 
     private function hasPermissionForUser($item, $user): bool
     {
+        // Retira usuarios que nao tem acesso
+        if (isset($item['section']) && (!$user || !$user->hasAccessTo($item['section']))) {
+            return false;
+        }
+
+        // Verifica as outras urls
         $permissionsByUrl = [
             'isRoot' => [
                 'rica',

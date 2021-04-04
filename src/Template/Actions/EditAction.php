@@ -29,6 +29,6 @@ class EditAction extends AbstractAction
     public function getDefaultRoute()
     {
         return \Pedreiro\Routing\UrlGenerator::managerRoute($this->dataType->slug, 'edit', $this->data->{$this->data->getKeyName()});
-        // return route('facilitador.'.$this->dataType->slug.'.edit', $this->data->{$this->data->getKeyName()});
+        // return route('rica.facilitador.'.$this->dataType->slug.'.edit', $this->data->{$this->data->getKeyName()});
     }
 }

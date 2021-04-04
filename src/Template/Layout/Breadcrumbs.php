@@ -28,7 +28,6 @@ class Breadcrumbs
      */
     public function set($links)
     {
-        dd($links);
         $this->links = $links;
     }
 
@@ -40,7 +39,6 @@ class Breadcrumbs
      */
     public function get()
     {
-        dd($this->links);
         return $this->links;
     }
 

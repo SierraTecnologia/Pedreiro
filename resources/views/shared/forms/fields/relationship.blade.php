@@ -28,7 +28,7 @@
 
                 <select
                     class="form-control select2-ajax" name="{{ $options->column }}"
-                    data-get-items-route="{{route('facilitador.' . $dataType->slug.'.relation')}}"
+                    data-get-items-route="{{route('rica.facilitador.' . $dataType->slug.'.relation')}}"
                     data-get-items-field="{{$row->field}}"
                     @if(!is_null($dataTypeContent->getKey())) data-id="{{$dataTypeContent->getKey()}}" @endif
                     data-method="{{ !is_null($dataTypeContent->getKey()) ? 'edit' : 'add' }}"
@@ -69,7 +69,7 @@
 
                 <select
                     class="form-control select2-ajax" name="{{ $options->column }}"
-                    data-get-items-route="{{route('facilitador.' . $dataType->slug.'.relation')}}"
+                    data-get-items-route="{{route('rica.facilitador.' . $dataType->slug.'.relation')}}"
                     data-get-items-field="{{$row->field}}"
                     @if(!is_null($dataTypeContent->getKey())) data-id="{{$dataTypeContent->getKey()}}" @endif
                     data-method="{{ !is_null($dataTypeContent->getKey()) ? 'edit' : 'add' }}"
@@ -200,12 +200,12 @@
                 <select
                     class="form-control @if(isset($options->taggable) && $options->taggable === 'on') select2-taggable @else select2-ajax @endif"
                     name="{{ $relationshipField }}[]" multiple
-                    data-get-items-route="{{route('facilitador.' . $dataType->slug.'.relation')}}"
+                    data-get-items-route="{{route('rica.facilitador.' . $dataType->slug.'.relation')}}"
                     data-get-items-field="{{$row->field}}"
                     @if(!is_null($dataTypeContent->getKey())) data-id="{{$dataTypeContent->getKey()}}" @endif
                     data-method="{{ !is_null($dataTypeContent->getKey()) ? 'edit' : 'add' }}"
                     @if(isset($options->taggable) && $options->taggable === 'on')
-                        data-route="{{ route('facilitador.'.\Illuminate\Support\Str::slug($options->table).'.store') }}"
+                        data-route="{{ route('rica.facilitador.'.\Illuminate\Support\Str::slug($options->table).'.store') }}"
                         data-label="{{$options->label}}"
                         data-error-message="{{__('support::cruds.bread.error_tagging')}}"
                     @endif
