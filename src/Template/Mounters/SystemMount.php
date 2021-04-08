@@ -41,6 +41,7 @@ class SystemMount
 
             \Trainner\TrainnerProvider::class,
             \Gamer\GamerProvider::class,
+            \Jogos\JogosProvider::class,
             
             \Facilitador\FacilitadorProvider::class,
             \Boravel\BoravelProvider::class,
