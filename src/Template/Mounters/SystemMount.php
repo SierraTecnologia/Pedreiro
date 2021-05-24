@@ -46,6 +46,7 @@ class SystemMount
             \Facilitador\FacilitadorProvider::class,
             \Boravel\BoravelProvider::class,
             \Siravel\SiravelProvider::class,
+            \Cms\CmsProvider::class,
             \PrivateJustice\PrivateJusticeProvider::class,
         ];
     }

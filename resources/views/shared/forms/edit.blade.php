@@ -10,7 +10,7 @@
 
             <div class="panel-body">
                 @include('pedreiro::_errors')
-                <form action="{{ route("$route.update", $entity->id) }}" method="POST">
+                <form action="{{ route("$route.update", $entity->getIdentificador()) }}" method="POST">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <div class="row">

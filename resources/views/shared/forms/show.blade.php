@@ -29,14 +29,14 @@
                         </div>
                         {{-- Edit resource --}}
                         <div class="col-sm-3 col-sm-offset-3">
-                            <a href="{{ route("$route.edit", $entity->id ) }}" class="btn btn-warning btn-block">
+                            <a href="{{ route("$route.edit", $entity->getIdentificador() ) }}" class="btn btn-warning btn-block">
                                 <i class='fa fa-edit'></i> Edit {{ $title }}
                             </a>
                         </div>
                         {{-- Delete resource --}}
                         <div class="col-sm-3">
 
-                            <form action="{{ route("$route.destroy", $entity->id) }}" method="POST" style="display: inline-block;">
+                            <form action="{{ route("$route.destroy", $entity->getIdentificador()) }}" method="POST" style="display: inline-block;">
                                 {{ method_field('DELETE') }}
                                 {{ csrf_field() }}
                                 <button class="btn btn-danger delete-btn btn-block" type="submit">

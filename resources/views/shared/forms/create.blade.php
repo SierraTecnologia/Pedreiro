@@ -9,7 +9,7 @@
             </div>
             <div class="panel-body">
                 @include('pedreiro::_errors')
-                <form action="{{ route("$route.store", $entity->id) }}" method="POST">
+                <form action="{{ route("$route.store", $entity->getIdentificador()) }}" method="POST">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-sm-12">
