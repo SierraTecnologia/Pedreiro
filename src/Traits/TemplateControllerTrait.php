@@ -8,7 +8,7 @@
 namespace Pedreiro\Traits;
 
 use App;
-use Bkwld\Library\Utils\File;
+use Muleta\Library\Utils\File;
 use Request;
 use Route;
 use View;

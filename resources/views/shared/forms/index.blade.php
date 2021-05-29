@@ -8,7 +8,7 @@
             <div class="panel-heading">
                 <div class="btn-group float-right">
                     <a href="{{ route("$route.create" ) }}" class="btn btn-secondary btn-xs float-right">
-                        <i class='fa fa-plus'></i> {{ __('pedreiro::media.add_new_folder') }} {{ $title }}
+                        <i class='fa fa-plus'></i> aa{{ __('pedreiro::media.add_new_folder') }} {{ $title }}
                     </a>
                 </div>
                 <h3 class="panel-title">{{ Illuminate\Support\Str::plural($title) }} Index</h3>

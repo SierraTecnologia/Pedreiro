@@ -1,0 +1,1 @@
+{{ print_r($entity->{$field['name']}, true) }}

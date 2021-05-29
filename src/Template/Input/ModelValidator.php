@@ -2,7 +2,7 @@
 
 namespace Pedreiro\Template\Input;
 
-use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
+use Muleta\Library\Laravel\Validator as BkwldLibraryValidator;
 use Facilitador\Models\Base as BaseModel;
 use MediaManager\Models\Image;
 use Pedreiro\Exceptions\ValidationFail;

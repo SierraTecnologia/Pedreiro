@@ -3,7 +3,7 @@
 namespace Pedreiro\Models;
 
 // Dependencies
-use Bkwld\Library\Utils\File;
+use Muleta\Library\Utils\File;
 use Config;
 use DB;
 use Exception;

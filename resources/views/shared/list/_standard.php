@@ -2,9 +2,8 @@
     data-js-view="standard-list"
     data-controller-route="<?php echo URL::to(app('pedreiro.url')->action($controller))?>"
     data-position-offset="<?php echo $paginator_from?>"
-    data-with-trashed="<?php echo $with_trashed?>"
-    <?php if ($parent_controller) :?> data-parent-controller="<?php echo $parent_controller?><?php 
-    endif?>"
+    data-with-trashed="<?php echo $with_trashed?>"<?php 
+    if ($parent_controller) { echo ' data-parent-controller="'.$parent_controller.'"'; } ?>
   >
 
     <?php

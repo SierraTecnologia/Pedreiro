@@ -5,7 +5,7 @@ namespace Pedreiro\Models;
 use App;
 // use Audit\Traits\Loggable;
 // use Bkwld\Cloner\Cloneable;
-use Bkwld\Library\Utils\Collection;
+use Muleta\Library\Utils\Collection;
 use Bkwld\Upchuck\SupportsUploads;
 use Config;
 use DB;

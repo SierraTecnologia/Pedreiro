@@ -4,7 +4,7 @@ namespace Pedreiro\Collections;
 
 // Deps
 use App;
-use Bkwld\Library\Utils;
+use Muleta\Library\Utils;
 use Cache;
 use Facilitador\Exceptions\Exception;
 use Facilitador\Models\Element;

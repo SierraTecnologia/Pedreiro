@@ -3,8 +3,8 @@
 namespace Pedreiro\Http\Controllers\Admin;
 
 use App;
-use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
-use Bkwld\Library\Utils\File;
+use Muleta\Library\Laravel\Validator as BkwldLibraryValidator;
+use Muleta\Library\Utils\File;
 use Event;
 use Former;
 use Illuminate\Database\Eloquent\Model;

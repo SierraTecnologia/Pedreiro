@@ -3,7 +3,7 @@
 namespace Pedreiro\Elements\Fields;
 
 // Deps
-use Bkwld\Library\Laravel\Former as FormerUtils;
+use Muleta\Library\Laravel\Former as FormerUtils;
 use Former\Form\Fields\Checkbox;
 use HtmlObject\Input as HtmlInput;
 use Illuminate\Container\Container;
