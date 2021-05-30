@@ -154,6 +154,10 @@ abstract class Base extends Model //Ardent
     {
         return $this->{$this->getKeyName()};
     }
+    public function getId()
+    {
+        return $this->getIdentificador();
+    }
 
     /**
      * No-Op callbacks invoked by Observers\ModelCallbacks.  These allow quick handling
