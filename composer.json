@@ -21,6 +21,7 @@
         "ricardosierra/minify": "dev-master",
         "ricardosierra/validate": "dev-master",
         "ricardosierra/changelog": "~1.4",
+        "sierratecnologia/muleta": "dev-master",
         "sierratecnologia/crudmaker": "dev-master",
         "sierratecnologia/locaravel": "dev-master",
         "google/recaptcha": "^1.2.4",
