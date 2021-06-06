@@ -1,9 +1,9 @@
 <?php
 
-namespace Support\Models;
+namespace Pedreiro\Models;
 
 // Dependencies
-use Bkwld\Library\Utils\File;
+use Muleta\Library\Utils\File;
 use Config;
 use DB;
 use Exception;
@@ -93,7 +93,7 @@ class Element extends Base
      * @param  Illuminate\Database\Eloquent\Builder $query
      * @return Illuminate\Database\Eloquent\Builder
      */
-    protected function setKeysForSaveQuery(Builder $query)
+    protected function setKeysForSaveQuery($query)
     {
         parent::setKeysForSaveQuery($query);
         $query->where('locale', '=', $this->locale);
@@ -170,7 +170,7 @@ class Element extends Base
      */
     protected function relatedModel()
     {
-        $yaml = app('facilitador.elements')->getConfig();
+        $yaml = app('pedreiro.elements')->getConfig();
         $model = array_get($yaml, $this->key.'.class')
             ?: array_get($yaml, $this->key.',model.class');
 
@@ -244,7 +244,7 @@ class Element extends Base
 
         // Get the current file value form the YAML.  Need to check for the
         // shorthand with the type suffix as well.
-        $yaml = app('facilitador.elements')->assocConfig();
+        $yaml = app('pedreiro.elements')->assocConfig();
         $replacement = $yaml[$this->key]['value'];
 
         // Check if the filenames are the same

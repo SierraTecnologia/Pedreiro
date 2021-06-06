@@ -4,7 +4,7 @@ namespace Pedreiro\Test;
 
 use Pedreiro\Test\Models\Post;
 
-class CrudFormsTest extends TestCase
+class CrudControllerTest extends TestCase
 {
     public function setUp(): void
     {

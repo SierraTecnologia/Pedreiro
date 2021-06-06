@@ -2,7 +2,7 @@
 
 namespace Pedreiro;
 
-use Bkwld\Library;
+use Muleta\Library;
 use Config;
 use Facilitador\Models\Setting;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Pedreiro\Elements\FormFields\After\HandlerInterface as AfterHandlerInterface;
 use Pedreiro\Elements\FormFields\HandlerInterface;
+use Pedreiro\Events\AlertsCollection;
 use Pedreiro\Template\Actions\DeleteAction;
 use Pedreiro\Template\Actions\EditAction;
 use Pedreiro\Template\Actions\RestoreAction;
@@ -21,7 +22,6 @@ use ReflectionClass;
 use Request;
 use Session;
 use Siravel\Models\Negocios\Page;
-use Support\Events\AlertsCollection;
 use View;
 
 class Pedreiro
@@ -61,6 +61,27 @@ class Pedreiro
         $this->filesystem = app(Filesystem::class);
 
         $this->findVersion();
+    }
+
+    /**
+     * 
+     */
+    public function loadRelativeView($view)
+    {
+        if (View::exists($view)) {
+            return $view;
+        }
+        if (View::exists('pedreiro::'.$view)) {
+            return 'pedreiro::'.$view;
+        }
+        $view = str_replace('layouts.', '', $view);
+        if (View::exists('pedreiro::'.$view)) {
+            return 'pedreiro::'.$view;
+        }
+        if (View::exists($view)) {
+            return $view;
+        }
+        throw new Exception('Não encontrado Relative View: '.$view);
     }
 
     public function getUrlSection()
@@ -206,6 +227,12 @@ class Pedreiro
         $model = str_replace(
             'Support\Http\Controllers\Admin',
             'Support\Models',
+            $model,
+            $is_support
+        );
+        $model = str_replace(
+            'Pedreiro\Http\Controllers\Admin',
+            'Pedreiro\Models',
             $model,
             $is_support
         );
@@ -375,7 +402,7 @@ class Pedreiro
      */
     public function translatable($model)
     {
-        if (! config('sitec.facilitador.multilingual.enabled')) {
+        if (! config('sitec.facilitador.multilingual.enabled', true)) {
             return false;
         }
 
@@ -436,9 +463,12 @@ class Pedreiro
 
         return '<title>' . ($title ? "$title | $site" : $site) . '</title>';
     }
+    /**
+     * @todo Fazer DEscricao
+     */
     public function description()
     {
-        return 'descricao';
+        return 'description';
     }
 
     /**
@@ -611,7 +641,7 @@ class Pedreiro
      */
     public function el($key)
     {
-        return app('facilitador.elements')->localize($this->locale())->get($key);
+        return app('pedreiro.elements')->localize($this->locale())->get($key);
     }
 
     /**
@@ -624,7 +654,7 @@ class Pedreiro
      */
     public function els($prefix, $crops = [])
     {
-        return app('facilitador.elements')
+        return app('pedreiro.elements')
             ->localize($this->locale())
             ->getMany($prefix, $crops);
     }
@@ -637,7 +667,7 @@ class Pedreiro
      */
     public function hasEl($key)
     {
-        return app('facilitador.elements')
+        return app('pedreiro.elements')
             ->localize($this->locale())
             ->hydrate()
             ->has($key);

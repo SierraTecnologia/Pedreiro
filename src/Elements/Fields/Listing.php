@@ -8,10 +8,10 @@ use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
+use Pedreiro\Http\Controllers\Admin\Base;
 use Request;
 use Support;
-use Support\Http\Controllers\Admin\Base;
-use SupportURL;
+use PedreiroURL;
 use URL;
 use View;
 
@@ -163,7 +163,7 @@ class Listing extends Field
         // Instantiate a string controller
         if (is_string($controller)
             && class_exists($controller)
-            && is_subclass_of($controller, 'Support\Http\Controllers\Admin\Base')
+            && is_subclass_of($controller, 'Pedreiro\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = $controller;
             $this->controller = new $controller;
@@ -175,7 +175,7 @@ class Listing extends Field
 
             // Or, validate a passed controller instance
         } elseif (is_object($controller)
-            && is_a($controller, 'Support\Http\Controllers\Admin\Base')
+            && is_a($controller, 'Pedreiro\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = get_class($controller);
             $this->controller = $controller;
@@ -331,7 +331,7 @@ class Listing extends Field
         // then don't show a special message
         if ($this->layout == 'sidebar' && ! $this->parent_item) {
             return View::make(
-                'support::shared.list._pending',
+                'pedreiro::shared.list._pending',
                 [
                 'title' => $this->label_text,
                 'description' => $this->controller->description(),
@@ -372,7 +372,7 @@ class Listing extends Field
         }
 
         // Return the view, passing in a bunch of variables
-        return View::make('support::shared.list._standard', $vars)->render();
+        return View::make('pedreiro::shared.list._standard', $vars)->render();
     }
 
     /**
@@ -396,8 +396,8 @@ class Listing extends Field
     protected function getIndexURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            SupportURL::action($this->controller_name.'@index') :
-            SupportURL::relative('index', null, $this->controller_name);
+            PedreiroURL::action($this->controller_name.'@index') :
+            PedreiroURL::relative('index', null, $this->controller_name);
     }
 
     /**
@@ -408,8 +408,8 @@ class Listing extends Field
     protected function getCreateURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            SupportURL::action($this->controller_name.'@create') :
-            SupportURL::relative('create', null, $this->controller_name);
+            PedreiroURL::action($this->controller_name.'@create') :
+            PedreiroURL::relative('create', null, $this->controller_name);
     }
 
     /**

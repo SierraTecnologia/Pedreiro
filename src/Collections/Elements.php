@@ -4,7 +4,7 @@ namespace Pedreiro\Collections;
 
 // Deps
 use App;
-use Bkwld\Library\Utils;
+use Muleta\Library\Utils;
 use Cache;
 use Facilitador\Exceptions\Exception;
 use Facilitador\Models\Element;
@@ -25,7 +25,7 @@ class Elements extends Collection
      *
      * @var string
      */
-    protected $cache_key = 'facilitador.elements.data';
+    protected $cache_key = 'pedreiro.elements.data';
 
     /**
      * The parse YAML contents

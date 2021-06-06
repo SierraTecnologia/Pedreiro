@@ -1,4 +1,4 @@
-@include('crud-forms::inputs.label')
+@include('pedreiro::shared.forms.inputs.label')
 
 <input type="password"
        id="{{ $field['name'] }}"

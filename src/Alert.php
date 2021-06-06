@@ -31,7 +31,7 @@ class Alert
 
     public function __call($name, $arguments)
     {
-        $component = app('facilitador.alert.components.'.$name, ['alert' => $this])
+        $component = app('pedreiro.alert.components.'.$name, ['alert' => $this])
             ->setAlert($this);
 
         call_user_func_array([$component, 'create'], $arguments);

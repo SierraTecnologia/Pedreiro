@@ -83,7 +83,7 @@ if ($listing->count()) {
 
             <?php // Standard bulk actions ?>
         <?php else: ?>
-            <?php echo View::make('support::shared.list._bulk_actions')->render()?>
+            <?php echo View::make('pedreiro::shared.list._bulk_actions')->render()?>
         <?php endif ?>
 
         <?php
@@ -127,7 +127,7 @@ if ($listing->count()) {
                 <?php
                 // Wrap the column value in an edit link only if it's the first
                 // column and it doesn't contain an a tag with an href attribute
-                $value = Support::renderListColumn($item, $column, $convert_dates);
+                $value = Pedreiro::renderListColumn($item, $column, $convert_dates);
                 if ($i ===0 && !preg_match('#<a[^.]+href[^.]+>#', $value)) {
                     $value = '<a href="'
                     .$item->getAdminEditUri($controller, $many_to_many)
@@ -151,7 +151,7 @@ if ($listing->count()) {
         <?php 
         // Maybe there were no results found 
         ?>
-        <?php echo View::make('support::shared.list._no_results', $__data)->render()?>
+        <?php echo View::make('pedreiro::shared.list._no_results', $__data)->render()?>
 
     </tbody>
 </table>

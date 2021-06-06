@@ -24,7 +24,7 @@ class RiCaService
 
     public function __construct()
     {
-        $this->imageRepo = app(ImageRepository::class);
+        // $this->imageRepo = app(ImageRepository::class); @todo @bug removi
         $this->backendRoute = config('siravel.backend-route-prefix', 'siravel');
     }
 
@@ -150,7 +150,7 @@ class RiCaService
     {
         $splitKey = explode('.', $key);
 
-        $moduleConfig = include __DIR__.'/../PublishedAssets/Config/'.$splitKey[0].'.php';
+        $moduleConfig = include __DIR__.'/../../publishes/config/'.$splitKey[0].'.php';
 
         $strippedKey = preg_replace('/'.$splitKey[1].'./', '', preg_replace('/'.$splitKey[0].'./', '', $key, 1), 1);
 
@@ -317,7 +317,7 @@ class RiCaService
             'site-mapped-modules',
             [
             'blog' => 'Siravel\Repositories\BlogRepository',
-            'page' => 'Siravel\Repositories\PageRepository',
+            'page' => 'Siravel\Repositories\Negocios\PageRepository',
             'events' => 'Siravel\Repositories\EventRepository',
             ]
         );

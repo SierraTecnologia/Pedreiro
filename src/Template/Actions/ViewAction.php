@@ -28,7 +28,6 @@ class ViewAction extends AbstractAction
 
     public function getDefaultRoute()
     {
-        return \Support\Routing\UrlGenerator::managerRoute($this->dataType->slug, 'show', $this->data->{$this->data->getKeyName()});
-        // return route('facilitador.'.$this->dataType->slug.'.show', $this->data->{$this->data->getKeyName()});
+        return \Pedreiro\Routing\UrlGenerator::managerRoute($this->dataType->slug, 'show', $this->data->{$this->data->getKeyName()});
     }
 }

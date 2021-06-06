@@ -6,8 +6,19 @@
     @elseif (View::exists('boravel::botman.partials.css') && config('siravel.botman', false))
         @include('boravel::botman.partials.css')
     @endif
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
     
+
+    <script type="text/javascript">
+        var _token = '{!! csrf_token() !!}';
+        var _url = '{!! url("/") !!}';
+        var _cms = '{!! url("/") !!}';
+        var _pixabayKey = '{!! config('cms.pixabay', '') !!}';
+        var _appTimeZone = '{!! config('app.timezone', 'UTC') !!}';
+        var _apiKey = '{!! config("cms.api-key") !!}';
+        var _apiToken = '{!! config("cms.api-token") !!}';
+    </script>
 @endpush
 
 @section('js')
@@ -18,8 +29,12 @@
         @include('boravel::botman.partials.js')
     @endif
     <script src="https://cdn.rawgit.com/download/glyphicons/0.1.0/glyphicons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     @stack('javascript')
     @yield('javascript')
+    @stack('scripts')
+    @yield('scripts')
 @stop
 
 @section('title')
@@ -164,6 +179,15 @@
     @endif
     @stack('content')
     @yield('content')
+    @if (isset($main))
+      @if (is_string($main))
+        {!! $main !!}
+      @else
+        {!! $main->render() !!}
+      @endif
+    @endif
+    @stack('main')
+    @yield('main')
   </div>
 @stop
 

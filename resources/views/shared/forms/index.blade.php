@@ -8,7 +8,7 @@
             <div class="panel-heading">
                 <div class="btn-group float-right">
                     <a href="{{ route("$route.create" ) }}" class="btn btn-secondary btn-xs float-right">
-                        <i class='fa fa-plus'></i> Add New {{ $title }}
+                        <i class='fa fa-plus'></i> aa{{ __('pedreiro::media.add_new_folder') }} {{ $title }}
                     </a>
                 </div>
                 <h3 class="panel-title">{{ Illuminate\Support\Str::plural($title) }} Index</h3>
@@ -30,7 +30,7 @@
                         @foreach ($entities as $entity)
                             <tr>
                                 @foreach ($fields as $field)
-                                    <td>@include( "crud-forms::displays.{$field['type']}")</td>
+                                    <td>@include( "pedreiro::displays.{$field['type']}")</td>
                                 @endforeach
 
                                 @if ($withTrashed)
@@ -40,7 +40,7 @@
                                 <td class="text-center" style="white-space: nowrap">
                                     @if (empty($entity->deleted_at))
                                         {{-- Show --}}
-                                        <a href="{{ route("$route.show", $entity->id ) }}" class="btn btn-info">
+                                        <a href="{{ route("$route.show", $entity->getIdentificador() ) }}" class="btn btn-info">
                                             @if (\Illuminate\Support\Facades\Config::get('crud-forms.button_icons'))
                                                 <i class="fa fa-info-circle"></i>
                                             @else
@@ -49,7 +49,7 @@
                                         </a>
 
                                         {{-- Update --}}
-                                        <a href="{{ route("$route.edit", $entity->id ) }}" class="btn btn-warning">
+                                        <a href="{{ route("$route.edit", $entity->getIdentificador() ) }}" class="btn btn-warning">
                                             @if (\Illuminate\Support\Facades\Config::get('crud-forms.button_icons'))
                                                 <i class="fa fa-edit"></i>
                                             @else
@@ -58,7 +58,7 @@
                                         </a>
 
                                         {{-- Delete --}}
-                                        <form action="{{ route("$route.destroy", $entity->id) }}" method="POST" style="display: inline-block;">
+                                        <form action="{{ route("$route.destroy", $entity->getIdentificador()) }}" method="POST" style="display: inline-block;">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
                                             <button class="btn btn-danger delete-btn" type="submit">

@@ -3,7 +3,7 @@
 namespace Pedreiro\Http\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Pedreiro\Facades\Pedreiro;
+use Pedreiro;
 use Porteiro\Contracts\User;
 
 class BasePolicy

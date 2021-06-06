@@ -4,7 +4,7 @@
 // Standard full list pagination
 if ((empty($layout) || $layout == 'full') && method_exists($listing, 'links')) {
     echo view(
-        'support::shared.pagination.paginator', [
+        'pedreiro::shared.pagination.paginator', [
         'paginator' => $listing->appends(
             [
             'query' => request('query'),

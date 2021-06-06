@@ -4,7 +4,6 @@ namespace Pedreiro\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
 use Pedreiro\Models\RedirectRule;
@@ -13,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
-class Handler extends ExceptionHandler
+class Handler extends \SiUtils\Exceptions\Handler
 {
     public static $DEFAULT_MESSAGE = 'Algo que não esta certo deu errado! Por favor, entre em contato conosco.';
 
@@ -91,7 +90,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        dd($exception);
         // Check for custom handling
         if ($response = $this->handle404s($request, $exception)) {
             return $response;
@@ -147,6 +145,11 @@ class Handler extends ExceptionHandler
         } elseif (config('app.debug') && $this->shouldReport($exception)) {
             dd('Error Handler', $exception);
         }
+        // // Caso não esteja em desenvolvimento não dispara erro
+        // elseif (config('app.env') == 'development' || config('app.env') == 'local' || config('app.env') == 'dev') {
+        //     dd($exception);
+        // }
+
 
         return parent::render($request, $exception);
     }

@@ -9,6 +9,7 @@ namespace Pedreiro\Template\Mounters;
 use Illuminate\Support\Str;
 use Log;
 use Route;
+use Auth;
 
 /**
  * Menu helper to make table and object form mapping easy.
@@ -28,10 +29,16 @@ class Menu
 
     protected $url = null;
     protected $route = null;
+
+    /**
+     * Somente ira aparecer para as features selecionadas
+     */
     protected $feature = null;
+
     protected $space = null;
     protected $section = null;
     protected $dontSection = null;
+    
     /**
      *
      */
@@ -57,6 +64,12 @@ class Menu
 
 
 
+    /**
+     * 0 -> Desabilitado
+     * 1 -> Habilitado
+     * 2 -> Em Desenvolvimento
+     */
+    protected $dev_status = 1;
 
     /**
      *  'text'    => 'Finder',
@@ -64,32 +77,43 @@ class Menu
      * 'nivel' => \Porteiro\Models\Role::$GOOD,
      * 'submenu' => \Finder\Services\MenuService::getAdminMenu(),
      */
-    public static function createFromArray($data)
+    public static function createFromArray($item)
     {
         $instance = new Menu;
 
-        // Caso seja uma divisoria
-        if (is_string($data) || (is_array($data) && isset($data['divisory']))) {
-            $instance->isDivisory = true;
 
-            if (is_array($data)) {
-                $instance->setText($data['text']);
-                if (isset($data['order'])) {
-                    $instance->setOrder($data['order']);
-                }
-            } else {
-                $data = explode('|', $data);
-                $instance->setText($data[0]);
-                if (! empty($data[1])) {
-                    $instance->setOrder($data[1]);
-                }
+        // Caso seja uma divisoria String sempre é
+        // Ps: Caso habilityTopNav desativado entao nao mostra as divisorias
+        if (is_string($item)) {
+            if (!config('siravel.habilityTopNav', true)) {
+                Log::debug('habilityTopNav Ativado removendo o menu: ' . $item);
+                return false;
             }
-        } elseif // Caso seja um menu
-        (is_array($data)) {
-            foreach ($data as $attribute => $valor) {
-                $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
-                $array[$attribute] = $instance->{$methodName}($valor);
+            $instance->isDivisory = true;
+            $item = explode('|', $item);
+            $instance->setText($item[0]);
+            if (! empty($item[1])) {
+                $instance->setOrder($item[1]);
             }
+            return $instance->validateAndReturn();
+        }
+
+        // Personalizacao de Config
+        if (!config('siravel.habilityTopNav', true) && isset($item['topnav']) && $item['topnav']!==false) {            
+            $item['topnav'] = false;
+            $item['divisory'] = true;
+            if (isset($item['url'])) {
+                $item['section'] = $item['url'];
+            }
+            if (Auth::user() && !Auth::user()->hasAccessTo($item['section'])) {
+                return false;
+            }
+        } 
+
+        // Caso seja um menu normal, nao divis
+        foreach ($item as $attribute => $valor) {
+            $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+            $instance->{$methodName}($valor);
         }
 
         return $instance->validateAndReturn();
@@ -179,6 +203,8 @@ class Menu
             'topnav_right',
             'data',
             'active',
+
+            'dev_status',
         ];
     }
 
@@ -428,6 +454,23 @@ class Menu
         $this->active = $value;
     }
 
+    public function getDevStatus(): int
+    {
+        return $this->dev_status;
+    }
+    public function setDevStatus(int $value)
+    {
+        $this->dev_status = $value;
+    }
+
+    public function getDivisory(): bool
+    {
+        return $this->isDivisory;
+    }
+    public function setDivisory(bool $value)
+    {
+        $this->isDivisory = $value;
+    }
     
     /**
      * Caso nao seja pra exibir, cria log e retorna false.

@@ -1,10 +1,11 @@
 <?php
 
-namespace Support\Http\Controllers\ExtendedBreadFormFields;
+namespace Pedreiro\Http\Controllers\ExtendedBreadFormFields;
 
 use Exception;
 use Facilitador\Http\Controllers\FacilitadorMediaController;
 use Illuminate\Http\Request;
+use Porteiro\Facades\Porteiro;
 use Support\Facades\Support;
 
 class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
@@ -28,21 +29,16 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                 // GET THE DataType based on the slug
                 $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
     
-                // Check permission
-                Support::canOrFail('delete_'.$dataType->name);
+                // // Check permission
+                // Porteiro::canOrFail('delete_'.$dataType->name);
     
                 // Load model and find record
                 $model = app($dataType->model_name);
                 $data = $model::find([$id])->first();
     
                 // Check if field exists
-<<<<<<< HEAD
                 if (!isset($data->{$field})) {
                     throw new Exception(__('pedreiro::generic.field_does_not_exist'), 400);
-=======
-                if (! isset($data->{$field})) {
-                    throw new Exception(__('facilitador::generic.field_does_not_exist'), 400);
->>>>>>> 5c903fb258ad1626860a5f217c8b6b11e51d0b1b
                 }
     
                 // Check if valid json
@@ -58,13 +54,8 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                         $founded = $i;
                     }
                 }
-<<<<<<< HEAD
                 if(!isset($founded)) {
                     throw new Exception(__('pedreiro::media.image_does_not_exist'), 400);
-=======
-                if (! isset($founded)) {
-                    throw new Exception(__('facilitador::media.image_does_not_exist'), 400);
->>>>>>> 5c903fb258ad1626860a5f217c8b6b11e51d0b1b
                 }
                 
                 // Remove image from array
@@ -77,13 +68,8 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                 return response()->json(
                     [
                     'data' => [
-<<<<<<< HEAD
                        'status'  => 200,
                        'message' => __('pedreiro::media.image_removed'),
-=======
-                       'status' => 200,
-                       'message' => __('facilitador::media.image_removed'),
->>>>>>> 5c903fb258ad1626860a5f217c8b6b11e51d0b1b
                     ],
                     ]
                 );
@@ -110,6 +96,7 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                 );
             }
         } else {
+            // @todo que classe é essa ?
             FacilitadorMediaController::remove($request);
         }
     }

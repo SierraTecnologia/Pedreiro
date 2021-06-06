@@ -2,6 +2,7 @@
 
 namespace Pedreiro\Template\Layout;
 
+use Illuminate\Support\Facades\App;
 use Request;
 use Support\Routing\Wildcard;
 use URL;
@@ -58,6 +59,12 @@ class Breadcrumbs
 
         // Loop through them in blocks of 2: [list, detail]
         $url = $segments[0];
+        
+        // $nav = new Nav();
+        // dd($segments, $nav->generate());
+
+
+
         for ($i = 1; $i < count($segments); $i += 2) {
 
             // If an action URL, you're at the end of the URL
@@ -73,7 +80,7 @@ class Breadcrumbs
             if (! ($controller = $router->detectController())) {
                 continue;
             }
-            $controller = new $controller;
+            $controller = App::make($controller);
 
             // Add controller to breadcrumbs
             $breadcrumbs[URL::to($url)] = strip_tags($controller->title(), '<img>');

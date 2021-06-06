@@ -7,13 +7,14 @@ namespace Pedreiro\Template\Mounters;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * MenuRepository helper to make table and object form mapping easy.
  */
 class MenuRepository
 {
+    use MenuRepositoryTrait;
+
     protected $menus = [];
 
 
@@ -40,7 +41,59 @@ class MenuRepository
         // );
     }
 
-    public function getTreeInArray($parent = 'root')
+
+    public static function createFromArray(array $array): MenuRepository
+    {
+        $arrayFromMenuEntities = [];
+        foreach ($array as $value) {
+            if ($createMenuArray = Menu::createFromArray($value)) {
+                $arrayFromMenuEntities[] = $createMenuArray;
+            }
+        }
+
+        return new self($arrayFromMenuEntities);
+    }
+
+    public static function createFromMultiplosArray(Collection $array): MenuRepository
+    {
+        $mergeArray = [];
+
+        if (! self::isArraysFromMenus($array) && ! empty($array)) {
+            foreach ($array as $value) {
+                $mergeArray = array_merge($mergeArray, self::mergeDinamicGroups($value));
+            }
+        }
+
+        return self::createFromArray($mergeArray);
+    }
+
+
+    private static function mergeDinamicGroups($array, $groupParent = '')
+    {
+        $mergeArray = [];
+
+        if (self::isArraysFromMenus($array)) {
+            return $array;
+        }
+        
+        if (! is_array($array)) {
+            throw new Exception('Deveria ser um array aqui no mergeDinamicGroups do MenuRepository');
+        };
+
+
+        foreach ($array as $indice => $values) {
+            $mergeArray = self::generateMergeMenus(
+                $mergeArray,
+                $groupParent,
+                $indice,
+                $values
+            );
+        }
+
+        return $mergeArray;
+    }
+    
+    public function getTreeInArray($parent = 'root', $order = null)
     {
         $menuArrayList = [];
 
@@ -68,7 +121,7 @@ class MenuRepository
         return $this->getInOrder($menuArrayList);
     }
 
-    public function getInOrder($arrayMenu)
+    private function getInOrder($arrayMenu)
     {
         if (is_object($arrayMenu[0])) {
             usort(
@@ -90,7 +143,7 @@ class MenuRepository
         return $arrayMenu;
     }
 
-    public function groupBy($attribute)
+    private function groupBy($attribute)
     {
         $byGroup = [];
         $getFunction = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
@@ -104,116 +157,5 @@ class MenuRepository
 
         // dd($byGroup, $this->menus);
         return $byGroup;
-    }
-
-
-    public static function createFromArray(array $array): MenuRepository
-    {
-        $arrayFromMenuEntitys = [];
-        foreach ($array as $value) {
-            if ($createMenuArray = Menu::createFromArray($value)) {
-                $arrayFromMenuEntitys[] = $createMenuArray;
-            }
-        }
-
-        return new self($arrayFromMenuEntitys);
-    }
-
-    public static function createFromMultiplosArray(Collection $array): MenuRepository
-    {
-        $mergeArray = [];
-
-        if (! self::isArraysFromMenus($array) && ! empty($array)) {
-            foreach ($array as $value) {
-                $mergeArray = array_merge($mergeArray, self::mergeDinamicGroups($value));
-            }
-        }
-
-        return self::createFromArray($mergeArray);
-    }
-
-    protected static function mergeDinamicGroups($array, $groupParent = '')
-    {
-        $mergeArray = [];
-
-        if (self::isArraysFromMenus($array)) {
-            return $array;
-        }
-        
-        if (! is_array($array)) {
-            throw new Exception('Deveria ser um array aqui no mergeDinamicGroups do MenuRepository');
-        };
-
-
-        foreach ($array as $indice => $values) {
-            $group = $groupParent;
-            if (is_string($indice)) {
-                if (! empty($group)) {
-                    $tempArrayToMerge = [
-                        'text' => explode('|', $indice)[0],
-                        'group' => $group,
-                    ];
-                    if (isset(explode('|', $indice)[1])) {
-                        $tempArrayToMerge['order'] = explode('|', $indice)[1];
-                    }
-                    $mergeArray = array_merge(
-                        $mergeArray,
-                        [
-                            $tempArrayToMerge,
-                        ]
-                    );
-                    $group .= '.';
-                } else {
-                    $mergeArray = array_merge($mergeArray, [$indice]);
-                }
-
-                $group .= Str::slug(explode('|', $indice)[0], '-');
-            }
-            if (Menu::isArrayMenu($values, $indice)) {
-                if (! empty($group)) {
-                    if (! isset($values['group'])) {
-                        $values['group'] = $group;
-                    } else {
-                        $values['group'] = $group . '.' . $values[$indice]['group'];
-                    }
-                }
-                $values = [$values];
-            } elseif (self::isArraysFromMenus($values)) {
-                if (! empty($group)) {
-                    foreach ($values as $indice => $value) {
-                        if (! isset($value['group'])) {
-                            $values[$indice]['group'] = $group;
-                        } else {
-                            $values[$indice]['group'] = $group . '.' . $values[$indice]['group'];
-                        }
-                    }
-                }
-            } else {
-                $values = self::mergeDinamicGroups($values, $group);
-            }
-
-            $mergeArray = array_merge($mergeArray, $values);
-        }
-
-        return $mergeArray;
-    }
-
-    public static function isArraysFromMenus($arrayMenu)
-    {
-        if (is_string($arrayMenu)) {
-            return false;
-        }
-
-        if (! is_array($arrayMenu)) {
-            return false;
-        }
-
-        foreach ($arrayMenu as $indice => $values) {
-            if (! Menu::isArrayMenu($values, $indice)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

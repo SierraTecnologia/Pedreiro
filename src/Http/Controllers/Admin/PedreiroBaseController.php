@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Pedreiro\Facades\Pedreiro;
+use Pedreiro;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Events\BreadDataAdded;
 use Support\Events\BreadDataDeleted;
 use Support\Events\BreadDataRestored;
 use Support\Events\BreadDataUpdated;
 use Support\Events\BreadImagesDeleted;
+use Support\Models\Application\DataRow;
+use Support\Models\Application\DataType;
 
 class PedreiroBaseController extends Base
 {
@@ -36,7 +38,7 @@ class PedreiroBaseController extends Base
         $slug = $this->getSlug($request);
 
         // GET THE DataType based on the slug
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('browse', app($dataType->model_name));
@@ -48,7 +50,7 @@ class PedreiroBaseController extends Base
         $searchNames = [];
         if ($dataType->server_side) {
             $searchable = SchemaManager::describeTable(app($dataType->model_name)->getTable())->pluck('name')->toArray();
-            $dataRow = Pedreiro::model('DataRow')->whereDataTypeId($dataType->id)->get();
+            $dataRow = DataRow::whereDataTypeId($dataType->id)->get();
             foreach ($searchable as $key => $value) {
                 $displayName = $dataRow->where('field', $value)->first()->getTranslatedAttribute('display_name');
                 $searchNames[$value] = $displayName ?: ucwords(str_replace('_', ' ', $value));
@@ -202,7 +204,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         $isSoftDeleted = false;
 
@@ -262,7 +264,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
@@ -307,7 +309,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Compatibility with Model binding.
         $id = $id instanceof \Illuminate\Database\Eloquent\Model ? $id->{$id->getKeyName()} : $id;
@@ -362,7 +364,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('add', app($dataType->model_name));
@@ -401,7 +403,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('add', app($dataType->model_name));
@@ -446,7 +448,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('delete', app($dataType->model_name));
@@ -493,7 +495,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('delete', app($dataType->model_name));
@@ -549,7 +551,7 @@ class PedreiroBaseController extends Base
             // GET multi value
             $multi = $request->get('multi');
 
-            $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+            $dataType = DataType::where('slug', '=', $slug)->first();
 
             // Load model and find record
             $model = app($dataType->model_name);
@@ -755,7 +757,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('edit', app($dataType->model_name));
@@ -765,7 +767,7 @@ class PedreiroBaseController extends Base
                 ->route("facilitador.{$dataType->slug}.index")
                 ->with(
                     [
-                    'message' => __('support::cruds.bread.ordering_not_set'),
+                    'message' => __('bread.ordering_not_set'),
                     'alert-type' => 'error',
                     ]
                 );
@@ -779,7 +781,7 @@ class PedreiroBaseController extends Base
 
         $display_column = $dataType->order_display_column;
 
-        $dataRow = Pedreiro::model('DataRow')->whereDataTypeId($dataType->id)->whereField($display_column)->first();
+        $dataRow = DataRow::whereDataTypeId($dataType->id)->whereField($display_column)->first();
 
         $view = 'support::cruds.bread.order';
 
@@ -802,7 +804,7 @@ class PedreiroBaseController extends Base
     {
         $slug = $this->getSlug($request);
 
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('edit', app($dataType->model_name));
@@ -825,7 +827,7 @@ class PedreiroBaseController extends Base
     public function action(Request $request)
     {
         $slug = $this->getSlug($request);
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         $action = new $request->action($dataType, null);
 
@@ -845,7 +847,7 @@ class PedreiroBaseController extends Base
         $page = $request->input('page');
         $on_page = 50;
         $search = $request->input('search', false);
-        $dataType = Pedreiro::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = DataType::where('slug', '=', $slug)->first();
 
         $rows = $request->input('method', 'add') == 'add' ? $dataType->addRows : $dataType->editRows;
         foreach ($rows as $key => $row) {

@@ -2,7 +2,7 @@
 
 namespace Pedreiro\Models;
 
-use Bkwld\Library\Utils;
+use Muleta\Library\Utils;
 use Config;
 use DB;
 use Illuminate\Database\Eloquent\Builder;

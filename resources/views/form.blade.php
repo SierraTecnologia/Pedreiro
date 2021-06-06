@@ -1,7 +1,7 @@
 @foreach ($fields as $field)
 
     <div class="form-group">
-        @include( "pedreiro::inputs.{$field['type']}")
+        @include( "pedreiro::shared.forms.inputs.{$field['type']}")
     </div>
 
 @endforeach

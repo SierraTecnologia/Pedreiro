@@ -1,14 +1,13 @@
 @extends( $bladeLayout ?: \Illuminate\Support\Facades\Config::get('pedreiro.blade_layout', 'layouts.app'))
 
 @section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
-
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="btn-group float-right">
                     <a href="{{ route("$route.create" ) }}" class="btn btn-secondary btn-xs float-right">
-                        <i class='fa fa-plus'></i> Add New {{ $title }}
+                        <i class='fa fa-plus'></i> {{ __('common.add') }} {{ $title }}
                     </a>
                 </div>
                 <h3 class="panel-title">{{ Illuminate\Support\Str::plural($title) }} Index</h3>
@@ -23,14 +22,14 @@
                             @if ($withTrashed)
                                 <th>Deleted On</th>
                             @endif
-                            <th class="text-center" style="white-space: nowrap;">Actions</th>
+                            <th class="text-center" style="white-space: nowrap;">{{ __('common.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($entities as $entity)
                             <tr>
                                 @foreach ($fields as $field)
-                                    <td>@include( "pedreiro::displays.{$field['type']}")</td>
+                                    <td>@include( "pedreiro::shared.forms.displays.{$field['type']}")</td>
                                 @endforeach
 
                                 @if ($withTrashed)
@@ -44,7 +43,7 @@
                                             @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                 <i class="fa fa-info-circle"></i>
                                             @else
-                                                show
+                                            {{ __('common.view') }}
                                             @endif
                                         </a>
 
@@ -53,7 +52,7 @@
                                             @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                 <i class="fa fa-edit"></i>
                                             @else
-                                                edit
+                                            {{ __('common.edit') }}
                                             @endif
                                         </a>
 
@@ -65,7 +64,7 @@
                                                 @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                     <i class="fa fa-remove"></i>
                                                 @else
-                                                    delete
+                                                {{ __('common.delete') }}
                                                 @endif
                                             </button>
                                         </form>
@@ -87,6 +86,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if ($withPagination && $withPagination != 0)
+                    {{ $entities->links() }}
+                @endif
             </div>
         </div>
     </div>

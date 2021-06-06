@@ -1,0 +1,37 @@
+@import "_variables";
+
+// Fonts
+// @import "fonts";
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic');
+@import '~@fortawesome/fontawesome-free/css/all.css';
+// @import '~glyphicons-only-bootstrap/css/bootstrap'; // @todo Ativar
+@import '~open-iconic/font/css/open-iconic-bootstrap.css';
+// @import "fonts";
+
+
+
+// Upload
+@import "node_modules/dropzone/dist/dropzone";
+@import "node_modules/cropperjs/dist/cropper";
+
+// OverlayScrollbars
+@import '~overlayscrollbars/css/OverlayScrollbars.css';
+
+// iCheck
+@import '~icheck-bootstrap/icheck-bootstrap.css';
+
+// Bootstrap
+// Already imported by AdminLTE
+//@import '~bootstrap/scss/bootstrap';
+
+  
+//   /********* END MEDIA STYLES *********/
+
+// @import '../../vendor/sierratecnologia/laravel-support/resources/assets/sass/app.scss';
+@import '../../vendor/sierratecnologia/pedreiro/resources/assets/sass/app.scss';
+
+
+// // // AdminLTE
+// @import '../../vendor/almasaeed2010/adminlte/dist/css/adminlte.css';
+
+@import "app/app";

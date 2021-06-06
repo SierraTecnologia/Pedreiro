@@ -6,8 +6,8 @@ use App;
 use Config;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Events\RouteMatched;
-
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
@@ -22,9 +22,8 @@ use Pedreiro\Elements\FormFields\KeyValueJsonFormField;
 use Pedreiro\Elements\FormFields\MultipleImagesWithAttrsFormField;
 use Pedreiro\Events\FormFieldsRegistered;
 use Pedreiro\Facades\Form;
-use Support\Facades\Support as SupportFacade;
-use Pedreiro\Services\RiCaService;
 use Pedreiro\Http\Middleware\isAjax;
+use Pedreiro\Services\RiCaService;
 
 class PedreiroServiceProvider extends ServiceProvider
 {
@@ -34,51 +33,143 @@ class PedreiroServiceProvider extends ServiceProvider
     const pathVendor = 'sierratecnologia/pedreiro';
 
     public static $aliasProviders = [
+        'PedreiroURL' => \Pedreiro\Facades\PedreiroURL::class,
+
         'Active' => \Pedreiro\Facades\Active::class,
 
         'Flash' => \Laracasts\Flash\Flash::class,
-        'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
-        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'Active' => HieuLe\Active\Facades\Active::class,
+        'Gravatar' => \Creativeorange\Gravatar\Facades\Gravatar::class,
 
-        'Translation' => Translation\Facades\Translation::class,
-        'TranslationCache' => Translation\Facades\TranslationCache::class,
+        /**
+         * Listagens
+         */
+        'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
+        
+        'Active' => \HieuLe\Active\Facades\Active::class,
+
+        'Translation' => \Translation\Facades\Translation::class,
+        'TranslationCache' => \Translation\Facades\TranslationCache::class,
         // Form field generation
         'Former' => \Former\Facades\Former::class,
     ];
 
     // public static $providers = [
     public static $providers = [
-            /**
-             * Layoults
-             */
-            \RicardoSierra\Minify\MinifyServiceProvider::class,
-            \Collective\Html\HtmlServiceProvider::class,
-            \Laracasts\Flash\FlashServiceProvider::class,
-    
-            JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
-            /**
-             * VEio pelo Facilitador
-             **/
-            \Former\FormerServiceProvider::class,
-            \Bkwld\Upchuck\ServiceProvider::class,
-    
-            Translation\TranslationServiceProvider::class,
-            Locaravel\LocaravelProvider::class,
-            /**
-             * Helpers
-             */
-            HieuLe\Active\ActiveServiceProvider::class,
-            Laracasts\Flash\FlashServiceProvider::class,
-            /**
-             * Outros
-             */
-            \Laravel\Tinker\TinkerServiceProvider::class,
+        // HAML
+        \Bkwld\LaravelHaml\ServiceProvider::class,
+        /**
+         * Layoults
+         */
+        \RicardoSierra\Minify\MinifyServiceProvider::class,
+        \Collective\Html\HtmlServiceProvider::class,
+        \Laracasts\Flash\FlashServiceProvider::class,
 
-            \Pedreiro\RoutesExplorerServiceProvider::class,
-        ];
+        \JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
+
+        /**
+         * Listagens
+         */
+        \Yajra\DataTables\DataTablesServiceProvider::class,
+
+        /**
+         * VEio pelo Facilitador
+         **/
+        \Former\FormerServiceProvider::class,
+        \Bkwld\Upchuck\ServiceProvider::class,
+
+        \Translation\TranslationServiceProvider::class,
+        
+        /**
+         * Helpers
+         */
+        \HieuLe\Active\ActiveServiceProvider::class,
+        \Laracasts\Flash\FlashServiceProvider::class,
+        /**
+         * Outros
+         */
+        \Laravel\Tinker\TinkerServiceProvider::class,
+
+        \Pedreiro\RoutesExplorerServiceProvider::class,
+    ];
     
     public static $menuItens = [
+        [
+            'text' => 'Painel',
+            'order' => 501,
+            'url' => 'painel',
+            // 'dontSection'     => 'painel',
+            'topnav' => true,
+            'active' => ['painel', 'painel*', 'regex:@^painel/[0-9]+$@'],
+        ],
+        [
+            'text' => 'Master',
+            'order' => 1001,
+            'url' => 'master',
+            // 'dontSection'     => 'master',
+            'topnav' => true,
+            'active' => ['master', 'master*', 'regex:@^master/[0-9]+$@'],
+        ],
+        [
+            'text' => 'Administração',
+            'order' => 2001,
+            'url' => 'admin',
+            // 'dontSection'     => 'admin',
+            'topnav' => true,
+            'active' => ['admin', 'admin*', 'regex:@^admin/[0-9]+$@'],
+        ],
+        [
+            'text' => 'RiCa',
+            'order' => 4001,
+            'url' => 'rica',
+            // 'dontSection'     => 'rica',
+            'topnav' => true,
+            'active' => ['rica', 'rica*', 'regex:@^rica/[0-9]+$@'],
+        ],
+        [
+            'text'        => 'Painel Dashboard',
+            'route'       => 'painel.porteiro.dashboard',
+            'icon'        => 'fas fa-fw fa-industry',
+            'icon_color'  => 'blue',
+            'label_color' => 'success',
+            'section'     => 'painel',
+            'order' => 502,
+            // 'access' => \Porteiro\Models\Role::$ADMIN
+        ],
+
+
+        /**
+         * @todo fazer esses tres dashboards
+         */
+        // [
+        //     'text'        => 'Master Dashboard',
+        //     'route'       => 'master.porteiro.dashboard',
+        //     'icon'        => 'fas fa-fw fa-industry',
+        //     'icon_color'  => 'blue',
+        //     'label_color' => 'success',
+        //     'section'     => 'master',
+        //     'order' => 1002,
+        //     // 'access' => \Porteiro\Models\Role::$ADMIN
+        // ],
+        // [
+        //     'text'        => 'Admin Dashboard',
+        //     'route'       => 'admin.porteiro.dashboard',
+        //     'icon'        => 'fas fa-fw fa-industry',
+        //     'icon_color'  => 'blue',
+        //     'label_color' => 'success',
+        //     'section'     => 'admin',
+        //     'order' => 2001,
+        //     // 'access' => \Porteiro\Models\Role::$ADMIN
+        // ],
+        // [
+        //     'text'        => 'RiCa Dashboard',
+        //     'route'       => 'rica.porteiro.dashboard',
+        //     'icon'        => 'fas fa-fw fa-industry',
+        //     'icon_color'  => 'blue',
+        //     'label_color' => 'success',
+        //     'section'     => 'rica',
+        //     'order' => 4002,
+        //     // 'access' => \Porteiro\Models\Role::$ADMIN
+        // ],
     ];
 
     
@@ -102,6 +193,24 @@ class PedreiroServiceProvider extends ServiceProvider
     
     public function boot(Router $router, Dispatcher $event)
     {
+
+        // Define constants that Decoy uses
+        if (!defined('FORMAT_DATE')) {
+            define('FORMAT_DATE', __('pedreiro::base.constants.format_date'));
+        }
+        if (!defined('FORMAT_DATETIME')) {
+            define('FORMAT_DATETIME', __('pedreiro::base.constants.format_datetime'));
+        }
+        if (!defined('FORMAT_TIME')) {
+            define('FORMAT_TIME', __('pedreiro::base.constants.format_time'));
+        }
+        
+        // Paginator Bootstrap
+        // @todo tava dando erro
+        // syntax error, unexpected ''pagination.previous'' (T_CONSTANT_ENCAPSED_STRING), expecting ';' or ',' (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php) (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php)
+        // Paginator::useBootstrap();
+
+
         $this->loadTranslations();
         if ($this->app->runningInConsole()) {
             $this->publishes(
@@ -170,10 +279,29 @@ class PedreiroServiceProvider extends ServiceProvider
 
 
         $this->registerViewComposers();
+
+
+        $this->eloquentSvents();
+        $this->setProviders();
     }
+    /**
+     * Delegate events to Decoy observers
+     *
+     * @return void
+     */
+    protected function eloquentSvents()
+    {
+        $this->app['events']->listen(
+            'eloquent.saved:*',
+            '\Pedreiro\Observers\ManyToManyChecklist'
+        );
+    }
+
+
 
     public function register()
     {
+        
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', Form::class);
         $loader->alias('Pedreiro', PedreiroFacade::class);
@@ -184,10 +312,11 @@ class PedreiroServiceProvider extends ServiceProvider
             }
         );
         // $this->app->bind('pedreiro', Pedreiro::class);
-        $loader->alias('Siravel', \Pedreiro\Facades\RiCaServiceFacade::class);
+        $loader->alias('Siravel', \Pedreiro\Facades\RiCaServiceFacade::class); // @todo ??? que porra é essa ?
         $loader->alias('RiCaService', \Pedreiro\Facades\RiCaServiceFacade::class);
         $this->app->bind(
-            'RiCaService', function ($app) {
+            'RiCaService',
+            function ($app) {
                 return new RiCaService();
             }
         );
@@ -195,6 +324,26 @@ class PedreiroServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   
+
+        // Register URL Generators as "PedreiroURL".
+        $this->app->singleton(
+            'pedreiro.url',
+            function ($app) {
+                return new \Pedreiro\Routing\UrlGenerator($app['request']->path());
+            }
+        );
+        // Build the Breadcrumbs store
+        $this->app->singleton(
+            'rica.breadcrumbs',
+            function ($app) {
+                $breadcrumbs = new \Pedreiro\Template\Layout\Breadcrumbs();
+                $breadcrumbs->set($breadcrumbs->parseURL());
+
+                return $breadcrumbs;
+            }
+        );
+
+
 
         // Register Migrations
         $this->loadMigrationsFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
@@ -226,6 +375,13 @@ class PedreiroServiceProvider extends ServiceProvider
         PedreiroFacade::addFormField(MultipleImagesWithAttrsFormField::class);
         $this->registerFormFields();
 
+
+        // Build the Elements collection
+        $this->app->singleton(
+            'pedreiro.elements', function ($app) {
+                return with(new \Pedreiro\Collections\Elements)->setModel(\Support\Models\Element::class);
+            }
+        );
 
         // $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'pedreiro');
     }
@@ -287,9 +443,9 @@ class PedreiroServiceProvider extends ServiceProvider
         $components = ['title', 'text', 'button'];
 
         foreach ($components as $component) {
-            $class = 'Support\\Elements\\Alert\\'.ucfirst(Str::camel($component)).'Component';
+            $class = 'Pedreiro\\Elements\\Alert\\'.ucfirst(Str::camel($component)).'Component';
 
-            $this->app->bind("facilitador.alert.components.{$component}", $class);
+            $this->app->bind("pedreiro.alert.components.{$component}", $class);
         }
     }
 
@@ -300,9 +456,9 @@ class PedreiroServiceProvider extends ServiceProvider
     {
         // Register alerts
         View::composer(
-            'support::*',
+            'pedreiro::*',
             function ($view) {
-                $view->with('alerts', SupportFacade::alerts());
+                $view->with('alerts', PedreiroFacade::alerts());
             }
         );
     }
@@ -331,19 +487,19 @@ class PedreiroServiceProvider extends ServiceProvider
 
         // Add Facilitador's custom Fields to Former so they can be invoked using the "Former::"
         // namespace and so we can take advantage of sublassing Former's Field class.
-        $this->app['former.dispatcher']->addRepository('Support\\Elements\\Fields\\');
+        $this->app['former.dispatcher']->addRepository('Pedreiro\\Elements\\Fields\\');
     }
     protected function loadTranslations()
     {
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'support'),
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'pedreiro'),
             ],
             ['lang',  'sitec', 'sitec-lang', 'translations']
         );
 
         // Load translations
-        $this->loadTranslationsFrom($this->getResourcesPath('lang'), 'support');
+        $this->loadTranslationsFrom($this->getResourcesPath('lang'), 'pedreiro');
     }
 }

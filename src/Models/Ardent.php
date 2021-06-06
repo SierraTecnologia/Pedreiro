@@ -3,7 +3,7 @@
 namespace Pedreiro\Models;
 
 use Closure;
-use Facilitador\Models\Builder;
+use Muleta\Modules\Eloquents\Displays\BuilderAbstract as Builder;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as DatabaseCapsule;
 use Illuminate\Database\Eloquent\Model;

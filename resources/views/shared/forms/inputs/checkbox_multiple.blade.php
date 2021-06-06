@@ -8,7 +8,7 @@ if (old($field['name'])) {
 
 ?>
 
-@include('crud-forms::inputs.label')
+@include('pedreiro::shared.forms.inputs.label')
 
 @foreach($relationshipOptions["{$field['relationship']}"] as $key=>$val)
     <div class="checkbox">

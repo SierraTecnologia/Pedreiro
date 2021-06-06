@@ -5,11 +5,12 @@ namespace Pedreiro\Models;
 use App;
 // use Audit\Traits\Loggable;
 // use Bkwld\Cloner\Cloneable;
-use Bkwld\Library\Utils\Collection;
+use Muleta\Library\Utils\Collection;
 use Bkwld\Upchuck\SupportsUploads;
 use Config;
 use DB;
 use Event;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -19,16 +20,14 @@ use Muleta\Traits\Models\Importable;
 use Muleta\Traits\Models\ValidatingTrait;
 use Muleta\Utils\Extratores\DbalExtractor;
 use Muleta\Utils\Inclusores\DbalInclusor;
-use Muleta\Utils\Mergeators\DbalMergeator;
 
+use Muleta\Utils\Mergeators\DbalMergeator;
 use Muleta\Utils\Modificators\ArrayModificator;
 use Pedreiro;
 use Pedreiro\Collections\Base as BaseCollection;
 use Pedreiro\Exceptions\Exception;
-
 use Session;
-use Support\Services\ModelService;
-use SupportURL;
+use PedreiroURL;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use URL;
 
@@ -154,6 +153,10 @@ abstract class Base extends Model //Ardent
     public function getIdentificador()
     {
         return $this->{$this->getKeyName()};
+    }
+    public function getId()
+    {
+        return $this->getIdentificador();
     }
 
     /**
@@ -593,6 +596,15 @@ abstract class Base extends Model //Ardent
         return false;
     }
 
+    public static function firstOrCreateAndAssociate($data, $associate = false): self
+    {
+        $entity = static::firstOrCreate($data);
+        if ($associate) {
+            static::associate($entity, $associate);
+        }
+
+        return $entity;
+    }
     /**
      *
      */
@@ -608,16 +620,16 @@ abstract class Base extends Model //Ardent
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
 
-        if (! $eloquentEntityForModel = ModelService::make(static::class)) {
-            dd('Nao deeria cair aqui debug');
-            $entity = static::firstOrCreate($data);
-            if ($associate) {
-                static::associate($entity, $associate);
+        // Caso não tenho o Support ModelService
+        if (! class_exists(\Support\Services\ModelService::class) || ! $eloquentEntityForModel = \Support\Services\ModelService::make(static::class)) {
+
+            // Temp - Caso seja a 2 condicao da erro
+            if (class_exists(\Support\Services\ModelService::class) && ! $eloquentEntityForModel) {
+                dd('Nao deeria cair aqui debug');
             }
 
-            return $entity;
+            return static::firstOrCreateAndAssociate($data, $associate);
         }
-        
 
         $data = DbalInclusor::includeDataFromEloquentEntity($eloquentEntityForModel, $data, $keyName);
 
@@ -662,12 +674,7 @@ abstract class Base extends Model //Ardent
             return $entity;
         }
 
-        $entity = static::firstOrCreate($data);
-        if ($associate) {
-            static::associate($entity, $associate);
-        }
-
-        return $entity;
+        return static::firstOrCreateAndAssociate($data, $associate);
     }
 
 
@@ -877,10 +884,10 @@ abstract class Base extends Model //Ardent
     public function getAdminEditUri($controller, $many_to_many = false)
     {
         if ($many_to_many) {
-            return URL::to(SupportURL::action($controller.'@edit', $this->getKey()));
+            return URL::to(PedreiroURL::action($controller.'@edit', $this->getKey()));
         }
 
-        return URL::to(SupportURL::relative('edit', $this->getKey(), $controller));
+        return URL::to(PedreiroURL::relative('edit', $this->getKey(), $controller));
     }
 
     /**
@@ -986,6 +993,21 @@ abstract class Base extends Model //Ardent
      * Gatinho para funcionar o ordered pra quem nao tem ordenacao
      */
     public function scopeOrderedForce($query)
+    {
+        if ($this->usesTimestamps()) {
+            $query->orderBy($this->getTable().'.created_at', 'desc');
+        }
+
+        return $query;
+    }
+
+    /**
+     * Orders instances of this model in the admin
+     *
+     * @param  Illuminate\Database\Query\Builder $query
+     * @return void
+     */
+    public function scopeOrdered(Builder $query, string $direction = 'asc')
     {
         if ($this->usesTimestamps()) {
             $query->orderBy($this->getTable().'.created_at', 'desc');

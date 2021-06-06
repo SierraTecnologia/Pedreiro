@@ -13,12 +13,12 @@ use Translation;
  */
 class SystemMount
 {
-    public function getProviders()
+    public static function getProviders()
     {
         return [
             \Support\SupportServiceProvider::class,
             \Porteiro\PorteiroProvider::class,
-            \Pedreiro\PedreiroProvider::class,
+            \Pedreiro\PedreiroServiceProvider::class,
             
             \Informate\InformateProvider::class,
             \Translation\TranslationProvider::class,
@@ -41,10 +41,12 @@ class SystemMount
 
             \Trainner\TrainnerProvider::class,
             \Gamer\GamerProvider::class,
+            \Jogos\JogosProvider::class,
             
             \Facilitador\FacilitadorProvider::class,
             \Boravel\BoravelProvider::class,
             \Siravel\SiravelProvider::class,
+            \Cms\CmsProvider::class,
             \PrivateJustice\PrivateJusticeProvider::class,
         ];
     }
@@ -52,7 +54,6 @@ class SystemMount
     public function loadMenuForAdminlte($event)
     {
         if (! config('siravel.packagesMenu', false)) {
-
             return ;
         }
 
@@ -66,7 +67,7 @@ class SystemMount
         }
 
 
-        // dd($this->getAllMenus()->getTreeInArray());
+        // dd($this->getAllMenus(), $this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
         collect($this->getAllMenus()->getTreeInArray())->map(
             function ($valor) use ($event) {
@@ -92,7 +93,7 @@ class SystemMount
     {
         return MenuRepository::createFromMultiplosArray(
             collect(
-                $this->getProviders()
+                self::getProviders()
             )->reject(
                 function ($class) {
                     return ! class_exists($class) || ! is_array($class::$menuItens) || empty($class::$menuItens);

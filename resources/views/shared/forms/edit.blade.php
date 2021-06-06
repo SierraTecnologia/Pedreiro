@@ -9,13 +9,13 @@
             </div>
 
             <div class="panel-body">
-                @include('crud-forms::_errors')
-                <form action="{{ route("$route.update", $entity->id) }}" method="POST">
+                @include('pedreiro::_errors')
+                <form action="{{ route("$route.update", $entity->getIdentificador()) }}" method="POST">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-sm-12">
-                            @include('crud-forms::form')
+                            @include('pedreiro::form')
                         </div>
                     </div>
                     <hr>
@@ -23,21 +23,21 @@
                         {{-- Back to resource index --}}
                         <div class="col-sm-2">
                             <a href="{{ route("$route.index") }}" class="btn btn-secondary btn-block">
-                                <i class='fa fa-arrow-circle-left'></i> Back to Index
+                                <i class='fa fa-arrow-circle-left'></i> {{ __('common.back') }}
                             </a>
                         </div>
 
                         {{-- Cancel and go back to resource show --}}
                         <div class="col-sm-2">
                             <a href="{{ route("$route.show", $entity) }}" class="btn btn-warning btn-block">
-                                <i class='fa fa-ban'></i> Cancel
+                                <i class='fa fa-ban'></i> {{ __('pedreiro::generic.cancel') }}
                             </a>
                         </div>
 
                         {{-- Submit --}}
                         <div class="col-sm-8">
                             <button type="submit" class="btn btn-success btn-block">
-                                <i class='fa fa-check-circle'></i> Submit Form
+                                <i class='fa fa-check-circle'></i> {{ __('common.save') }}
                             </button>
                         </div>
 
