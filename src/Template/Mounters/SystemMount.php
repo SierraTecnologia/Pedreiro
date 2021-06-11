@@ -48,6 +48,8 @@ class SystemMount
             \Siravel\SiravelProvider::class,
             \Cms\CmsProvider::class,
             \PrivateJustice\PrivateJusticeProvider::class,
+
+            \Legislateiro\LegislateiroProvider::class,
         ];
     }
 
