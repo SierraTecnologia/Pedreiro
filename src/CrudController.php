@@ -332,6 +332,43 @@ trait CrudController
     }
 
     /**
+     * Get the array of fields that we need to present in the forms.
+     *
+     * @return array
+     */
+    public function getFormFields()
+    {
+        if (empty($this->formFields)) {
+            $this->formFields = $this->model->formFields;
+        }
+
+
+        // No fields declared. We have a table with only a name field.
+        if (! $this->formFields || 0 == count($this->formFields)) {
+            if (! is_array($this->formFields)) {
+                return $this->formFields = [['name' => 'name', 'label' => 'Name', 'type' => 'text']];
+            }
+            array_push($this->formFields, ['name' => 'name', 'label' => 'Name', 'type' => 'text']);
+
+            return $this->formFields;
+        }
+
+        foreach ($this->formFields as $key => $field) {
+            if (Arr::has($field, 'relationship') && $field['type'] !== "inline" && ! Arr::has($field, 'relFieldName')) {
+                // set default name of related table main field
+                $this->formFields[$key]['relFieldName'] = 'name';
+            }
+            // @todo fazer para type inine
+            //  else if (Arr::has($field, 'relationship') && $field['type'] === "inline") {
+            //     // set default name of related table main field
+            //     $this->formFields[$key]['relFieldName'] = 'name';
+            // }
+        }
+
+        return $this->formFields;
+    }
+
+    /**
      * Get an array of all the model's relationships needed in the crud forms.
      *
      * @return array
@@ -425,6 +462,24 @@ trait CrudController
         } catch (\Throwable $th) {
             return Str::title(class_basename($this->model));
         }
+
+        /**
+         * @todo Essa parte foi removida verificar
+         
+        // If none declared, use the first of the formFields.
+        if (! $this->indexFields || 0 == count($this->indexFields)) {
+            $this->indexFields = [$this->getFormFields()[0]['name']];
+
+            return array_slice($this->getFormFields(), 0, 1);
+        }
+
+        return Arr::where(
+            $this->getFormFields(),
+            function ($value) {
+                return in_array($value['name'], $this->indexFields, true);
+            }
+        );
+        */
     }
 
 
