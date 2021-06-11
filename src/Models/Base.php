@@ -605,11 +605,13 @@ abstract class Base extends Model //Ardent
 
         return $entity;
     }
-    /**
-     *
-     */
+    
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
+        if (!static::hasFeatureHability()) {
+            dd('Nao tem feature');
+        }
+
         $associate = false;
         // @todo migrar isso pra ca pro support
         if (config('siravel.influencia', false)) {
@@ -1015,4 +1017,18 @@ abstract class Base extends Model //Ardent
 
         return $query;
     }
+
+    /**
+     * Verifica se é habilitado para esse sistema
+     */
+    public static function hasFeatureHability(): bool
+    {
+        if (isset(static::$features)) {
+            return \Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+                static::$features
+            );
+        }
+        return true;
+    }
+
 }
