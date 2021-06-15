@@ -127,7 +127,13 @@ class MenuRepository
             usort(
                 $arrayMenu,
                 function ($a, $b) {
-                    return $a->getOrder() > $b->getOrder();
+                    // usort(): Returning bool from comparison function is deprecated, return an integer less than, equal
+                    // Invez de retornar bool, retorna 1, -1, ou 0
+                    if ($a->getOrder() > $b->getOrder()) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
                 }
             );
 
