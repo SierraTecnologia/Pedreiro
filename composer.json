@@ -26,7 +26,7 @@
         "sierratecnologia/locaravel": "dev-master",
         "google/recaptcha": "^1.2.4",
         "kartik-v/bootstrap-fileinput": "dev-master",
-        "hieu-le/active": "^8.0",
+        "hieu-le/active": "^7.0|^8.0",
         "creativeorange/gravatar": "^1.0",
         "league/csv": "^9.0",
         "rap2hpoutre/fast-excel": "^1.7|^2.0",
@@ -51,7 +51,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
-        "orchestra/testbench": "^5.0",
+        "orchestra/testbench": "^5.0|^6.0",
         "phpunit/phpunit": "^9.3",
         "psalm/plugin-laravel": "^1.2",
         "vimeo/psalm": "^4.0"
@@ -59,13 +59,7 @@
     "autoload": {
         "psr-4": {
             "Pedreiro\\": "src"
-        },
-        "files": [
-            "utils/funcs/load-laravel.php",
-            "utils/funcs/helpers.php",
-            "utils/funcs/helperSlugify.php",
-            "utils/funcs/Reflection.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
