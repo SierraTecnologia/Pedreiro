@@ -13,6 +13,11 @@ use Translation;
  */
 class SystemMount
 {
+    public function __construct()
+    {
+        
+    }
+
     public static function getProviders()
     {
         return [
@@ -55,6 +60,7 @@ class SystemMount
 
     public function loadMenuForAdminlte($event)
     {
+
         if (! config('siravel.packagesMenu', false)) {
             return ;
         }
@@ -68,10 +74,13 @@ class SystemMount
             );
         }
 
+        $allMenus = Cache::rememberForever('system-mount-load-menu-for-adminlte', function () {
+            return collect($this->getAllMenus()->getTreeInArray());
+        });
 
         // dd($this->getAllMenus(), $this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-        collect($this->getAllMenus()->getTreeInArray())->map(
+        $allMenus->map(
             function ($valor) use ($event) {
                 $event->menu->add($valor);
             }
@@ -81,30 +90,31 @@ class SystemMount
 
     public function loadMenuForArray()
     {
-        // dd($this->getAllMenus()->getTreeInArray());
-        // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-        return collect($this->getAllMenus()->getTreeInArray())->map(
-            function ($valor) {
-                return $valor;
-            }
-        )->values()->all();
-        // });
+        return Cache::rememberForever('system-mount-load-menu-for-array', function () {
+            return collect($this->getAllMenus()->getTreeInArray())->map(
+                function ($valor) {
+                    return $valor;
+                }
+            )->values()->all();
+        });
     }
 
     protected function getAllMenus()
     {
-        return MenuRepository::createFromMultiplosArray(
-            collect(
-                self::getProviders()
-            )->reject(
-                function ($class) {
-                    return ! class_exists($class) || ! is_array($class::$menuItens) || empty($class::$menuItens);
-                }
-            )->map(
-                function ($class) {
-                    return $class::$menuItens;
-                }
-            ) //->push(Translation::menuBuilder())
-        );
+        return Cache::rememberForever('system-mount-get-all-menus', function () {
+            return MenuRepository::createFromMultiplosArray(
+                collect(
+                    self::getProviders()
+                )->reject(
+                    function ($class) {
+                        return ! class_exists($class) || ! is_array($class::$menuItens) || empty($class::$menuItens);
+                    }
+                )->map(
+                    function ($class) {
+                        return $class::$menuItens;
+                    }
+                ) //->push(Translation::menuBuilder())
+            );
+        });
     }
 }

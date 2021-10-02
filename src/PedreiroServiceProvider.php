@@ -301,7 +301,6 @@ class PedreiroServiceProvider extends ServiceProvider
 
     public function register()
     {
-        
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', Form::class);
         $loader->alias('Pedreiro', PedreiroFacade::class);
@@ -321,7 +320,6 @@ class PedreiroServiceProvider extends ServiceProvider
             }
         );
 
-
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   
 
@@ -336,9 +334,14 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->app->singleton(
             'rica.breadcrumbs',
             function ($app) {
+                print_mem();
+                $time = time();
                 $breadcrumbs = new \Pedreiro\Template\Layout\Breadcrumbs();
                 $breadcrumbs->set($breadcrumbs->parseURL());
-
+                print_mem();
+                dd(
+                    (time()-$time)/1000
+                );
                 return $breadcrumbs;
             }
         );
