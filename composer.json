@@ -23,7 +23,6 @@
         "ricardosierra/changelog": "~1.4",
         "sierratecnologia/muleta": "dev-master",
         "sierratecnologia/crudmaker": "dev-master",
-        "sierratecnologia/locaravel": "dev-master",
         "google/recaptcha": "^1.2.4",
         "kartik-v/bootstrap-fileinput": "dev-master",
         "hieu-le/active": "^7.0|^8.0",
