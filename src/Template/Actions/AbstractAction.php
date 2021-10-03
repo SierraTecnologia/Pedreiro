@@ -13,10 +13,16 @@ abstract class AbstractAction implements ActionInterface
         $this->data = $data;
     }
 
+    /**
+     * @return void
+     */
     public function getDataType()
     {
     }
 
+    /**
+     * @return void
+     */
     public function getPolicy()
     {
     }
@@ -30,12 +36,17 @@ abstract class AbstractAction implements ActionInterface
         }
     }
 
+    /**
+     * @return array
+     *
+     * @psalm-return array<empty, empty>
+     */
     public function getAttributes()
     {
         return [];
     }
 
-    public function convertAttributesToHtml()
+    public function convertAttributesToHtml(): string
     {
         $result = '';
 
@@ -46,7 +57,7 @@ abstract class AbstractAction implements ActionInterface
         return $result;
     }
 
-    public function shouldActionDisplayOnDataType()
+    public function shouldActionDisplayOnDataType(): bool
     {
         return $this->dataType->name === $this->getDataType() || $this->getDataType() === null;
     }

@@ -9,6 +9,9 @@ class Yaml implements DataTransformerInterface
         return $value;
     }
 
+    /**
+     * @return string
+     */
     public function reverseTransform($value)
     {
         return str_replace("\t", "    ", $value);

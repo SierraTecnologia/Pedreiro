@@ -163,62 +163,64 @@ abstract class Base extends Model //Ardent
      * No-Op callbacks invoked by Observers\ModelCallbacks.  These allow quick handling
      * of model event states.
      *
-     * @return void|false
+     * @return void
      */
-    public function onSaving()
+    public function onSaving(): void
     {
     }
-    public function onSaved()
+    public function onSaved(): void
     {
     }
-    public function onCreating()
+    public function onCreating(): void
     {
     }
-    public function onCreated()
+    public function onCreated(): void
     {
     }
-    public function onUpdating()
+    public function onUpdating(): void
     {
     }
-    public function onUpdated()
+    public function onUpdated(): void
     {
     }
-    public function onDeleting()
+    public function onDeleting(): void
     {
     }
-    public function onDeleted()
+    public function onDeleted(): void
     {
     }
 
     /**
      * Validation callback no-ops
      *
-     * @param  $validation Illuminate\Validation\Validator
-     * @return void|false
+     * @param $validation Illuminate\Validation\Validator
+     *
+     * @return void
      */
     public function onValidating($validation)
     {
     }
-    public function onValidated($validation)
+    public function onValidated($validation): void
     {
     }
 
     /**
      * Many to many attach/detach callback no-ops
      *
-     * @param  $parent Eloquent\Model
-     * @return void|false
+     * @param $parent Eloquent\Model
+     *
+     * @return void
      */
-    public function onAttaching($parent)
+    public function onAttaching($parent): void
     {
     }
-    public function onAttached($parent)
+    public function onAttached($parent): void
     {
     }
-    public function onRemoving($parent)
+    public function onRemoving($parent): void
     {
     }
-    public function onRemoved($parent)
+    public function onRemoved($parent): void
     {
     }
 
@@ -237,7 +239,7 @@ abstract class Base extends Model //Ardent
         return $this->{$this->getApresentationNameKey()};
     }
 
-    public function getApresentationNameKey()
+    public function getApresentationNameKey(): string
     {
         $atributesInOrderToDisplay = [
             'name',
@@ -274,7 +276,7 @@ abstract class Base extends Model //Ardent
     /**
      * Deduce the source for the title of the model and return that title
      *
-     * @return string
+     * @return array|null|string
      */
     public function getAdminTitleAttribute()
     {
@@ -292,7 +294,7 @@ abstract class Base extends Model //Ardent
     /**
      * Add a thumbnail img tag to the title
      *
-     * @return string IMG tag
+     * @return null|string IMG tag
      */
     public function getAdminThumbTagAttribute()
     {
@@ -338,9 +340,9 @@ abstract class Base extends Model //Ardent
     /**
      * A no-op that should return the URI (an absolute path or a fulL URL) to the record
      *
-     * @return string
+     * @return void
      */
-    public function getUriAttribute()
+    public function getUriAttribute(): void
     {
     }
 
@@ -495,8 +497,10 @@ abstract class Base extends Model //Ardent
      * Throw exception if not public and no admin session
      *
      * @throws Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
+     * @return void
      */
-    public function enforceVisibility()
+    public function enforceVisibility(): void
     {
         if (array_key_exists('public', $this->getAttributes())
             && ! $this->getAttribute('public')
@@ -561,14 +565,18 @@ abstract class Base extends Model //Ardent
      * Add a field to the blacklist
      *
      * @param string $field
+     *
+     * @return void
      */
-    public function blacklist($field)
+    public function blacklist($field): void
     {
         $this->guarded[] = $field;
     }
 
     /**
      * Criado por mim posteriormente
+     *
+     * @return void
      */
     public function save(array $options = [])
     {
@@ -596,7 +604,7 @@ abstract class Base extends Model //Ardent
         return false;
     }
 
-    public static function firstOrCreateAndAssociate($data, $associate = false): self
+    public static function firstOrCreateAndAssociate(array $data, $associate = false): self
     {
         $entity = static::firstOrCreate($data);
         if ($associate) {
@@ -683,8 +691,10 @@ abstract class Base extends Model //Ardent
 
     /**
      * Help for Class
+     *
+     * @return bool
      */
-    public function hasAttribute($attr)
+    public function hasAttribute($attr): bool
     {
         return array_key_exists($attr, $this->attributes);
     }
@@ -714,10 +724,11 @@ abstract class Base extends Model //Ardent
     /**
      * Use the Facilitador Base Collection
      *
-     * @param  array $models
-     * @return Images
+     * @param array $models
+     *
+     * @return BaseCollection
      */
-    public function newCollection(array $models = [])
+    public function newCollection(array $models = []): BaseCollection
     {
         return new BaseCollection($models);
     }
@@ -895,8 +906,9 @@ abstract class Base extends Model //Ardent
     /**
      * Make the view action
      *
-     * @param  array $data The data passed to a listing view
-     * @return string
+     * @param array $data The data passed to a listing view
+     *
+     * @return null|string
      */
     protected function makeViewAction($data)
     {
@@ -1006,10 +1018,11 @@ abstract class Base extends Model //Ardent
     /**
      * Orders instances of this model in the admin
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return void
+     * @param Builder $query
+     *
+     * @return Builder
      */
-    public function scopeOrdered(Builder $query, string $direction = 'asc')
+    public function scopeOrdered(Builder $query, string $direction = 'asc'): Builder
     {
         if ($this->usesTimestamps()) {
             $query->orderBy($this->getTable().'.created_at', 'desc');

@@ -30,8 +30,10 @@ class PedreiroRouteProvider extends ServiceProvider
      * Define the routes for the application.
      *
      * @param \Illuminate\Routing\Router $router
+     *
+     * @return void
      */
-    public function map(Router $router)
+    public function map(Router $router): void
     {
         // $router->group(
         //     ['namespace' => $this->namespace], function ($router) {

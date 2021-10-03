@@ -6,6 +6,9 @@ class RichTextBoxHandler extends AbstractHandler
 {
     protected $codename = 'rich_text_box';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

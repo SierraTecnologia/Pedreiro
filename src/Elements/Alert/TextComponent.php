@@ -6,11 +6,14 @@ class TextComponent extends AbstractComponent
 {
     protected $text;
 
-    public function create($text)
+    public function create($text): void
     {
         $this->text = $text;
     }
 
+    /**
+     * @return string
+     */
     public function render()
     {
         return "<p>{$this->text}</p>";

@@ -18,6 +18,8 @@ class Email extends Text
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {

@@ -38,8 +38,10 @@ class FieldSet extends Element
 
     /**
      * @param array $values
+     *
+     * @return void
      */
-    public function setValues(array $values)
+    public function setValues(array $values): void
     {
         foreach ($this->children as $field) {
             if ($field instanceof FieldSet) {
@@ -62,8 +64,10 @@ class FieldSet extends Element
 
     /**
      * @param Element $field
+     *
+     * @return void
      */
-    public function addField(Element $field)
+    public function addField(Element $field): void
     {
         $this->children[$field->getName()] = $field;
         $field->setParent($this);
@@ -87,6 +91,8 @@ class FieldSet extends Element
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {

@@ -191,9 +191,9 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->loadRoutesForRiCa(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes');
     }
     
-    public function boot(Router $router, Dispatcher $event)
+    public function boot(Router $router, Dispatcher $event): void
     {
-
+        \Performance\Performance::point();
         // Define constants that Decoy uses
         if (!defined('FORMAT_DATE')) {
             define('FORMAT_DATE', __('pedreiro::base.constants.format_date'));
@@ -283,6 +283,7 @@ class PedreiroServiceProvider extends ServiceProvider
 
         $this->eloquentSvents();
         $this->setProviders();
+        \Performance\Performance::point();
     }
     /**
      * Delegate events to Decoy observers
@@ -301,7 +302,6 @@ class PedreiroServiceProvider extends ServiceProvider
 
     public function register()
     {
-        
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', Form::class);
         $loader->alias('Pedreiro', PedreiroFacade::class);
@@ -321,7 +321,6 @@ class PedreiroServiceProvider extends ServiceProvider
             }
         );
 
-
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
   
 
@@ -336,9 +335,14 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->app->singleton(
             'rica.breadcrumbs',
             function ($app) {
+                print_mem();
+                $time = time();
                 $breadcrumbs = new \Pedreiro\Template\Layout\Breadcrumbs();
                 $breadcrumbs->set($breadcrumbs->parseURL());
-
+                print_mem();
+                dd(
+                    (time()-$time)/1000
+                );
                 return $breadcrumbs;
             }
         );
@@ -397,7 +401,7 @@ class PedreiroServiceProvider extends ServiceProvider
 
         return false;
     }
-    protected function registerFormFields()
+    protected function registerFormFields(): void
     {
         $formFields = [
             'checkbox',
@@ -437,8 +441,10 @@ class PedreiroServiceProvider extends ServiceProvider
 
     /**
      * Register alert components.
+     *
+     * @return void
      */
-    protected function registerAlertComponents()
+    protected function registerAlertComponents(): void
     {
         $components = ['title', 'text', 'button'];
 
@@ -451,8 +457,10 @@ class PedreiroServiceProvider extends ServiceProvider
 
     /**
      * Register view composers.
+     *
+     * @return void
      */
-    protected function registerViewComposers()
+    protected function registerViewComposers(): void
     {
         // Register alerts
         View::composer(
@@ -489,7 +497,7 @@ class PedreiroServiceProvider extends ServiceProvider
         // namespace and so we can take advantage of sublassing Former's Field class.
         $this->app['former.dispatcher']->addRepository('Pedreiro\\Elements\\Fields\\');
     }
-    protected function loadTranslations()
+    protected function loadTranslations(): void
     {
         // Publish lanaguage files
         $this->publishes(

@@ -51,9 +51,9 @@ class ManyToManyChecklist extends Checkbox
      * Prints out the field, wrapped in its group.  This is the opportunity
      * to tack additional stuff onto the control group
      *
-     * @return string
+     * @return null|string
      */
-    public function wrapAndRender()
+    public function wrapAndRender(): ?string
     {
         // Do not show the form at all if they don't have permission
         if (! app('facilitador.user')->can('read', $this->name)) {

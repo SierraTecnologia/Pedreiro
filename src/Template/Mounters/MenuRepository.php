@@ -93,7 +93,12 @@ class MenuRepository
         return $mergeArray;
     }
     
-    public function getTreeInArray($parent = 'root', $order = null)
+    /**
+     * @return (mixed|object|string)[]
+     *
+     * @psalm-return array<mixed|object|string>
+     */
+    public function getTreeInArray($parent = 'root', $order = null): array
     {
         $menuArrayList = [];
 
@@ -121,7 +126,14 @@ class MenuRepository
         return $this->getInOrder($menuArrayList);
     }
 
-    private function getInOrder($arrayMenu)
+    /**
+     * @param (mixed|string)[] $arrayMenu
+     *
+     * @return (mixed|object|string)[]
+     *
+     * @psalm-return array<mixed|object|string>
+     */
+    private function getInOrder(array $arrayMenu): array
     {
         if (is_object($arrayMenu[0])) {
             usort(
@@ -149,7 +161,14 @@ class MenuRepository
         return $arrayMenu;
     }
 
-    private function groupBy($attribute)
+    /**
+     * @param string $attribute
+     *
+     * @return array[]
+     *
+     * @psalm-return array<list<mixed>>
+     */
+    private function groupBy(string $attribute): array
     {
         $byGroup = [];
         $getFunction = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));

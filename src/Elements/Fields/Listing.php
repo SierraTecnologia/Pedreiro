@@ -131,8 +131,9 @@ class Listing extends Field
      * A factory to create an instance using the passed controller.  This is to prevent
      * duplicate controller instantations when invoked from the base controller.
      *
-     * @param  Support\Http\Controllers\Admin\Base $controller
-     * @param  LengthAwarePaginator                $items
+     * @param Base $controller
+     * @param LengthAwarePaginator                $items
+     *
      * @return Support\Field\Listing
      */
     public static function createFromController(Base $controller, $items)
@@ -188,10 +189,11 @@ class Listing extends Field
     /**
      * Store the items that will be displayed in the list
      *
-     * @param  LengthAwarePaginator | Collection | $items
-     * @return Field                               This field
+     * @param LengthAwarePaginator | Collection | $items
+     *
+     * @return static
      */
-    public function items($items)
+    public function items($items): self
     {
         $this->items = $items;
 
@@ -232,10 +234,11 @@ class Listing extends Field
     /**
      * Store the parent model instance
      *
-     * @param  Illuminate\Database\Eloquent\Model $parent
-     * @return this
+     * @param Illuminate\Database\Eloquent\Model $parent
+     *
+     * @return static
      */
-    public function parent($parent)
+    public function parent($parent): self
     {
         $this->parent_item = $parent;
 
@@ -259,9 +262,9 @@ class Listing extends Field
      * Render the layout, .i.e. put it in a control group or a different
      * wrapper
      *
-     * @return string HTML
+     * @return null|string HTML
      */
-    public function wrapAndRender()
+    public function wrapAndRender(): ?string
     {
         // Don't set an id
         $this->setAttribute('id', false);
@@ -444,7 +447,7 @@ class Listing extends Field
     /**
      * Create the list of items to display
      *
-     * @return LengthAwarePaginator | Collection
+     * @return Collection|LengthAwarePaginator|string
      */
     public function getItems()
     {

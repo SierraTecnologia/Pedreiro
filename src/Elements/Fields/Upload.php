@@ -75,7 +75,7 @@ class Upload extends File
     /**
      * Render the display of the currently uploaded item
      *
-     * @return string HTML
+     * @return null|string HTML
      */
     protected function renderReview()
     {

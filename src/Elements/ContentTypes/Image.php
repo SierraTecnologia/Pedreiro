@@ -109,7 +109,7 @@ class Image extends BaseType
      *
      * @return string
      */
-    protected function generateFileName($file, $path)
+    protected function generateFileName($file, string $path)
     {
         if (isset($this->options->preserveFileUploadName) && $this->options->preserveFileUploadName) {
             $filename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
@@ -131,7 +131,10 @@ class Image extends BaseType
         return $filename;
     }
 
-    private function is_animated_gif($filename)
+    /**
+     * @param (\Illuminate\Http\UploadedFile|mixed)[]|\Illuminate\Http\UploadedFile|null $filename
+     */
+    private function is_animated_gif($filename): bool
     {
         $raw = file_get_contents($filename);
 

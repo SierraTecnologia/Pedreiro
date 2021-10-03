@@ -106,9 +106,9 @@ class ValueCollection extends EloquentCollection
      *
      * @param mixed $value
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return null|object
      */
-    protected function buildValue($value): Model
+    protected function buildValue($value): ?object
     {
         if ($value instanceof Model || is_null($value)) {
             return $value;
@@ -130,9 +130,11 @@ class ValueCollection extends EloquentCollection
      *
      * @param \Illuminate\Support\Collection|array $values
      *
-     * @return \Pedreiro\Models\Value[]
+     * @return (null|object)[]
+     *
+     * @psalm-return list<null|object>
      */
-    protected function buildValues($values)
+    protected function buildValues($values): array
     {
         $result = [];
 

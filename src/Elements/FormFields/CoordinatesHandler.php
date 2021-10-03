@@ -11,6 +11,9 @@ class CoordinatesHandler extends AbstractHandler
 
     protected $codename = 'coordinates';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
  */
 trait MenuRepositoryTrait
 {
-    public static function generateMergeMenus($mergeArray, $groupParent = '', $indice, $values)
+    public static function generateMergeMenus($mergeArray, $groupParent = '', $indice, $values): array
     {
         $group = $groupParent;
         if (is_string($indice)) {
@@ -88,7 +88,7 @@ trait MenuRepositoryTrait
 
 
 
-    public static function isArraysFromMenus($arrayMenu)
+    public static function isArraysFromMenus($arrayMenu): bool
     {
         if (is_string($arrayMenu)) {
             return false;

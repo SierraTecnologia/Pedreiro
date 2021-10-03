@@ -321,7 +321,7 @@ abstract class Ardent extends Model
             );
         }
 
-        $verifyArgs = function (array $opt, array $req = []) use ($relationName, &$relation, $errorHeader) {
+        $verifyArgs = function (array $opt, array $req = []) use ($relationName, &$relation, $errorHeader): void {
             $missing = ['req' => [], 'opt' => []];
 
             foreach (['req', 'opt'] as $keyType) {
@@ -518,8 +518,10 @@ abstract class Ardent extends Model
      *
      * @param array $connection Connection info used by {@link \Illuminate\Database\Capsule\Manager::addConnection}.
      *                          Should contain driver, host, port, database, username, password, charset and collation.
+     *
+     * @return void
      */
-    public static function configureAsExternal(array $connection, $lang = 'en')
+    public static function configureAsExternal(array $connection, $lang = 'en'): void
     {
         $db = new DatabaseCapsule;
         $db->addConnection($connection);
@@ -558,7 +560,7 @@ abstract class Ardent extends Model
      * @return \Illuminate\Validation\Validator
      * @see    Ardent::$externalValidator
      */
-    protected static function makeValidator($data, $rules, $customMessages, $customAttributes)
+    protected static function makeValidator(array $data, $rules, array $customMessages, array $customAttributes)
     {
         return self::$external?
             self::$validationFactory->make($data, $rules, $customMessages, $customAttributes) :
@@ -726,7 +728,7 @@ abstract class Ardent extends Model
             return;
         }
 
-        $this->purgeFilters[] = function ($attributeKey) {
+        $this->purgeFilters[] = function ($attributeKey): bool {
             // disallow password confirmation fields
             if (Str::endsWith($attributeKey, '_confirmation')) {
                 return false;

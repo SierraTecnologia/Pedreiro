@@ -18,7 +18,7 @@ class ConfigService
         return \Illuminate\Support\Facades\Config::get($config, $default);
     }
 
-    public static function getInstance()
+    public static function getInstance(): self
     {
         return new self;
     }

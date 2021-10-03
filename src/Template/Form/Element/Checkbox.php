@@ -27,16 +27,20 @@ class Checkbox extends Input
 
     /**
      * @param mixed $value
+     *
+     * @return void
      */
-    public function setCheckedValue($value)
+    public function setCheckedValue($value): void
     {
         $this->checkedValue = $value;
     }
 
     /**
      * @param mixed $value
+     *
+     * @return void
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         if (is_bool($value) && $value === true) {
             $this->value = $this->getCheckedValue();
@@ -58,6 +62,8 @@ class Checkbox extends Input
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     public function onPreRender(View &$view)
     {

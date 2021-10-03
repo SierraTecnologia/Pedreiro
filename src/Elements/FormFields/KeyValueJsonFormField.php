@@ -6,6 +6,9 @@ class KeyValueJsonFormField extends AbstractHandler
 {
     protected $codename = 'key-value_to_json';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

@@ -156,13 +156,14 @@ class Search
     /**
      * Make the NULL-safe equals query
      *
-     * @param  string  $comparison
-     * @param  Builder $query
-     * @param  string  $field
-     * @param  string  $input
-     * @return Builder
+     * @param string  $comparison
+     * @param Builder $query
+     * @param string  $field
+     * @param string  $input
+     *
+     * @return Builder|null
      */
-    protected function applyEquality($comparison, $query, $field, $input)
+    protected function applyEquality($comparison, $query, $field, $input): ?Builder
     {
         // Make SQL safe values
         $safe_field = $this->makeSafeField($field);

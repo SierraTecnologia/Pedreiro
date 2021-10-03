@@ -8,6 +8,9 @@ abstract class AbstractHandler implements HandlerInterface
 {
     use Renderable;
 
+    /**
+     * @return true
+     */
     public function visible($row, $dataType, $dataTypeContent, $options)
     {
         return true;

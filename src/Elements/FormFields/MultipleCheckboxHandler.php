@@ -6,6 +6,9 @@ class MultipleCheckboxHandler extends AbstractHandler
 {
     protected $codename = 'multiple_checkbox';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

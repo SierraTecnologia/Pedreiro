@@ -10,11 +10,11 @@ use Muleta\Utils\Semantics\ReturnSimilars;
  */
 class Icons
 {
-    public static function withHtml($icon)
+    public static function withHtml(string $icon): string
     {
         return '<i class="' . $icon . '"></i>';
     }
-    public static function getRandon($html = true)
+    public static function getRandon($html = true): string
     {
         $icon = array_rand(self::icons(), 1);
 
@@ -91,7 +91,12 @@ class Icons
     }
 
 
-    public static function icons()
+    /**
+     * @return (array|string)[][]
+     *
+     * @psalm-return non-empty-list<array{class: string, name: string, uses: array<empty, empty>}>
+     */
+    public static function icons(): array
     {
         return [
 

@@ -6,6 +6,9 @@ class TimestampHandler extends AbstractHandler
 {
     protected $codename = 'timestamp';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

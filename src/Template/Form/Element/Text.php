@@ -9,6 +9,8 @@ class Text extends Input
 {
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {

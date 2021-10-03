@@ -25,6 +25,9 @@ abstract class AbstractHandler implements HandlerInterface
         return $this->render($content);
     }
 
+    /**
+     * @return bool
+     */
     public function supports($driver)
     {
         if (empty($this->supports)) {

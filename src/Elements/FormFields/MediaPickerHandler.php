@@ -9,6 +9,9 @@ class MediaPickerHandler extends AbstractHandler
 {
     protected $codename = 'media_picker';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         $content = '';

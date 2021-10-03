@@ -6,6 +6,9 @@ class TextHandler extends AbstractHandler
 {
     protected $codename = 'text';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

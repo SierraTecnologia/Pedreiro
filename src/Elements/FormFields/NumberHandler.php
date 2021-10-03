@@ -6,6 +6,9 @@ class NumberHandler extends AbstractHandler
 {
     protected $codename = 'number';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

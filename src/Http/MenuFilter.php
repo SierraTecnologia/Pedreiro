@@ -14,6 +14,9 @@ class MenuFilter implements FilterInterface
 {
     public $splitForSection = true;
 
+    /**
+     * @return array|false
+     */
     public function transform($item)
     {
         // Para debug
@@ -86,7 +89,10 @@ class MenuFilter implements FilterInterface
         return $item;
     }
 
-    private function verifySection($item, $user): bool
+    /**
+     * @param \Illuminate\Contracts\Auth\Authenticatable|null $user
+     */
+    private function verifySection(array $item, ?\Illuminate\Contracts\Auth\Authenticatable $user): bool
     {         
         // Se nao for pra dividir entre as sessões, então nao remove o menu, return true
         if (!$this->splitForSection || !config('siravel.habilityTopNav', true)) {

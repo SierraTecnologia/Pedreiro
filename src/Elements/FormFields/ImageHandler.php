@@ -6,6 +6,9 @@ class ImageHandler extends AbstractHandler
 {
     protected $codename = 'image';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

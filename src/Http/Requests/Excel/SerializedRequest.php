@@ -36,7 +36,7 @@ class SerializedRequest
     }
 
     /**
-     * @param ActionRequest|LensActionRequest $request
+     * @param ActionRequest $request
      *
      * @return SerializedRequest
      */

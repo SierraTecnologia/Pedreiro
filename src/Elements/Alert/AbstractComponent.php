@@ -8,7 +8,10 @@ abstract class AbstractComponent implements ComponentInterface
 {
     protected $alert;
 
-    public function setAlert(Alert $alert)
+    /**
+     * @return static
+     */
+    public function setAlert(Alert $alert): self
     {
         $this->alert = $alert;
 

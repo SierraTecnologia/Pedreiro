@@ -44,6 +44,8 @@ class ManyToManyChecklist
      *
      * @param Facilitador\Models\Base $model        A model instance
      * @param string                  $relationship The relationship name
+     *
+     * @return void
      */
     private function updateRelationship($model, $relationship)
     {

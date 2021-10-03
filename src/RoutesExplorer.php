@@ -7,7 +7,12 @@ use Route;
 
 class RoutesExplorer
 {
-    public function getRoutes()
+    /**
+     * @return (int|mixed|string)[][]
+     *
+     * @psalm-return array<array{name: ''|mixed, url: string, methods: string, count: 0|mixed}>
+     */
+    public function getRoutes(): array
     {
         /**
  * @var \Illuminate\Routing\Route[] $allRoutes

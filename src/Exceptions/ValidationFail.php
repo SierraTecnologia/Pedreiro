@@ -15,7 +15,7 @@ class ValidationFail extends Exception
     public $validation;
 
     /**
-     * @param Illuminate\Validation\Validator $validation
+     * @param Validator $validation
      * @param string                          $message
      * @param int                         $code
      */

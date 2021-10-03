@@ -6,6 +6,9 @@ class PasswordHandler extends AbstractHandler
 {
     protected $codename = 'password';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

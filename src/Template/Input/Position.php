@@ -33,8 +33,10 @@ class Position
 
     /**
      * Check if we have all dependencies for an position change
+     *
+     * @return bool
      */
-    public function has()
+    public function has(): bool
     {
         if (! Request::has('position')) {
             return false;
@@ -53,8 +55,10 @@ class Position
 
     /**
      * Set new position
+     *
+     * @return void
      */
-    public function fill()
+    public function fill(): void
     {
         // Write the position value to the pivot table
         if (isset($this->pivot->position)) {

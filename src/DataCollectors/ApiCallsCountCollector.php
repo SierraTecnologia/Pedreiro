@@ -7,6 +7,9 @@ use Pedreiro\Models\ApiCallsCount;
 
 class ApiCallsCountCollector implements DataCollectorInterface
 {
+    /**
+     * @return void
+     */
     public function collect(Request $request)
     {
         $apiCall = new ApiCallsCount(
