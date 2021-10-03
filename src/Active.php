@@ -81,8 +81,10 @@ class Active
      *
      * @param Route   $route
      * @param Request $request
+     *
+     * @return void
      */
-    public function updateInstances($route, $request)
+    public function updateInstances($route, $request): void
     {
         $this->request = $request;
         if ($request) {

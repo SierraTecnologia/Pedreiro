@@ -202,6 +202,8 @@ class Input extends Element
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {
@@ -219,7 +221,7 @@ class Input extends Element
         return $this->dataTransformator;
     }
 
-    public function setDataTransformator(DataTransformerInterface $dataTransformator)
+    public function setDataTransformator(DataTransformerInterface $dataTransformator): void
     {
         $this->dataTransformator = $dataTransformator;
     }

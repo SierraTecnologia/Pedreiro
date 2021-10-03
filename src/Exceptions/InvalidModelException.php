@@ -39,9 +39,9 @@ class InvalidModelException extends \RuntimeException
     /**
      * Returns the model with invalid attributes.
      *
-     * @return Ardent
+     * @return \Support\Models\Ardent
      */
-    public function getModel()
+    public function getModel(): \Support\Models\Ardent
     {
         return $this->model;
     }

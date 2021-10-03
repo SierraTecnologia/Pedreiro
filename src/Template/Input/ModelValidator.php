@@ -92,7 +92,7 @@ class ModelValidator
      * @param  array     $rules A Laravel rules array. If null, will be pulled from model
      * @return array
      */
-    public function handleImageRules($model, $rules)
+    public function handleImageRules(BaseModel $model, $rules)
     {
 
         // If the model is an image, the rules were passed in by NestedModels
@@ -174,7 +174,7 @@ class ModelValidator
         // will have already replaced underscores with spaces, so we need to
         // reverse that.
         $prefix = str_replace('_', ' ', $prefix);
-        $replacer = function ($message) use ($prefix) {
+        $replacer = function ($message) use ($prefix): string {
             return str_replace($prefix, '', $message);
         };
 

@@ -191,7 +191,7 @@ class PedreiroServiceProvider extends ServiceProvider
         $this->loadRoutesForRiCa(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes');
     }
     
-    public function boot(Router $router, Dispatcher $event)
+    public function boot(Router $router, Dispatcher $event): void
     {
         \Performance\Performance::point();
         // Define constants that Decoy uses
@@ -401,7 +401,7 @@ class PedreiroServiceProvider extends ServiceProvider
 
         return false;
     }
-    protected function registerFormFields()
+    protected function registerFormFields(): void
     {
         $formFields = [
             'checkbox',
@@ -441,8 +441,10 @@ class PedreiroServiceProvider extends ServiceProvider
 
     /**
      * Register alert components.
+     *
+     * @return void
      */
-    protected function registerAlertComponents()
+    protected function registerAlertComponents(): void
     {
         $components = ['title', 'text', 'button'];
 
@@ -455,8 +457,10 @@ class PedreiroServiceProvider extends ServiceProvider
 
     /**
      * Register view composers.
+     *
+     * @return void
      */
-    protected function registerViewComposers()
+    protected function registerViewComposers(): void
     {
         // Register alerts
         View::composer(
@@ -493,7 +497,7 @@ class PedreiroServiceProvider extends ServiceProvider
         // namespace and so we can take advantage of sublassing Former's Field class.
         $this->app['former.dispatcher']->addRepository('Pedreiro\\Elements\\Fields\\');
     }
-    protected function loadTranslations()
+    protected function loadTranslations(): void
     {
         // Publish lanaguage files
         $this->publishes(

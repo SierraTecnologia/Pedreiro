@@ -76,6 +76,8 @@ class Menu
      * 'icon'    => 'cog',
      * 'nivel' => \Porteiro\Models\Role::$GOOD,
      * 'submenu' => \Finder\Services\MenuService::getAdminMenu(),
+     *
+     * @return false|static
      */
     public static function createFromArray($item)
     {
@@ -119,7 +121,10 @@ class Menu
         return $instance->validateAndReturn();
     }
 
-    public static function isArrayMenu($arrayMenu, $indice = false)
+    /**
+     * @param (int|string)|false $indice
+     */
+    public static function isArrayMenu($arrayMenu, $indice = false): bool
     {
         if (is_string($arrayMenu) && ! is_string($indice)) {
             return true;
@@ -128,12 +133,15 @@ class Menu
         return isset($arrayMenu['text']) || isset($arrayMenu['key']);
     }
 
-    public function attributeIsDefault($attribute)
+    public function attributeIsDefault(string $attribute): bool
     {
         return is_null($this->$attribute);
     }
 
-    public function mergeWithMenu(Menu $menu)
+    /**
+     * @return static
+     */
+    public function mergeWithMenu(Menu $menu): self
     {
         $divisory = $this->isDivisory;
 
@@ -172,7 +180,12 @@ class Menu
         return $array;
     }
 
-    public function getAttributes()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: 'key', 1: 'code', 2: 'slug', 3: 'text', 4: 'url', 5: 'route', 6: 'icon', 7: 'label_color', 8: 'icon_color', 9: 'nivel', 10: 'level', 11: 'feature', 12: 'space', 13: 'section', 14: 'dontSection', 15: 'order', 16: 'config', 17: 'topnav', 18: 'topnav_user', 19: 'topnav_right', 20: 'data', 21: 'active', 22: 'dev_status'}
+     */
+    public function getAttributes(): array
     {
         return [
             'key',
@@ -210,9 +223,9 @@ class Menu
 
 
     /**
-     *
+     * @return string
      */
-    public function getAddressSlugGroup()
+    public function getAddressSlugGroup(): string
     {
         $group = '';
 
@@ -228,7 +241,7 @@ class Menu
     {
         return $this->key;
     }
-    public function setKey($value)
+    public function setKey(string $value): void
     {
         $value = Str::slug($value, '-');
         $this->key = $value;
@@ -242,7 +255,7 @@ class Menu
 
         return $this->code;
     }
-    public function setCode($value)
+    public function setCode($value): void
     {
         $this->code = $value;
     }
@@ -251,7 +264,7 @@ class Menu
     {
         return $this->slug;
     }
-    public function setSlug($value)
+    public function setSlug(string $value): void
     {
         $value = Str::slug($value, '-');
         if (is_null($this->getKey())) {
@@ -264,7 +277,7 @@ class Menu
     {
         return $this->text;
     }
-    public function setText($value)
+    public function setText(string $value): void
     {
         if (is_null($this->getSlug())) {
             $this->setSlug($value);
@@ -276,7 +289,7 @@ class Menu
     {
         return $this->route;
     }
-    public function setRoute($value)
+    public function setRoute($value): void
     {
         $this->route = $value;
     }
@@ -285,7 +298,7 @@ class Menu
     {
         return $this->url;
     }
-    public function setUrl($value)
+    public function setUrl($value): void
     {
         $this->url = $value;
     }
@@ -294,7 +307,7 @@ class Menu
     {
         return $this->icon;
     }
-    public function setIcon($value)
+    public function setIcon($value): void
     {
         $this->icon = $value;
     }
@@ -303,7 +316,7 @@ class Menu
     {
         return $this->label_color;
     }
-    public function setLabelColor($value)
+    public function setLabelColor($value): void
     {
         $this->label_color = $value;
     }
@@ -312,7 +325,7 @@ class Menu
     {
         return $this->icon_color;
     }
-    public function setIconColor($value)
+    public function setIconColor($value): void
     {
         $this->icon_color = $value;
     }
@@ -321,7 +334,7 @@ class Menu
     {
         return $this->nivel;
     }
-    public function setNivel($value)
+    public function setNivel($value): void
     {
         $this->nivel = $value;
     }
@@ -330,7 +343,7 @@ class Menu
     {
         return $this->level;
     }
-    public function setLevel($value)
+    public function setLevel($value): void
     {
         $this->level = $value;
     }
@@ -339,7 +352,7 @@ class Menu
     {
         return $this->feature;
     }
-    public function setFeature($value)
+    public function setFeature($value): void
     {
         $this->feature = $value;
     }
@@ -348,7 +361,7 @@ class Menu
     {
         return $this->space;
     }
-    public function setSpace($value)
+    public function setSpace($value): void
     {
         $this->space = $value;
     }
@@ -357,7 +370,7 @@ class Menu
     {
         return $this->section;
     }
-    public function setSection($value)
+    public function setSection($value): void
     {
         $this->section = $value;
     }
@@ -366,7 +379,7 @@ class Menu
     {
         return $this->dontSection;
     }
-    public function setDontSection($value)
+    public function setDontSection($value): void
     {
         $this->dontSection = $value;
     }
@@ -379,7 +392,7 @@ class Menu
 
         return $this->order;
     }
-    public function setOrder($value)
+    public function setOrder(string $value): void
     {
         $this->order = $value;
     }
@@ -387,7 +400,7 @@ class Menu
     {
         return $this->config;
     }
-    public function setConfig($value)
+    public function setConfig($value): void
     {
         $this->config = $value;
     }
@@ -400,7 +413,7 @@ class Menu
 
         return $this->group;
     }
-    public function setGroup($value)
+    public function setGroup($value): void
     {
         $value = explode('|', $value);
         $this->group = $value[0];
@@ -409,7 +422,7 @@ class Menu
     {
         return $this->error;
     }
-    public function setError($value)
+    public function setError(string $value): void
     {
         $this->error = $value;
     }
@@ -417,7 +430,7 @@ class Menu
     {
         return $this->topnav;
     }
-    public function setTopnav($value)
+    public function setTopnav($value): void
     {
         $this->topnav = $value;
     }
@@ -425,7 +438,7 @@ class Menu
     {
         return $this->topnav_user;
     }
-    public function setTopnavUser($value)
+    public function setTopnavUser($value): void
     {
         $this->topnav_user = $value;
     }
@@ -433,7 +446,7 @@ class Menu
     {
         return $this->topnav_right;
     }
-    public function setTopnavRight($value)
+    public function setTopnavRight($value): void
     {
         $this->topnav_right = $value;
     }
@@ -441,7 +454,7 @@ class Menu
     {
         return $this->data;
     }
-    public function setData($value)
+    public function setData($value): void
     {
         $this->data = $value;
     }
@@ -449,7 +462,7 @@ class Menu
     {
         return $this->active;
     }
-    public function setActive($value)
+    public function setActive($value): void
     {
         $this->active = $value;
     }
@@ -458,7 +471,7 @@ class Menu
     {
         return $this->dev_status;
     }
-    public function setDevStatus(int $value)
+    public function setDevStatus(int $value): void
     {
         $this->dev_status = $value;
     }
@@ -467,7 +480,7 @@ class Menu
     {
         return $this->isDivisory;
     }
-    public function setDivisory(bool $value)
+    public function setDivisory(bool $value): void
     {
         $this->isDivisory = $value;
     }
@@ -476,6 +489,8 @@ class Menu
      * Caso nao seja pra exibir, cria log e retorna false.
      *
      * Se nao retorna a propria instancia
+     *
+     * @return false|static
      */
     public function validateAndReturn()
     {
@@ -491,8 +506,10 @@ class Menu
 
     /**
      * Protected
+     *
+     * @return bool
      */
-    protected function isToDisplay()
+    protected function isToDisplay(): bool
     {
         // Verify Route Exist
         if (! empty($this->getRoute()) && ! Route::has($this->getRoute())) {

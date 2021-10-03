@@ -18,11 +18,12 @@ trait CaptureLabel
     /**
      * Override the parent label so we can use the raw text of the label
      *
-     * @param  string $text       A label
-     * @param  array  $attributes The label's attributes
-     * @return Field  A field
+     * @param string $text       A label
+     * @param array  $attributes The label's attributes
+     *
+     * @return \Former\Traits\Field A field
      */
-    public function label($text, $attributes = [])
+    public function label($text, $attributes = []): \Former\Traits\Field
     {
         $this->label_text = $text;
 

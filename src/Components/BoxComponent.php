@@ -21,11 +21,14 @@ class BoxComponent extends AbstractComponent
         $this->link = $link;
     }
 
-    public static function create($color, $number, $name, $icon, $linkText, $link)
+    public static function create($color, $number, $name, $icon, $linkText, $link): self
     {
         return new self($color, $number, $name, $icon, $linkText, $link);
     }
 
+    /**
+     * @return string
+     */
     public function render()
     {
         return '<div class="col-lg-3 col-xs-6">

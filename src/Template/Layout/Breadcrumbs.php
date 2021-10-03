@@ -26,7 +26,7 @@ class Breadcrumbs
      * @param  array $breadcrumbs Key/value pairs of url/title
      * @return void
      */
-    public function set($links)
+    public function set(array $links)
     {
         $this->links = $links;
     }
@@ -173,7 +173,9 @@ class Breadcrumbs
      * the slides of a news page, when you go "back", it's back to the news page
      * and not the listing of the news slides
      *
-     * @return string
+     * @return (int|string)|null
+     *
+     * @psalm-return array-key|null
      */
     public function smartBack()
     {

@@ -18,7 +18,12 @@ class SystemMount
         
     }
 
-    public static function getProviders()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: \Support\SupportServiceProvider::class, 1: \Porteiro\PorteiroProvider::class, 2: \Pedreiro\PedreiroServiceProvider::class, 3: \Informate\InformateProvider::class, 4: \Translation\TranslationProvider::class, 5: \Locaravel\LocaravelProvider::class, 6: \Populate\PopulateProvider::class, 7: \Telefonica\TelefonicaProvider::class, 8: \MediaManager\MediaManagerProvider::class, 9: \Stalker\StalkerProvider::class, 10: \Audit\AuditProvider::class, 11: \Tracking\TrackingProvider::class, 12: \Integrations\IntegrationsProvider::class, 13: \Transmissor\TransmissorProvider::class, 14: \Market\MarketProvider::class, 15: \Bancario\BancarioProvider::class, 16: \Operador\OperadorProvider::class, 17: \Fabrica\FabricaProvider::class, 18: \Finder\FinderProvider::class, 19: \Casa\CasaProvider::class, 20: \Trainner\TrainnerProvider::class, 21: \Gamer\GamerProvider::class, 22: \Jogos\JogosProvider::class, 23: \Facilitador\FacilitadorProvider::class, 24: \Boravel\BoravelProvider::class, 25: \Siravel\SiravelProvider::class, 26: \Cms\CmsProvider::class, 27: \PrivateJustice\PrivateJusticeProvider::class, 28: \Legislateiro\LegislateiroProvider::class}
+     */
+    public static function getProviders(): array
     {
         return [
             \Support\SupportServiceProvider::class,
@@ -58,6 +63,9 @@ class SystemMount
         ];
     }
 
+    /**
+     * @return void
+     */
     public function loadMenuForAdminlte($event)
     {
 

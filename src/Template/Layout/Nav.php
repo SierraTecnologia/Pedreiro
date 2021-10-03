@@ -39,7 +39,7 @@ class Nav
     /**
      * Generate the nav config
      *
-     * @return array
+     * @return \stdClass|string
      */
     public function recursiveGenerate($menuItem)
     {
@@ -139,8 +139,13 @@ class Nav
     }
     /**
      * Break the icon out of the label, returning an arary of label and icon
+     *
+     * @return string[]
+     *
+     * @psalm-return array{label: string, icon: string}
+     * @param int|string $label_and_icon
      */
-    protected function makeIcon($label_and_icon)
+    protected function makeIcon($label_and_icon): array
     {
         $parts = explode(',', $label_and_icon);
         if (count($parts) == 2) {
@@ -153,6 +158,8 @@ class Nav
      * Make a page object
      *
      * @return object
+     *
+     * @param (int|string) $key
      */
     protected function makePage($key, $val)
     {

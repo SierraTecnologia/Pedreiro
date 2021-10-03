@@ -6,6 +6,9 @@ class MultipleImagesHandler extends AbstractHandler
 {
     protected $codename = 'multiple_images';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

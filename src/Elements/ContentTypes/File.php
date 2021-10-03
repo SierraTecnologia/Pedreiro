@@ -53,7 +53,7 @@ class File extends BaseType
     /**
      * @return string
      */
-    protected function generateFileName($file, $path)
+    protected function generateFileName($file, string $path)
     {
         if (isset($this->options->preserveFileUploadName) && $this->options->preserveFileUploadName) {
             $filename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());

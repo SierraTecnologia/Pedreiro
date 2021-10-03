@@ -67,8 +67,9 @@ class RedirectRule extends Base
     /**
      * Pre-validation rules
      *
-     * @param  Illuminate\Validation\Validator $validation
-     * @return null
+     * @param Illuminate\Validation\Validator $validation
+     *
+     * @return void
      */
     public function onValidating($validation)
     {
@@ -90,10 +91,11 @@ class RedirectRule extends Base
      * Orders instances of this model in the admin as well as default ordering
      * to be used by public site implementation.
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return void
+     * @param Builder $query
+     *
+     * @return Builder
      */
-    public function scopeOrdered(Builder $query, string $direction = 'asc')
+    public function scopeOrdered(Builder $query, string $direction = 'asc'): self
     {
         return $query->orderBy('from', $direction);
     }

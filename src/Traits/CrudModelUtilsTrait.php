@@ -93,6 +93,9 @@ trait CrudModelUtilsTrait
         return $this->formFields;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function getElementFromIndexFields($element)
     {
         return (new Collection($this->getIndexFields()))->map(

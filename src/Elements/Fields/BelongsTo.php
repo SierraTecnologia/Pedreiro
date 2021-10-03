@@ -75,8 +75,10 @@ class BelongsTo extends Field
      * Allow the relation to be explicitly specified if guessing won't work.
      *
      * @param string $route
+     *
+     * @return static
      */
-    public function relation($relation)
+    public function relation($relation): self
     {
         $this->relation = $relation;
 
@@ -89,8 +91,10 @@ class BelongsTo extends Field
      * will get submitted and the value is the title that is displayed to users.
      *
      * @param string $route
+     *
+     * @return static
      */
-    public function route($route)
+    public function route($route): self
     {
         $this->route = $route;
 
@@ -100,9 +104,11 @@ class BelongsTo extends Field
     /**
      * Use the parent class to set the route
      *
-     * @param string $class
+     * @param Model $class
+     *
+     * @return static
      */
-    public function parent(Model $class)
+    public function parent(Model $class): self
     {
         $this->route(Support::action(PedreiroURL::controllerForModel($class)));
 
@@ -114,8 +120,10 @@ class BelongsTo extends Field
      * autocomplete on the create page.
      *
      * @param string $title
+     *
+     * @return static
      */
-    public function title(string $title)
+    public function title(string $title): self
     {
         $this->title = $title;
 
@@ -126,9 +134,9 @@ class BelongsTo extends Field
      * Prints out the field, wrapped in its group.  This is the opportunity
      * to tack additional stuff onto the control group
      *
-     * @return string
+     * @return null|string
      */
-    public function wrapAndRender()
+    public function wrapAndRender(): ?string
     {
         // Apend the edit button
         $this->appendEditButton();
@@ -147,8 +155,10 @@ class BelongsTo extends Field
     /**
      * Append a different edit button depending on whether there is a value
      * already set
+     *
+     * @return void
      */
-    protected function appendEditButton()
+    protected function appendEditButton(): void
     {
         if ($this->value) {
             $this->append(

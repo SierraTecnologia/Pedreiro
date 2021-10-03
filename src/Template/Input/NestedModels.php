@@ -160,9 +160,12 @@ class NestedModels
      * Get the validation rules.  They are generally on the child except for
      * in the special case of Images
      *
-     * @param  Relation $relation
-     * @param  array    $input    The data for the nested model
-     * @return array
+     * @param Relation $relation
+     * @param array    $input    The data for the nested model
+     *
+     * @return null|string[]
+     *
+     * @psalm-return array{file: string}|null
      */
     public function getRules($relation, $input)
     {

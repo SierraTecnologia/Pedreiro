@@ -6,6 +6,9 @@ class TextAreaHandler extends AbstractHandler
 {
     protected $codename = 'text_area';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

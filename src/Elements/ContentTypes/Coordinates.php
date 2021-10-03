@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Coordinates extends BaseType
 {
     /**
-     * @return string|\Illuminate\Database\Query\Expression
+     * @return \Illuminate\Database\Query\Expression|null
      */
     public function handle()
     {

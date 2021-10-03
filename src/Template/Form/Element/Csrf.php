@@ -24,6 +24,8 @@ class Csrf extends Hidden
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {

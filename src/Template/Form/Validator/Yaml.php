@@ -24,7 +24,7 @@ class Yaml implements ValidatorInterface
         return true;
     }
 
-    public function getParser()
+    public function getParser(): Parser
     {
         if (! $this->parser) {
             $this->parser = new Parser();

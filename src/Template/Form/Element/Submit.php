@@ -23,6 +23,8 @@ class Submit extends Button
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {

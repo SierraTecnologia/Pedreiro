@@ -18,10 +18,11 @@ trait Scopable
      * Allow the developer to customize the query for related items.  We'll execute the
      * scope function, passing it a reference to this query to customize
      *
-     * @param  callable $callback
-     * @return Field    A field
+     * @param callable $callback
+     *
+     * @return \Pedreiro\Elements\Fields\ManyToManyChecklist A field
      */
-    public function scope($callback)
+    public function scope($callback): self
     {
         if (is_callable($callback)) {
             $this->scope = $callback;

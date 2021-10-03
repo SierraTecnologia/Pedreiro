@@ -7,9 +7,9 @@ class Password extends BaseType
     /**
      * Handle password fields.
      *
-     * @return string
+     * @return null|string
      */
-    public function handle()
+    public function handle(): ?string
     {
         return empty($this->request->input($this->row->field)) ? null :
             bcrypt($this->request->input($this->row->field));

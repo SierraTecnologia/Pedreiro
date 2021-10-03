@@ -14,14 +14,18 @@ class Select extends Input
 
     /**
      * @param array $options
+     *
+     * @return void
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {

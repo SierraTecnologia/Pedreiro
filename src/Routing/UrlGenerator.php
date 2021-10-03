@@ -178,19 +178,21 @@ class UrlGenerator
         return $controller;
     }
 
-    public function isWildCard()
+    public function isWildCard(): bool
     {
         return starts_with($this->getPath(), $this->getWildCardRoute());
     }
-    public function getWildCardRoute()
+    public function getWildCardRoute(): string
     {
         return \Illuminate\Support\Facades\Config::get('application.routes.main').'//'.'wildcard';
     }
 
     /**
      * Troquei de encrypt para shareable pq o usuario ainda nao foi carregado aqui
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
-    public static function managerRoute($slug, $page = '', $data = false)
+    public static function managerRoute($slug, string $page = '', $data = false)
     {
         if (! empty($page)) {
             $page = '/'.$page;
@@ -202,6 +204,9 @@ class UrlGenerator
         return url(\Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
     public static function routeForSlug($slug, $page = 'index', $data = false)
     {
         $route = 'facilitador.'.$slug.'.'.$page.'';
@@ -216,7 +221,7 @@ class UrlGenerator
         return route($route, $data);
     }
 
-    public static function displayStringName($name)
+    public static function displayStringName($name): string
     {
         if (Crypto::isCrypto($name)) {
             $name = Crypto::shareableDecrypt($name);

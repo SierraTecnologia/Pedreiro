@@ -6,6 +6,9 @@ class ColorHandler extends AbstractHandler
 {
     protected $codename = 'color';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

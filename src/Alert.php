@@ -17,7 +17,10 @@ class Alert
         $this->type = $type;
     }
 
-    public function addComponent(ComponentInterface $component)
+    /**
+     * @return static
+     */
+    public function addComponent(ComponentInterface $component): self
     {
         $this->components[] = $component;
 

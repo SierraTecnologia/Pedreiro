@@ -92,8 +92,10 @@ class Datetime extends Field
 
     /**
      * Configure the input attibutes for the date field
+     *
+     * @return static
      */
-    public function date($attributes)
+    public function date($attributes): self
     {
         $this->date->setAttributes($attributes);
 
@@ -102,8 +104,10 @@ class Datetime extends Field
 
     /**
      * Configure the input attibutes for the date field
+     *
+     * @return static
      */
-    public function time($attributes)
+    public function time($attributes): self
     {
         $this->time->setAttributes($attributes);
 

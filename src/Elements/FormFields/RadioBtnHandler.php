@@ -7,6 +7,9 @@ class RadioBtnHandler extends AbstractHandler
     protected $name = 'Radio Button';
     protected $codename = 'radio_btn';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

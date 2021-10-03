@@ -6,6 +6,9 @@ class MarkdownEditorHandler extends AbstractHandler
 {
     protected $codename = 'markdown_editor';
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(

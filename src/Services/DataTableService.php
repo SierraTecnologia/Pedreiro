@@ -19,11 +19,14 @@ class DataTableService extends DataTable
         }
     }
     
-    public static function make($model)
+    /**
+     * @return static
+     */
+    public static function make($model): self
     {
         return new static($model);
     }
-    public static function makeHtml($model)
+    public static function makeHtml($model): \Yajra\Datatables\Html\Builder
     {
         return (static::make($model))->html();
     }

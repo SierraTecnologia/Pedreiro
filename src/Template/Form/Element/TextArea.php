@@ -21,14 +21,18 @@ class TextArea extends Text
 
     /**
      * @param int $rows
+     *
+     * @return void
      */
-    public function setRows($rows)
+    public function setRows($rows): void
     {
         $this->rows = $rows;
     }
 
     /**
      * @param View $view
+     *
+     * @return void
      */
     protected function onPreRender(View &$view)
     {

@@ -30,7 +30,7 @@ trait Helpers
     /**
      * Get the model
      *
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model|null
      */
     public function getModel()
     {
@@ -51,7 +51,7 @@ trait Helpers
     /**
      * If there is a span class on the field, return it
      *
-     * @return string
+     * @return null|string
      */
     public function span()
     {

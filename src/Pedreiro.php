@@ -101,6 +101,9 @@ class Pedreiro
         return $this->urlSection;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function view($name, array $parameters = [])
     {
         foreach (Arr::get($this->viewLoadingEvents, $name, []) as $event) {
@@ -110,7 +113,7 @@ class Pedreiro
         return view($name, $parameters);
     }
 
-    public function onLoadingView($name, \Closure $closure)
+    public function onLoadingView($name, \Closure $closure): void
     {
         if (! isset($this->viewLoadingEvents[$name])) {
             $this->viewLoadingEvents[$name] = [];
@@ -130,7 +133,10 @@ class Pedreiro
         return $formField->handle($row, $dataType, $dataTypeContent);
     }
 
-    public function afterFormFields($row, $dataType, $dataTypeContent)
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function afterFormFields($row, $dataType, $dataTypeContent): self
     {
         return collect($this->afterFormFields)->filter(
             function ($after) use ($row, $dataType, $dataTypeContent) {
@@ -139,7 +145,10 @@ class Pedreiro
         );
     }
 
-    public function addFormField($handler)
+    /**
+     * @return static
+     */
+    public function addFormField(string $handler): self
     {
         if (! $handler instanceof HandlerInterface) {
             $handler = app($handler);
@@ -150,7 +159,10 @@ class Pedreiro
         return $this;
     }
 
-    public function addAfterFormField($handler)
+    /**
+     * @return static
+     */
+    public function addAfterFormField($handler): self
     {
         if (! $handler instanceof AfterHandlerInterface) {
             $handler = app($handler);
@@ -161,7 +173,10 @@ class Pedreiro
         return $this;
     }
 
-    public function formFields()
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function formFields(): self
     {
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver", 'mysql');
@@ -271,7 +286,8 @@ class Pedreiro
     /**
      * Get the controller class string from a model class string
      *
-     * @param  string $model ex: "App\Person"
+     * @param Model $model
+     *
      * @return string ex: "App\Http\Controllers\Admin\People"
      */
     public function controllerForModel(Model $model): Controller
@@ -355,7 +371,7 @@ class Pedreiro
         return $this->version;
     }
 
-    public function addAlert(Alert $alert)
+    public function addAlert(Alert $alert): void
     {
         $this->alerts[] = $alert;
     }
@@ -371,6 +387,9 @@ class Pedreiro
         return $this->alerts;
     }
 
+    /**
+     * @return void
+     */
     protected function findVersion()
     {
         if (! is_null($this->version)) {
@@ -423,7 +442,7 @@ class Pedreiro
         return in_array(Translatable::class, $traits);
     }
 
-    public function getLocales()
+    public function getLocales(): array
     {
         $appLocales = [];
         if ($this->filesystem->exists(resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'facilitador'))) {
@@ -465,8 +484,12 @@ class Pedreiro
     }
     /**
      * @todo Fazer DEscricao
+     *
+     * @return string
+     *
+     * @psalm-return 'description'
      */
-    public function description()
+    public function description(): string
     {
         return 'description';
     }
@@ -488,8 +511,10 @@ class Pedreiro
 
     /**
      * Add the controller and action as CSS classes on the body tag
+     *
+     * @return string
      */
-    public function bodyClass()
+    public function bodyClass(): string
     {
         $path = Request::path();
         $classes = [];
@@ -721,8 +746,10 @@ class Pedreiro
     
     /**
      * Set Influencia @todo tirar daqui
+     *
+     * @return void
      */
-    public function setInfluencia($influencia = false)
+    public function setInfluencia($influencia = false): void
     {
         $this->influenciaModel = $influencia;
     }
@@ -730,7 +757,7 @@ class Pedreiro
     {
         return $this->influenciaModel;
     }
-    public function emptyInfluencia()
+    public function emptyInfluencia(): void
     {
         $this->setInfluencia();
     }
@@ -743,9 +770,10 @@ class Pedreiro
 
     /**
      * GAMBI @TODO
+     *
+     * @return void
      */
-
-    protected function registerFormFields()
+    protected function registerFormFields(): void
     {
         $formFields = [
             'checkbox',

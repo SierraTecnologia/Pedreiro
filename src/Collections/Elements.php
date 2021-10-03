@@ -66,9 +66,9 @@ class Elements extends Collection
     /**
      * Map the items into a collection of Element instances
      *
-     * @return Pedreiro\Collections\Elements
+     * @return ModelCollection
      */
-    public function asModels()
+    public function asModels(): ModelCollection
     {
         $this->hydrate();
 
@@ -290,9 +290,9 @@ class Elements extends Collection
     /**
      * Merge database records and config file into a single, flat associative array.
      *
-     * @return void
+     * @return array
      */
-    protected function mergeSources()
+    protected function mergeSources(): array
     {
         $assoc = $this->assocConfig();
 
@@ -373,8 +373,11 @@ class Elements extends Collection
      * @param array  $el     The element data that is being merged into, passed by reference
      * @param mixed  $data   The data for a level in the Elements YAML config
      * @param string $prefix A prefix to append to the beginning of the key being set on $el
+     * @param (int|string) $key
+     *
+     * @return void
      */
-    protected function mergeExtra(&$el, $key, $data, $prefix = null)
+    protected function mergeExtra(&$el, $key, $data, $prefix = null): void
     {
         // Don't add extra if this in the 1st or 2nd depth (which means there is a prefix)
         // and there is no node for the children.  This prevents a FIELD named "label" to be
