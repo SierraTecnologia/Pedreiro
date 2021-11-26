@@ -193,7 +193,6 @@ class PedreiroServiceProvider extends ServiceProvider
     
     public function boot(Router $router, Dispatcher $event): void
     {
-        \Performance\Performance::point();
         // Define constants that Decoy uses
         if (!defined('FORMAT_DATE')) {
             define('FORMAT_DATE', __('pedreiro::base.constants.format_date'));
@@ -283,7 +282,6 @@ class PedreiroServiceProvider extends ServiceProvider
 
         $this->eloquentSvents();
         $this->setProviders();
-        \Performance\Performance::point();
     }
     /**
      * Delegate events to Decoy observers

@@ -6,10 +6,13 @@
 namespace Pedreiro;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Pedreiro\Template\Input\Search;
+use stdClass;
+use Pedreiro\Models\Base as BaseModel;
 
 trait CrudController
 {
