@@ -472,7 +472,7 @@ abstract class Base extends Model //Ardent
      *
      * @param  string $string
      * @param  array  $columns
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      *
      * @throws Illuminate\Database\Eloquent\ModelNotFoundException
      */
@@ -977,7 +977,7 @@ abstract class Base extends Model //Ardent
      *
      * @param  Illuminate\Database\Query\Builder $query
      * @param  string                            $locale
-     * @return Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeLocalize($query, $locale = null)
     {

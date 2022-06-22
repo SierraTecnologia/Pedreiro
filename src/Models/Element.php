@@ -91,7 +91,7 @@ class Element extends Base
      * https://github.com/laravel/framework/issues/5355
      *
      * @param  Illuminate\Database\Eloquent\Builder $query
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function setKeysForSaveQuery($query)
     {

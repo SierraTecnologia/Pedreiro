@@ -77,7 +77,7 @@ class Listing extends Field
     /**
      * Preserve the parent
      *
-     * @var Illuminate\Database\Eloquent\Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     private $parent_item;
 
@@ -134,7 +134,7 @@ class Listing extends Field
      * @param Base $controller
      * @param LengthAwarePaginator                $items
      *
-     * @return Support\Field\Listing
+     * @return \Support\Field\Listing
      */
     public static function createFromController(Base $controller, $items)
     {
@@ -155,7 +155,7 @@ class Listing extends Field
     /**
      * Replace the controller
      *
-     * @param  Support\Http\Controllers\Admin\Base | string $controller
+     * @param  \Support\Http\Controllers\Admin\Base | string $controller
      * @return Field                                 This field
      */
     public function controller($controller)
@@ -234,7 +234,7 @@ class Listing extends Field
     /**
      * Store the parent model instance
      *
-     * @param Illuminate\Database\Eloquent\Model $parent
+     * @param \Illuminate\Database\Eloquent\Model $parent
      *
      * @return static
      */

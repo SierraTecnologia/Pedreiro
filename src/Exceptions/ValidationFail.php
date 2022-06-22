@@ -10,14 +10,14 @@ use Illuminate\Validation\Validator;
 class ValidationFail extends Exception
 {
     /**
-     * @var Illuminate\Validation\Validator
+     * @var \Illuminate\Validation\Validator
      */
     public $validation;
 
     /**
      * @param Validator $validation
-     * @param string                          $message
-     * @param int                         $code
+     * @param string    $message
+     * @param int       $code
      */
     public function __construct(Validator $validation, $message = null, $code = 0)
     {

@@ -694,7 +694,7 @@ trait CrudController
      * Run the parent relationship function for the active model, returning the Relation
      * object. Returns false if none found.
      *
-     * @return Illuminate\Database\Eloquent\Relations\Relation | false
+     * @return \Illuminate\Database\Eloquent\Relations\Relation | false
      */
     private function parentRelation()
     {

@@ -97,7 +97,7 @@ class ManyToManyChecklist extends Checkbox
     /**
      * Get all the options in the related table.  Each will become a checkbox.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getRelations()
     {
@@ -171,7 +171,7 @@ class ManyToManyChecklist extends Checkbox
     /**
      * Get a collection of all the children that are already associated with the parent
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     protected function children()
     {

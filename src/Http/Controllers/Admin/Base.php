@@ -97,7 +97,7 @@ class Base extends BaseController
      * An instance of the model that is the parent of the controller that is handling
      * the request
      *
-     * @var Illuminate\Database\Eloquent\Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     public $parent;
 
@@ -342,7 +342,7 @@ class Base extends BaseController
     /**
      * Show an index, listing page.  Sets view via the layout.
      *
-     * @return Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Contracts\View\Factory
      */
     public function index(Request $request)
     {
@@ -368,7 +368,7 @@ class Base extends BaseController
     /**
      * Show the create form.  Sets view via the layout.
      *
-     * @return Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Contracts\View\Factory
      */
     public function create(Request $request)
     {
@@ -438,7 +438,7 @@ class Base extends BaseController
      * Show the edit form.  Sets view via the layout.
      *
      * @param  int $id Model key
-     * @return Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Contracts\View\Factory
      */
     public function edit(Request $request, $id)
     {
@@ -604,7 +604,7 @@ class Base extends BaseController
     /**
      * List as JSON for autocomplete widgets
      *
-     * @return Illuminate\Http\Response JSON
+     * @return \Illuminate\Http\Response JSON
      */
     public function autocomplete()
     {
@@ -687,7 +687,7 @@ class Base extends BaseController
      * autocomplete widget
      *
      * @param  int $id The id of the parent model
-     * @return Illuminate\Http\Response JSON
+     * @return \Illuminate\Http\Response JSON
      */
     public function attach($id)
     {
@@ -708,7 +708,7 @@ class Base extends BaseController
      * not actually deleting from the database
      *
      * @param  mixed $id One or many (commaa delimited) parent ids
-     * @return Illuminate\Http\Response Either a JSON or Redirect response
+     * @return \Illuminate\Http\Response Either a JSON or Redirect response
      */
     public function remove($id)
     {
@@ -919,7 +919,7 @@ class Base extends BaseController
      * Run the parent relationship function for the active model, returning the Relation
      * object. Returns false if none found.
      *
-     * @return Illuminate\Database\Eloquent\Relations\Relation | false
+     * @return \Illuminate\Database\Eloquent\Relations\Relation | false
      */
     private function parentRelation()
     {

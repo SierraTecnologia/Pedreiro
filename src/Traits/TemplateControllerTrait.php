@@ -45,7 +45,7 @@ trait TemplateControllerTrait
     /**
      * A view instance to use as the layout
      *
-     * @var Illuminate\Contracts\View\Factory
+     * @var \Illuminate\Contracts\View\Factory
      */
     protected $layout;
     protected $loadLayout = false;
@@ -96,7 +96,7 @@ trait TemplateControllerTrait
      *
      * @param  mixed $content string view name or an HtmlObject / View object
      * @param  array $vars    Key value pairs passed to the content view
-     * @return Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     protected function populateView($content, $vars = [])
     {

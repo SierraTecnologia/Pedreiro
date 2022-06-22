@@ -44,7 +44,7 @@ class Search
      *
      * @param  Illuminate\Database\Query\Builder $query
      * @param  array                             $config Search config from the controller class definition
-     * @return Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Query\Builder
      */
     public function apply($query, $config)
     {
@@ -96,7 +96,7 @@ class Search
      * @param  string                            $comparison The operator string from the search UI
      * @param  string                            $input      The input for the field
      * @param  string                            $type       The type of the field
-     * @return Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Query\Builder
      */
     private function condition($query, $field, $comparison, $input, $type)
     {
