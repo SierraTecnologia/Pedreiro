@@ -6,7 +6,7 @@
 namespace Pedreiro;
 
 use Illuminate\Database\Eloquent\Model;
-use Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
