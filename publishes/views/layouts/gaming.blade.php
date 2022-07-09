@@ -8,7 +8,7 @@
     @endif
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
-
+    
 
     <script type="text/javascript">
         var _token = '{!! csrf_token() !!}';
@@ -42,7 +42,7 @@
     @hasSection('page_title')
         @stack('page_title')
         @yield('page_title')
-    @else
+    @else 
         <?php if (isset($title)) {
             echo $title;
         } ?>

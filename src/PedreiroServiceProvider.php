@@ -11,7 +11,7 @@ use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
-
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -44,7 +44,7 @@ class PedreiroServiceProvider extends ServiceProvider
          * Listagens
          */
         'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
-        
+
         'Active' => \HieuLe\Active\Facades\Active::class,
 
         'Translation' => \Translation\Facades\Translation::class,
@@ -78,7 +78,7 @@ class PedreiroServiceProvider extends ServiceProvider
         \Bkwld\Upchuck\ServiceProvider::class,
 
         \Translation\TranslationServiceProvider::class,
-        
+
         /**
          * Helpers
          */
@@ -91,7 +91,7 @@ class PedreiroServiceProvider extends ServiceProvider
 
         \Pedreiro\RoutesExplorerServiceProvider::class,
     ];
-    
+
     public static $menuItens = [
         [
             'text' => 'Painel',
@@ -172,7 +172,7 @@ class PedreiroServiceProvider extends ServiceProvider
         // ],
     ];
 
-    
+
     /**
      * Register the tool's routes.
      *
@@ -190,7 +190,7 @@ class PedreiroServiceProvider extends ServiceProvider
          */
         $this->loadRoutesForRiCa(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes');
     }
-    
+
     public function boot(Router $router, Dispatcher $event): void
     {
         // Define constants that Decoy uses
@@ -203,7 +203,7 @@ class PedreiroServiceProvider extends ServiceProvider
         if (!defined('FORMAT_TIME')) {
             define('FORMAT_TIME', __('pedreiro::base.constants.format_time'));
         }
-        
+
         // Paginator Bootstrap
         // @todo tava dando erro
         // syntax error, unexpected ''pagination.previous'' (T_CONSTANT_ENCAPSED_STRING), expecting ';' or ',' (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php) (View: /var/www/html/vendor/laravel/framework/src/Illuminate/Pagination/resources/views/bootstrap-4.blade.php)
@@ -225,6 +225,23 @@ class PedreiroServiceProvider extends ServiceProvider
                 ],
                 'views'
             );
+
+        // Publish config files
+        $this->publishes(
+            [
+            // Paths
+            $this->getPublishesPath('config'.DIRECTORY_SEPARATOR.'pedreiro.php') => config_path('pedreiro.php'),
+            ],
+            ['config',  'sitec', 'sitec-config']
+        );
+        // Publish admin files
+        $this->publishes(
+            [
+            // Paths
+            $this->getPublishesPath('views'.DIRECTORY_SEPARATOR.'views') => base_path('resources'.DIRECTORY_SEPARATOR.'views'),
+            ],
+            ['views',  'sitec', 'sitec-views']
+        );
 
             // $migrationFileName = 'create_pedreiro_table.php';
             // if (! $this->migrationFileExists($migrationFileName)) {
@@ -269,6 +286,15 @@ class PedreiroServiceProvider extends ServiceProvider
             },
             trans('validation.invalid_strip_tags')
         );
+
+        // Automatiz o menu
+        $this->app['events']->listen(
+            BuildingMenu::class,
+            function (BuildingMenu $event) {
+                (new \Pedreiro\Template\Mounters\SystemMount())->loadMenuForAdminlte($event);
+            }
+        );
+
 
         // //ExtendedBreadFormFieldsServiceProvider
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'extended-fields');
@@ -320,7 +346,7 @@ class PedreiroServiceProvider extends ServiceProvider
         );
 
         $this->mergeConfigFrom(__DIR__ . '/../config/pedreiro.php', 'pedreiro');
-  
+
 
         // Register URL Generators as "PedreiroURL".
         $this->app->singleton(
