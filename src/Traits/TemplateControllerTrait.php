@@ -98,17 +98,18 @@ trait TemplateControllerTrait
      * @param  array $vars    Key value pairs passed to the content view
      * @return \Illuminate\View\View
      */
+    // @todo repetido no temlpeiro
     protected function populateView($content, $vars = [])
     {
         $this->loadLayout();
-        
+
         // The view
         if (is_string($content)) {
             $this->layout->content = View::make($content);
         } else {
             $this->layout->content = $content;
         }
-        
+
         // Set vars
         $this->layout->title = $this->title();
         $this->layout->description = $this->description();

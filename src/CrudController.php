@@ -54,7 +54,7 @@ trait CrudController
      * @var bool
      */
     protected $withTrashed = false;
-    
+
     /**
      * If equals ZERO then not have pagination
      *
@@ -559,7 +559,7 @@ trait CrudController
      * @return array
      */
     // public function search(Request $request)
-    public function search()
+    public function search(Request $request)
     {
         $search = new Search;
 
@@ -575,7 +575,7 @@ trait CrudController
      */
     // rn $class::RULES;
     //     }
-        
+
     //     if (!property_exists($class, 'rules')) {
     //         return [];
     //     }

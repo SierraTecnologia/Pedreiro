@@ -182,7 +182,7 @@ class Base extends BaseController
      * @return array
      */
     // public function search(Request $request)
-    public function search()
+    public function search(Request $request)
     {
         $search = new Search;
 
@@ -779,7 +779,7 @@ class Base extends BaseController
     protected function findOrFail($id)
     {
         $model = $this->model;
-        
+
         if ($this->withTrashed()) {
             return $model::withTrashed()->findOrFail($id);
         } else {
@@ -799,7 +799,7 @@ class Base extends BaseController
         if (defined($class.'::RULES')) {
             return $class::RULES;
         }
-        
+
         if (! property_exists($class, 'rules')) {
             return [];
         }
