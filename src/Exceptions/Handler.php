@@ -141,7 +141,7 @@ class Handler extends \SiUtils\Exceptions\Handler
         // if we don't do this exceptions are shown as a default template
         // instead of our own view in resources/views/errors/500.blade.php
         if (config('app.env') == 'production' && $this->shouldReport($exception) && ! $this->isHttpException($exception) && ! config('app.debug')) {
-            $exception = new HttpException(500, 'Whoops!');
+            $exception = new HttpException('Whoops!', 500);
         } elseif (config('app.debug') && $this->shouldReport($exception)) {
             dd('Error Handler', $exception);
         }

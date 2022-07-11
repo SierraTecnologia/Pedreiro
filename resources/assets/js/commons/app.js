@@ -18,8 +18,9 @@ jQuery(document).ready(function($) {
 
 $(document).ready(function () {
 
+    // @todo verificar dependencia
+        //$('.match-height').matchHeight();
 
-    $('.match-height').matchHeight();
 
     // $('.datatable').DataTable({
     //     "dom": '<"top"fl<"clear">>rt<"bottom"ip<"clear">>'

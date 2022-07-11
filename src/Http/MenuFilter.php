@@ -41,7 +41,7 @@ class MenuFilter implements FilterInterface
         // Remove Itens Sem Filhos
         if (
             (!isset($item["submenu"]) || empty($item["submenu"]))
-            && isset($item["text"]) && 
+            && isset($item["text"]) &&
             (!isset($item["href"]) || $item["href"]=='#')
         ) {
             Log::debug('Sem filho, tirando fora: '.$item['text']);
@@ -56,7 +56,7 @@ class MenuFilter implements FilterInterface
         if (!$this->verifySection($item, $user)) {
             return false;
         }
-        
+
         // //
         // if (! $this->verifyLevel($item, $user)) {
         //     Log::debug('Sem level, tirando fora: '.$item['text']);
@@ -93,7 +93,7 @@ class MenuFilter implements FilterInterface
      * @param \Illuminate\Contracts\Auth\Authenticatable|null $user
      */
     private function verifySection(array $item, ?\Illuminate\Contracts\Auth\Authenticatable $user): bool
-    {         
+    {
         // Se nao for pra dividir entre as sessões, então nao remove o menu, return true
         if (!$this->splitForSection || !config('siravel.habilityTopNav', true)) {
             return true;
@@ -112,6 +112,7 @@ class MenuFilter implements FilterInterface
         return true;
     }
 
+    // @todo rever
     private function isInDevelopment($item, $user): bool
     {
         if (isset($item['dev_status']) && $item['dev_status'] == 0) {
@@ -177,7 +178,7 @@ class MenuFilter implements FilterInterface
                 'admin',
             ]
         ];
-        
+
         $actualSection = Request::segment(1);
         foreach ($permissionsByUrl as $permission => $values) {
             if (isset($item['route'])) {

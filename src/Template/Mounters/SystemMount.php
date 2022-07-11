@@ -7,7 +7,8 @@ namespace Pedreiro\Template\Mounters;
 
 use Session;
 use Translation;
-
+use Cache;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 /**
  * SystemMount helper to make table and object form mapping easy.
  */
@@ -15,7 +16,7 @@ class SystemMount
 {
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -29,7 +30,7 @@ class SystemMount
             \Support\SupportServiceProvider::class,
             \Porteiro\PorteiroProvider::class,
             \Pedreiro\PedreiroServiceProvider::class,
-            
+
             \Informate\InformateProvider::class,
             \Translation\TranslationProvider::class,
             \Locaravel\LocaravelProvider::class,
@@ -52,7 +53,7 @@ class SystemMount
             \Trainner\TrainnerProvider::class,
             \Gamer\GamerProvider::class,
             \Jogos\JogosProvider::class,
-            
+
             \Facilitador\FacilitadorProvider::class,
             \Boravel\BoravelProvider::class,
             \Siravel\SiravelProvider::class,

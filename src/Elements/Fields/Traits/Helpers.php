@@ -10,7 +10,7 @@ trait Helpers
     /**
      * Allow passing in of a model when inferring doesn't work
      *
-     * @var Illuminate\Database\Eloquent\Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     private $model;
 
@@ -30,7 +30,7 @@ trait Helpers
     /**
      * Get the model
      *
-     * @return Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model|null
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model|null
      */
     public function getModel()
     {

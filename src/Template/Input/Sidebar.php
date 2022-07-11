@@ -25,14 +25,14 @@ class Sidebar
     /**
      * The model instance currently being worked on by Facilitador
      *
-     * @var Illuminate\Database\Eloquent\Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     private $parent;
 
     /**
      * Inject dependencies
      *
-     * @param Illuminate\Database\Eloquent\Model $parent The model instance
+     * @param \Illuminate\Database\Eloquent\Model $parent The model instance
      *                                                   currently being worked on by Facilitador
      */
     public function __construct($parent = null)

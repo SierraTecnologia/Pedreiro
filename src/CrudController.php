@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Pedreiro\Template\Input\Search;
+use stdClass;
+use Pedreiro\Models\Base as BaseModel;
 
 trait CrudController
 {
@@ -51,7 +54,7 @@ trait CrudController
      * @var bool
      */
     protected $withTrashed = false;
-    
+
     /**
      * If equals ZERO then not have pagination
      *
@@ -611,7 +614,7 @@ trait CrudController
      * @return array
      */
     // public function search(Request $request)
-    public function search()
+    public function search(Request $request)
     {
         $search = new Search;
 
@@ -627,7 +630,7 @@ trait CrudController
      */
     // rn $class::RULES;
     //     }
-        
+
     //     if (!property_exists($class, 'rules')) {
     //         return [];
     //     }
@@ -746,7 +749,7 @@ trait CrudController
      * Run the parent relationship function for the active model, returning the Relation
      * object. Returns false if none found.
      *
-     * @return Illuminate\Database\Eloquent\Relations\Relation | false
+     * @return \Illuminate\Database\Eloquent\Relations\Relation | false
      */
     private function parentRelation()
     {

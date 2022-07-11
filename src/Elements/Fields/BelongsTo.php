@@ -209,7 +209,7 @@ class BelongsTo extends Field
     /**
      * Get the parent record of the form instance
      *
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function parentModel()
     {

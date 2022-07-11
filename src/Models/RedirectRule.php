@@ -67,7 +67,7 @@ class RedirectRule extends Base
     /**
      * Pre-validation rules
      *
-     * @param Illuminate\Validation\Validator $validation
+     * @param \Illuminate\Validation\Validator $validation
      *
      * @return void
      */
