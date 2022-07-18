@@ -12,6 +12,7 @@ class FeatureServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /**
         // Blade::directive(
         //     'feature', function ($expression) {
         //         return "<?php if (Features::isActive($expression)) : ?>";
@@ -23,6 +24,7 @@ class FeatureServiceProvider extends ServiceProvider
         //         return "<?php endif; ?>";
         //     }
         // );
+         */
     }
 
     /**
