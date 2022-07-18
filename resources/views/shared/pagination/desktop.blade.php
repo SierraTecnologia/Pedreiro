@@ -1,5 +1,5 @@
 <?php
-use Stalker\Template\Markup\UrlWindow;
+use MediaManager\Template\Markup\UrlWindow;
 
 // Make a smaller window
 $window = (new UrlWindow($paginator))->get(3);

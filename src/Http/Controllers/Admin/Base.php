@@ -426,12 +426,13 @@ class Base extends BaseController
         }
 
         // Redirect to edit view
-        if (Request::ajax()) {
+        if ($request->ajax()) {
             return Response::json(['id' => $item->id]);
-        } else {
-            return Redirect::to(PedreiroURL::relative('edit', $item->id))
-            ->with('success', $this->successMessage($item, 'created'));
         }
+
+        return Redirect::to(PedreiroURL::relative('edit', $item->id))
+        ->with('success', $this->successMessage($item, 'created'));
+
     }
 
     /**
@@ -446,7 +447,7 @@ class Base extends BaseController
         $item = $this->findOrFail($id);
 
         // Respond to AJAX requests for a single item with JSON
-        if (Request::ajax()) {
+        if ($request->ajax()) {
             return Response::json($item);
         }
 
@@ -460,7 +461,7 @@ class Base extends BaseController
         // Initialize localization
         with($localize = new Localize)
             ->item($item)
-            ->title(Str::singular($this->title));
+            ->title(Str::singular($this->title()));
 
         // Make the sidebar
         $sidebar = new Sidebar($item);
@@ -495,7 +496,7 @@ class Base extends BaseController
         $input = (new NestedModels)->relateTo($item);
 
         // Hydrate for drag-and-drop sorting
-        if (Request::ajax()
+        if ($request->ajax()
             && ($position = new Position($item, $this->self_to_parent))
             && $position->has()
         ) {
@@ -516,7 +517,7 @@ class Base extends BaseController
         $item->save();
 
         // Redirect to the edit view
-        if (Request::ajax()) {
+        if ($request->ajax()) {
             return Response::json();
         } else {
             return Redirect::to(URL::current())
@@ -539,7 +540,7 @@ class Base extends BaseController
         $item->delete();
 
         // As long as not an ajax request, go back to the parent directory of the referrer
-        if (Request::ajax()) {
+        if ($request->ajax()) {
             return Response::json();
         } else {
             return Redirect::to(PedreiroURL::relative('index'))
@@ -811,175 +812,4 @@ class Base extends BaseController
         return (new $class)->rules;
     }
 
-    /**
-     * All actions validate in basically the same way.  This is shared logic for that
-     *
-     * @param  BaseModel|Request|array $data
-     * @param  array                   $rules    A Laravel rules array. If null, will be pulled from model
-     * @param  array                   $messages Special error messages
-     * @return void
-     *
-     * @throws ValidationFail
-     */
-    public function validateEloquentData($data, $rules = null, $messages = [])
-    {
-        // A request may be passed in when using Laravel traits, like how resetting
-        // passwords work.  Get the input from it
-        if (is_a($data, \Illuminate\Http\Request::class)) {
-            $data = $data->input();
-        }
-
-        // Get validation rules from model
-        $model = null;
-        if (is_a($data, BaseModel::class)) {
-            $model = $data;
-            $data = $model->getAttributes();
-            if (empty($rules)) {
-                $rules = $model::$rules;
-            }
-        }
-
-        // If an AJAX update, don't require all fields to be present. Pass just the
-        // keys of the input to the array_only function to filter the rules list.
-        if (Request::ajax() && Request::getMethod() == 'PUT') {
-            $rules = array_only($rules, array_keys(request()->input()));
-        }
-
-        // Stop if no rules
-        if (empty($rules)) {
-            return;
-        }
-
-        // Build the validation instance and fire the intiating event.
-        if ($model) {
-            (new ModelValidator)->validateEloquentData($model, $rules, $messages);
-        } else {
-            $messages = array_merge(BkwldLibraryValidator::$messages, $messages);
-            $validation = Validator::make($data, $rules, $messages);
-            if ($validation->fails()) {
-                throw new ValidationFail($validation);
-            }
-        }
-    }
-
-    /**
-     * Format the results of a query in the format needed for the autocomplete
-     * responses
-     *
-     * @param  array $results
-     * @return array
-     */
-    public function formatAutocompleteResponse($results)
-    {
-        $output = [];
-        foreach ($results as $row) {
-
-            // Only keep the id and title fields
-            $item = new stdClass;
-            $item->id = $row->getKey();
-            $item->title = $row->getAdminTitleAttribute();
-
-            // Add properties for the columns mentioned in the list view within the
-            // 'columns' property of this row in the response.  Use the same logic
-            // found in Pedreiro::renderListColumn();
-            $item->columns = [];
-            foreach ($this->columns() as $column) {
-                if (method_exists($row, $column)) {
-                    $item->columns[$column] = call_user_func([$row, $column]);
-                } elseif (isset($row->$column)) {
-                    if (is_a($row->$column, 'Carbon\Carbon')) {
-                        $item->columns[$column] = $row->$column->format(FORMAT_DATE);
-                    } else {
-                        $item->columns[$column] = $row->$column;
-                    }
-                } else {
-                    $item->columns[$column] = null;
-                }
-            }
-
-            // Add the item to the output
-            $output[] = $item;
-        }
-
-        return $output;
-    }
-
-    // Return the per_page based on the input
-    public function perPage()
-    {
-        $per_page = request('count', static::$per_page);
-        if ($per_page == 'all') {
-            return 1000;
-        }
-
-        return $per_page;
-    }
-
-    /**
-     * Run the parent relationship function for the active model, returning the Relation
-     * object. Returns false if none found.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation | false
-     */
-    private function parentRelation()
-    {
-        if ($this->parent && method_exists($this->parent, $this->parent_to_self)) {
-            return $this->parent->{$this->parent_to_self}();
-        }
-
-        return false;
-    }
-
-    /**
-     * Tell Laravel to look for view files within the app admin views so that,
-     * on a controller-level basis, the app can customize elements of an admin
-     * view through it's partials.
-     *
-     * @return void
-     */
-    protected function overrideViews()
-    {
-        $dir = Str::snake($this->controllerName());
-        $path = base_path('resources/views/admin/').$dir;
-        app('view')->prependNamespace('facilitador', $path);
-    }
-
-    /**
-     * Creates a success message for CRUD commands
-     *
-     * @param  Support\Model\Base|string $title The model instance that is
-     *                                          being worked on  or a string
-     *                                          containing the title
-     * @param  string                    $verb  Default: 'saved'. Past tense CRUD verb (created, saved, etc)
-     * @return string                        The CRUD success message string
-     */
-    protected function successMessage($input = '', $verb = 'saved')
-    {
-        // Figure out the title and wrap it in quotes
-        $title = $input;
-        if (is_a($input, '\Pedreiro\Models\Base')) {
-            $title = $input->getAdminTitleAttribute();
-        }
-
-        if ($title && is_string($title)) {
-            $title = '"'.$title.'"';
-        }
-
-        // Render the message
-        $message = __('pedreiro::base.success_message', ['model' => Str::singular($this->title), 'title' => $title, 'verb' => __("facilitador::base.verb.$verb")]);
-
-        // Add extra messaging for copies
-        if ($verb == 'duplicated') {
-            $url = preg_replace('#/duplicate#', '/edit', Request::url());
-            $message .= __('pedreiro::base.success_duplicated', ['url' => $url]);
-        }
-
-        // Add extra messaging if the creation was begun from the localize UI
-        if ($verb == 'duplicated' && is_a($input, '\Pedreiro\Models\Base') && ! empty($input->locale)) {
-            $message .= __('pedreiro::base.success_localized', ['locale' => \Illuminate\Support\Facades\Config::get('sitec.site.locales')[$input->locale]]);
-        }
-
-        // Return message
-        return $message;
-    }
 }

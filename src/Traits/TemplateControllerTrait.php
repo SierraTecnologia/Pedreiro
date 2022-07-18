@@ -161,7 +161,10 @@ trait TemplateControllerTrait
     {
         // For when this is invoked as a getter for $this->title
         // if (!$controller_name) {
-        return $this->title;
+        if ($this->title) {
+            return $this->title;
+        }
+        return 'Sem titulo';
         // }
 
         // // Do the de-studlying
