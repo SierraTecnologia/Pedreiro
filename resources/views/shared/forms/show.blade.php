@@ -3,12 +3,12 @@
 @section(\Illuminate\Support\Facades\Config::get('crud-forms.blade_section'))
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            <div class="card card-primary">
+                <div class="card-header">
                     <h3 class="panel-title">{{ $title }} Details</h3>
                 </div>
 
-                <div class="panel-body">
+                <div class="box-body panel-body card-body">
                     <ul>
                         @foreach ($fields as $field)
                             <li>

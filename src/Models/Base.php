@@ -45,7 +45,7 @@ abstract class Base extends Model //Ardent
         \Muleta\Traits\Models\CanSerializeTransform,
         \Muleta\Traits\Models\Exportable;
     // Loggable;
-    
+
 
     /**
      * @todo bug Resolver pra tirar esse coment
@@ -71,7 +71,7 @@ abstract class Base extends Model //Ardent
     public $rules = [
 
     ];
-    
+
     /**
      * Should this model be localizable in the admin.  If not undefined, will
      * override the site config "auto_localize_root_models"
@@ -243,9 +243,12 @@ abstract class Base extends Model //Ardent
     {
         $atributesInOrderToDisplay = [
             'name',
+            'description',
             'slug',
             'text',
             'token',
+            'code',
+            'id',
         ];
         $attributes = $this->getFillable();
         foreach ($atributesInOrderToDisplay as $display) {
@@ -613,7 +616,7 @@ abstract class Base extends Model //Ardent
 
         return $entity;
     }
-    
+
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
         if (!static::hasFeatureHability()) {
@@ -625,7 +628,7 @@ abstract class Base extends Model //Ardent
         if (config('siravel.influencia', false)) {
             $associate = Pedreiro::getInfluencia();
         }
-        
+
         $modelFind = false;
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);

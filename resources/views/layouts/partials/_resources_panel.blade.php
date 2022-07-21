@@ -1,10 +1,10 @@
 
 @if(isset($banners['sidebar-resources']))
-<div class="panel panel-default corner-radius sidebar-resources">
-  <div class="panel-heading text-center">
+<div class="card card-default corner-radius sidebar-resources">
+  <div class="card-header text-center">
     <h3 class="panel-title">Publicidade</h3>
   </div>
-  <div class="panel-body">
+  <div class="box-body panel-body card-body">
     <ul class="list list-group ">
         @foreach($banners['sidebar-resources'] as $banner)
             <li class="list-group-item ">

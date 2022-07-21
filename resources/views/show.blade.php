@@ -3,12 +3,12 @@
 @section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ $title }} {{ __('common.details') }}</h3>
+            <div class="card card-primary">
+                <div class="box-header panel-heading card-header">
+                    <h3 class="box-title panel-title card-title">{{ $title }} {{ __('common.details') }}</h3>
                 </div>
 
-                <div class="panel-body">
+                <div class="box-body panel-body card-body">
                     <ul>
                         @foreach ($fields as $field)
                             <li>
@@ -19,7 +19,7 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="panel-footer">
+                <div class="box-footer panel-footer card-footer">
                     <div class="row">
                         {{-- Back to resource index --}}
                         <div class="col-sm-3">

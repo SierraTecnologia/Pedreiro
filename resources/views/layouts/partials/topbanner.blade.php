@@ -8,7 +8,7 @@
                       <img src="{{$banner->image_url}}?imageView2/1/w/424/h/212">
                   </a>
                 <div class="caption">
-                  <h3 style="font-size:1.1em;font-weight:bord" class="card-title"><a href="@if($banner->link){{linkWithUTMSource($banner->link)}}@else javascript:; @endif" class="no-pjax">{{$banner->title}}</a></h3>
+                  <h3 style="font-size:1.1em;font-weight:bord" class="box-title panel-title card-title"><a href="@if($banner->link){{linkWithUTMSource($banner->link)}}@else javascript:; @endif" class="no-pjax">{{$banner->title}}</a></h3>
                   <p class="card-description hidden-xs">{{$banner->description}}</p>
                 </div>
               </div>

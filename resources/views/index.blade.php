@@ -3,8 +3,8 @@
 @section(\Illuminate\Support\Facades\Config::get('pedreiro.blade_section'))
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+        <div class="card card-primary">
+            <div class="card-header">
                 <div class="btn-group float-right">
                     <a href="{{ route("$route.create" ) }}" class="btn btn-secondary btn-xs float-right">
                         <i class='fa fa-plus'></i> {{ __('common.add') }} {{ $title }}
@@ -12,7 +12,7 @@
                 </div>
                 <h3 class="panel-title">{{ Illuminate\Support\Str::plural($title) }} Index</h3>
             </div>
-            <div class="panel-body">
+            <div class="box-body panel-body card-body">
 
                 @if ($entities->count() === 0)
                     <div class="well text-center">Nenhum resultado encontrado.</div>

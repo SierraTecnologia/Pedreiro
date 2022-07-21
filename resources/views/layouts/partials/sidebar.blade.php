@@ -9,9 +9,9 @@
 
 
     @if (isset($topic))
-        <div class="panel panel-default corner-radius">
+        <div class="card card-default corner-radius">
 
-            <div class="panel-heading text-center">
+            <div class="card-header text-center">
                 <h3 class="panel-title">Autor：{{ $topic->user->name }}</h3>
             </div>
 
@@ -41,11 +41,11 @@
 
 
     @if (isset($userTopics) && count($userTopics))
-        <div class="panel panel-default corner-radius">
-            <div class="panel-heading text-center">
+        <div class="card card-default corner-radius">
+            <div class="card-header text-center">
                 <h3 class="panel-title">Outros tópicos de {{ $topic->user->name }}</h3>
             </div>
-            <div class="panel-body">
+            <div class="box-body panel-body card-body">
                 @include('pedreiro::layouts.partials.sidebar_topics', ['sidebarTopics' => $userTopics])
             </div>
         </div>
@@ -53,41 +53,41 @@
 
 
     @if (isset($categoryTopics) && count($categoryTopics))
-        <div class="panel panel-default corner-radius">
-            <div class="panel-heading text-center">
+        <div class="card card-default corner-radius">
+            <div class="card-header text-center">
                 <h3 class="panel-title">{{ lang('Same Category Topics') }}</h3>
             </div>
-            <div class="panel-body">
+            <div class="box-body panel-body card-body">
                 @include('pedreiro::layouts.partials.sidebar_topics', ['sidebarTopics' => $categoryTopics])
             </div>
         </div>
     @endif
 
     @if (isset($active_users) && count($active_users))
-        <div class="panel panel-default corner-radius panel-active-users">
-            <div class="panel-heading text-center">
+        <div class="card card-default corner-radius panel-active-users">
+            <div class="card-header text-center">
                 <h3 class="panel-title">{{ lang('Active Users') }}（<a href="{{ route('hall_of_fames') }}"><i
                                 class="fa fa-star" aria-hidden="true"></i> {{ lang('Hall of Fame') }}</a>）</h3>
             </div>
-            <div class="panel-body">
+            <div class="box-body panel-body card-body">
                 @include('topics.partials.active_users')
             </div>
         </div>
     @endif
 
     @if (isset($hot_topics) && count($hot_topics))
-        <div class="panel panel-default corner-radius panel-hot-topics">
-            <div class="panel-heading text-center">
+        <div class="card card-default corner-radius panel-hot-topics">
+            <div class="card-header text-center">
                 <h3 class="panel-title">Mais quente da Semana</h3>
             </div>
-            <div class="panel-body">
+            <div class="box-body panel-body card-body">
                 @include('pedreiro::layouts.partials.sidebar_topics', ['sidebarTopics' => $hot_topics, 'numbered' => true])
             </div>
         </div>
     @endif
 
 
-    <div class="panel panel-default corner-radius">
+    <div class="card card-default corner-radius">
         <div class="panel-body text-center sidebar-sponsor-box">
             @if(isset($banners['sidebar-sponsor']))
                 @foreach($banners['sidebar-sponsor'] as $banner)
@@ -103,8 +103,8 @@
 
     @if (Route::currentRouteName() != 'home')
         @if (isset($links) && count($links))
-            <div class="panel panel-default corner-radius">
-                <div class="panel-heading text-center">
+            <div class="card card-default corner-radius">
+                <div class="card-header text-center">
                     <h3 class="panel-title">{{ lang('Links') }}</h3>
                 </div>
                 <div class="panel-body text-center" style="padding-top: 5px;">
@@ -122,8 +122,8 @@
     <?php /*
     @if (Route::currentRouteName() == 'topics.index')
 
-        <div class="panel panel-default corner-radius">
-            <div class="panel-heading text-center">
+        <div class="card card-default corner-radius">
+            <div class="card-header text-center">
                 <h3 class="panel-title">{{ lang('App Download') }}</h3>
             </div>
             <div class="panel-body text-center" style="padding: 7px;">
@@ -140,7 +140,7 @@
 
         @include('pedreiro::layouts.partials._resources_panel')
 
-        <div class="panel panel-default corner-radius" style="color:#a5a5a5">
+        <div class="card card-default corner-radius" style="color:#a5a5a5">
             <div class="panel-body text-center">
                 <a href="https://www.facebook.com/h3sotospeak" target="_BLANK" style="color:#a5a5a5">
                     <span style="margin-top: 7px;display: inline-block;">
@@ -150,7 +150,7 @@
             </div>
         </div>
 
-        <div class="panel panel-default corner-radius" style="color:#a5a5a5">
+        <div class="card card-default corner-radius" style="color:#a5a5a5">
             <div class="panel-body text-center">
                 <a href="{{ Auth::check() ? 'https://h3sotospeak.com/messages/to/1' : 'mailto:ricardo@sierratecnologia.com.br'}}"
                    style="color:#a5a5a5">
@@ -161,7 +161,7 @@
             </div>
         </div>
 
-        <div class="panel panel-default corner-radius" style="text-align: center; background-color: transparent; border: none;">
+        <div class="card card-default corner-radius" style="text-align: center; background-color: transparent; border: none;">
             <a href="https://h3sotospeak.com/about" rel="nofollow" title="" style="">
                 <img src="https://h3sotospeak.com/assets/images/hoppe/banner.jpeg" style="width: 100%;border-radius: 0px;box-shadow: none;border: 1px solid #ffafaf;">
             </a>

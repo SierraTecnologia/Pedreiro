@@ -75,8 +75,9 @@ class MenuRepository
         if (self::isArraysFromMenus($array)) {
             return $array;
         }
-        
+
         if (! is_array($array)) {
+            // dd($array);
             throw new Exception('Deveria ser um array aqui no mergeDinamicGroups do MenuRepository');
         };
 
@@ -92,7 +93,7 @@ class MenuRepository
 
         return $mergeArray;
     }
-    
+
     /**
      * @return (mixed|object|string)[]
      *
