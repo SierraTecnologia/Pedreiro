@@ -20,7 +20,7 @@
         "sierratecnologia/former": "dev-master",
         "ricardosierra/minify": "dev-master",
         "ricardosierra/validate": "dev-master",
-        "ricardosierra/changelog": "~1.4",
+        "ricardosierra/changelog": "^1.4",
         "sierratecnologia/muleta": "dev-master",
         "sierratecnologia/crudmaker": "dev-master",
         "google/recaptcha": "^1.2.4",
@@ -76,7 +76,10 @@
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "phpro/grumphp": true
+        }
     },
     "extra": {
         "laravel": {
