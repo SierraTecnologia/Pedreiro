@@ -126,7 +126,15 @@ trait CrudController
         $bladeLayout = $this->bladeLayout;
 
         $withPagination = $this->withPagination;
-
+        // dd(
+        //     $entities,
+        //     $fields,
+        //     $title,
+        //     $route,
+        //     $withTrashed,
+        //     $withPagination,
+        //     $bladeLayout
+        // );
         return view(
             'pedreiro::index',
             compact(
@@ -216,7 +224,13 @@ trait CrudController
         $title = $this->getFormTitle();
         $route = $this->getRoute();
         $bladeLayout = $this->bladeLayout;
-
+        // dd(
+        //     $entity,
+        //     $fields,
+        //     $title,
+        //     $route,
+        //     $bladeLayout
+        // );
         return view(
             'pedreiro::show',
             compact(

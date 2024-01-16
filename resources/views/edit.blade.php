@@ -4,12 +4,12 @@
 
 <div class="row">
     <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+        <div class="card card-primary">
+            <div class="card-header">
                 <h3 class="panel-title">{{ __('common.edit') }} {{ $title }}</h3>
             </div>
 
-            <div class="panel-body">
+            <div class="box-body panel-body card-body">
                 @include('pedreiro::_errors')
                 <form action="{{ route("$route.update", ['id' => $entity]) }}" method="POST">
                     {{ method_field('PATCH') }}

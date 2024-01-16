@@ -1,6 +1,6 @@
 <?php
 
-namespace Pedreiro\Http\Controllers\Admin;
+namespace Pedreiro\Http\Controllers\Master;
 
 use App;
 use Muleta\Library\Laravel\Validator as BkwldLibraryValidator;

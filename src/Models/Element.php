@@ -10,7 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Muleta\Traits\Models\HasImages;
-use Stalker\Traits\Encodable;
+use MediaManager\Traits\Encodable;
 use Support;
 
 /**

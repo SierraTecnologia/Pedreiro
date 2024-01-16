@@ -17,12 +17,21 @@
     ],
     "require": {
         "php": "^7.2|^8.0",
+<<<<<<< HEAD
         "sierratecnologia/former": "^0.4.0",
         "ricardosierra/minify": "^0.3.0 | ^0.4.0",
         "ricardosierra/validate": "^0.4.0",
         "ricardosierra/changelog": "~1.4",
         "sierratecnologia/muleta": "^0.4",
         "sierratecnologia/crudmaker": "^0.4",
+=======
+        "sierratecnologia/former": "dev-master",
+        "ricardosierra/minify": "dev-master",
+        "ricardosierra/validate": "dev-master",
+        "ricardosierra/changelog": "^1.4",
+        "sierratecnologia/muleta": "dev-master",
+        "sierratecnologia/crudmaker": "dev-master",
+>>>>>>> master
         "google/recaptcha": "^1.2.4",
         "kartik-v/bootstrap-fileinput": "dev-master",
         "hieu-le/active": "^7.0|^8.0",
@@ -75,7 +84,10 @@
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "phpro/grumphp": true
+        }
     },
     "extra": {
         "laravel": {

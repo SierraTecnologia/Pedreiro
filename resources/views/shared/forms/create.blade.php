@@ -3,11 +3,11 @@
 @section(\Illuminate\Support\Facades\Config::get('crud-forms.blade_section'))
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+        <div class="card card-primary">
+            <div class="card-header">
                 <h3 class="panel-title">{{ __('pedreiro::media.add_new_folder') }} {{ $title }}</h3>
             </div>
-            <div class="panel-body">
+            <div class="box-body panel-body card-body">
                 @include('pedreiro::_errors')
                 <form action="{{ route("$route.store", $entity->getIdentificador()) }}" method="POST">
                     {{ csrf_field() }}
