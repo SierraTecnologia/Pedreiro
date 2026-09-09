@@ -13,7 +13,7 @@ class CreateApiCallsCountTable extends Migration
      */
     public function up()
     {
-        Schema::create('api_calls_count', function (Blueprint $table) {
+        Schema::hasTable('api_calls_count') || Schema::create('api_calls_count', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url');
             $table->unsignedInteger('user_id')->nullable();

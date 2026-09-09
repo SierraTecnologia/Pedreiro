@@ -12,8 +12,7 @@ class CreateRedirectRules extends Migration
      */
     public function up()
     {
-        Schema::create(
-            'redirect_rules', function (Blueprint $table) {
+        Schema::hasTable('redirect_rules') || Schema::create('redirect_rules', function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->increments('id');
 
