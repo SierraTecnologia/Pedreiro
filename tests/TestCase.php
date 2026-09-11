@@ -1,9 +1,13 @@
 <?php
 
-namespace Pedreiro\Tests;
+namespace Pedreiro\Test;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use Pedreiro\PedreiroServiceProvider;
+use Pedreiro\Test\Models\Category;
+use Pedreiro\Test\Models\Post;
+use Pedreiro\Test\Models\Tag;
+use Illuminate\Support\Facades\Schema;
 
 class TestCase extends Orchestra
 {
@@ -11,18 +15,23 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__.'/database/factories');
+        $this->setUpDatabase();
+
     }
 
     protected function getPackageProviders($app)
     {
         return [
             PedreiroServiceProvider::class,
+            \Former\FormerServiceProvider::class,
+            \Pedreiro\Test\Providers\RouteServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
+        $app['config']->set('app.key', 'base64:QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUE=');
+        $app['config']->set('view.paths', [__DIR__.'/resources/views']);
         $app['config']->set('database.default', 'sqlite');
         $app['config']->set('database.connections.sqlite', [
             'driver' => 'sqlite',
@@ -34,6 +43,54 @@ class TestCase extends Orchestra
         include_once __DIR__.'/../database/migrations/create_pedreiro_table.php.stub';
         (new \CreatePackageTable())->up();
         */
+    }
+
+    protected function setUpDatabase(): void
+    {
+        Schema::create('categories', function ($table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug', 100);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('tags', function ($table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug', 100);
+            $table->timestamps();
+        });
+
+        Schema::create('posts', function ($table) {
+            $table->id();
+            $table->string('title');
+            $table->string('slug', 100);
+            $table->text('body');
+            $table->date('publish_on')->nullable();
+            $table->boolean('published')->default(false);
+            $table->foreignId('category_id')->constrained('categories');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('post_tag', function ($table) {
+            $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained('tags')->cascadeOnDelete();
+            $table->primary(['post_id', 'tag_id']);
+        });
+
+        $category = Category::create(['name' => 'category 1', 'slug' => 'category-1']);
+        $tag = Tag::create(['name' => 'tag 1', 'slug' => 'tag-1']);
+        $post = Post::create([
+            'title' => 'post 1',
+            'slug' => 'post-1',
+            'body' => 'post 1 body',
+            'publish_on' => now(),
+            'published' => true,
+            'category_id' => $category->id,
+        ]);
+        $post->tags()->attach($tag);
     }
 }
 

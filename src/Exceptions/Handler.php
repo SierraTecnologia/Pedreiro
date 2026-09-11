@@ -3,9 +3,11 @@
 namespace Pedreiro\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Pedreiro\Models\RedirectRule;
 use Sentry\State\Scope;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -24,7 +26,11 @@ class Handler extends \SiUtils\Exceptions\Handler
      * @var array
      */
     protected $dontReport = [
-        //
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Session\TokenMismatchException::class,
+        \Illuminate\Validation\ValidationException::class,
     ];
 
     /**
@@ -90,6 +96,12 @@ class Handler extends \SiUtils\Exceptions\Handler
      */
     public function render($request, Throwable $exception)
     {
+        // Preserve Laravel's standard guest redirect. Treating this
+        // exception as a generic browser error turns /login into a 500 page.
+        if ($exception instanceof AuthenticationException) {
+            return parent::render($request, $exception);
+        }
+
         // Check for custom handling
         if ($response = $this->handle404s($request, $exception)) {
             return $response;
@@ -138,10 +150,9 @@ class Handler extends \SiUtils\Exceptions\Handler
         }
         
         // Convert all non-http exceptions to a proper 500 http exception
-        // if we don't do this exceptions are shown as a default template
-        // instead of our own view in resources/views/errors/500.blade.php
+        // if we don't do this exceptions are shown as a default template.
         if (config('app.env') == 'production' && $this->shouldReport($exception) && ! $this->isHttpException($exception) && ! config('app.debug')) {
-            $exception = new HttpException('Whoops!', 500);
+            $exception = new HttpException(500, 'Whoops!');
         } elseif (config('app.debug') && $this->shouldReport($exception)) {
             dd('Error Handler', $exception);
         }
@@ -150,6 +161,17 @@ class Handler extends \SiUtils\Exceptions\Handler
         //     dd($exception);
         // }
 
+        if (! $request->ajax()
+            && ! $request->expectsJson()
+            && ! $request->is('api/*')
+            && ($exception instanceof HttpException ? $exception->getStatusCode() : 500) === 500) {
+            return $this->renderSystemError(
+                $request,
+                500,
+                'Algo deu errado do nosso lado.',
+                'O servidor encontrou uma condição inesperada. Tente novamente em instantes.'
+            );
+        }
 
         return parent::render($request, $exception);
     }
@@ -169,14 +191,28 @@ class Handler extends \SiUtils\Exceptions\Handler
             return;
         }
 
-        // Check for a valid redirect
-        if ($rule = RedirectRule::matchUsingRequest()->first()) {
-            return redirect($rule->to, $rule->code);
+        // Check for a valid redirect. Redirect rules are optional, so a missing
+        // table must not hide the actual 404 response.
+        try {
+            if ($rule = RedirectRule::matchUsingRequest()->first()) {
+                return redirect($rule->to, $rule->code);
+            }
+        } catch (Throwable) {
+            // Continue with the standard error response.
         }
 
         // Return header only on AJAX
         if ($request->ajax()) {
             return response(null, 404);
+        }
+
+        if (! $request->expectsJson() && ! $request->is('api/*')) {
+            return $this->renderSystemError(
+                $request,
+                404,
+                'Página não encontrada',
+                'A página que você procura não existe ou foi movida.'
+            );
         }
 
         // Check for right exception
@@ -197,6 +233,24 @@ class Handler extends \SiUtils\Exceptions\Handler
             ],
             406
         );
+    }
+
+    /**
+     * Render the shared Pedreiro error page for browser requests.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int                         $code
+     * @param  string                      $title
+     * @param  string                      $message
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderSystemError($request, int $code, string $title, string $message)
+    {
+        return response()->view('pedreiro::errors.'.$code, [
+            'title' => $title,
+            'code' => $code,
+            'message' => $message,
+        ], $code);
     }
 
     /**

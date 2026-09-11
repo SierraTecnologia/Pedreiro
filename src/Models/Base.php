@@ -127,6 +127,11 @@ abstract class Base extends Model //Ardent
 
 
 
+    protected static function isPedreiroHandling(): bool
+    {
+        return class_exists('\Pedreiro\Facades\Pedreiro') && app()->bound('pedreiro') && \Pedreiro\Facades\Pedreiro::handling();
+    }
+
     /**
      * Should this model log it's changes.  Defaults to true if the change
      * happened while handling an admin request or via the console but not
@@ -137,7 +142,7 @@ abstract class Base extends Model //Ardent
      */
     public function shouldLogChange($action)
     {
-        return Pedreiro::handling()
+        return static::isPedreiroHandling()
             || (App::runningInConsole() && request()->path() == '/');
     }
 
@@ -746,7 +751,7 @@ abstract class Base extends Model //Ardent
      */
     public function hasGetMutator($key)
     {
-        if (! Pedreiro::handling()
+        if (! static::isPedreiroHandling()
             || ! array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
@@ -764,7 +769,7 @@ abstract class Base extends Model //Ardent
      */
     public function hasSetMutator($key)
     {
-        if (! Pedreiro::handling()
+        if (! static::isPedreiroHandling()
             || ! array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
@@ -800,7 +805,7 @@ abstract class Base extends Model //Ardent
          */
         // Remove any settings that affect JSON conversion (visible / hidden) and
         // mass assignment protection (fillable / guarded) while in the admin
-        if (Pedreiro::handling()) {
+        if (static::isPedreiroHandling()) {
             $this->visible = $this->hidden = $this->fillable = $this->guarded = [];
         }
 

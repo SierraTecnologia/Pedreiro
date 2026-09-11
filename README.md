@@ -4,7 +4,7 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sierratecnologia/pedreiro/run-tests?label=tests)](https://github.com/sierratecnologia/pedreiro/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/sierratecnologia/pedreiro.svg?style=flat-square)](https://packagist.org/packages/sierratecnologia/pedreiro)
 
-**Pedreiro** is a comprehensive Laravel package (≥5.5) that provides a powerful CRUD (Create, Read, Update, Delete) form framework and admin panel infrastructure. It's designed as a quick, non-intrusive tool that dramatically reduces the time spent building admin interfaces while maintaining flexibility and extensibility.
+**Pedreiro** is a comprehensive Laravel 13 package that provides a powerful CRUD (Create, Read, Update, Delete) form framework and admin panel infrastructure. It's designed as a quick, non-intrusive tool that dramatically reduces the time spent building admin interfaces while maintaining flexibility and extensibility.
 
 ## Features
 
@@ -23,8 +23,8 @@
 
 ## Requirements
 
-- PHP 7.2 or higher (PHP 8.0+ supported)
-- Laravel 5.5 or higher
+- PHP 8.3 or higher
+- Laravel 13.x
 - Composer
 
 ## Installation

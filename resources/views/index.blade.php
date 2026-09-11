@@ -43,7 +43,7 @@
                                     <td class="text-center" style="white-space: nowrap">
                                         @if (empty($entity->deleted_at))
                                             {{-- Show --}}
-                                            <a href="{{ route("$route.show", ['id' => $entity] ) }}" class="btn btn-info">
+                                            <a href="{{ route("$route.show", $entity ) }}" class="btn btn-info">
                                                 @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                     <i class="fa fa-info-circle"></i>
                                                 @else
@@ -52,7 +52,7 @@
                                             </a>
 
                                             {{-- Update --}}
-                                            <a href="{{ route("$route.edit", ['id' => $entity] ) }}" class="btn btn-warning">
+                                            <a href="{{ route("$route.edit", $entity ) }}" class="btn btn-warning">
                                                 @if (\Illuminate\Support\Facades\Config::get('pedreiro.button_icons'))
                                                     <i class="fa fa-edit"></i>
                                                 @else
@@ -61,7 +61,7 @@
                                             </a>
 
                                             {{-- Delete --}}
-                                            <form action="{{ route("$route.destroy", ['id' => $entity]) }}" method="POST" style="display: inline-block;">
+                                            <form action="{{ route("$route.destroy", $entity) }}" method="POST" style="display: inline-block;">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button class="btn btn-danger delete-btn" type="submit">

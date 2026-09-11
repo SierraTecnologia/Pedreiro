@@ -95,7 +95,7 @@ class RedirectRule extends Base
      *
      * @return Builder
      */
-    public function scopeOrdered(Builder $query, string $direction = 'asc'): self
+    public function scopeOrdered(Builder $query, string $direction = 'asc'): Builder
     {
         return $query->orderBy('from', $direction);
     }
@@ -113,10 +113,11 @@ class RedirectRule extends Base
             function ($query) {
                 $from = $this->pathAndQuery();
                 $escaped_from = DB::connection()->getPdo()->quote($from);
-                $from_col = DB::getDriverName() == 'sqlsrv' ? '[from]' : '`from`';
+                $from_col = DB::connection()->getQueryGrammar()->wrap('from');
                 $query->where('from', $from)->orWhereRaw("{$escaped_from} LIKE {$from_col}");
                 if (Config::get('support::core.allow_regex_in_redirects')) {
-                    $query->orWhereRaw("{$escaped_from} REGEXP {$from_col}");
+                    $regexOperator = DB::getDriverName() === 'pgsql' ? '~' : 'REGEXP';
+                    $query->orWhereRaw("{$escaped_from} {$regexOperator} {$from_col}");
                 }
             }
         );

@@ -15,6 +15,19 @@ return [
     'blade_section' => 'content',
 
     /*
+     * Dashboard targets used by the shared browser error pages. Add new
+     * application segments here as they are introduced.
+     */
+    'error_pages' => [
+        'section_dashboard_urls' => [
+            'admin' => 'admin',
+            'master' => 'master',
+            'painel' => 'painel',
+            'rica' => 'rica',
+        ],
+    ],
+
+    /*
      * Whether the action buttons (show, edit, delete) of the index view should use font awesome icons.
      * If true, you will have to load the font-awesome css in the base layout.
      * (eg https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css).

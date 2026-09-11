@@ -10,9 +10,7 @@
 
     <title>{{ \Illuminate\Support\Facades\Config::get('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite('resources/js/app.ts')
 </head>
 <body>
     <div id="app">
@@ -21,7 +19,5 @@
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

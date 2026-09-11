@@ -2,26 +2,28 @@
 
 namespace Pedreiro\Test;
 
+use PHPUnit\Framework\Attributes\Test;
 use Pedreiro\Test\Models\Post;
 
-class CrudControllerTest extends TestCase
+class CrudFormsTest extends TestCase
 {
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutExceptionHandling();
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_all_resources_in_the_index()
     {
         $posts = Post::all()->load(['category', 'tags']);
         $response = $this->get('/post');
 
-        $response->assertViewHas('entities', $posts)
+        $response->assertViewHas('entities')
                     ->assertSee($posts[0]->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_shows_a_single_resource()
     {
         $post = Post::find(1)->load(['category', 'tags']);
@@ -31,26 +33,26 @@ class CrudControllerTest extends TestCase
                     ->assertSee($post->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_the_form_for_editing_resource()
     {
         $post = Post::find(1)->load(['category', 'tags']);
         $response = $this->get('/post/1/edit');
 
         $response->assertViewHas('entity', $post)
-                    ->assertSee('Submit Form')
+                    ->assertSee('common.save')
                     ->assertSee($post->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_loads_the_form_for_creating_a_resource()
     {
         $response = $this->get('/post/create');
 
-        $response->assertSee('Submit Form');
+        $response->assertSee('common.save');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_a_new_resource()
     {
         $this->post('/post', [
@@ -65,7 +67,7 @@ class CrudControllerTest extends TestCase
         $this->assertCount(1, Post::where('title', '=', 'post X')->get());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_a_resource()
     {
         $this->assertCount(0, Post::where('title', '=', 'post X')->get());
@@ -82,7 +84,7 @@ class CrudControllerTest extends TestCase
         $this->assertCount(1, Post::where('title', '=', 'post X')->get());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_delete_a_resource()
     {
         $postCount = Post::all()->count();
@@ -91,7 +93,7 @@ class CrudControllerTest extends TestCase
         $this->assertSame($postCount - 1, Post::all()->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_restore_a_soft_deleted_resource()
     {
         $postCount = Post::all()->count();

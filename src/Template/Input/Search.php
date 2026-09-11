@@ -149,7 +149,9 @@ class Search
         case 'sqlsrv':
             return DB::raw("CONVERT(date, [{$field}])");
         default:
-            return DB::raw("DATE(`{$field}`)");
+            $wrappedField = DB::connection()->getQueryGrammar()->wrap($field);
+
+            return DB::raw("DATE({$wrappedField})");
         }
     }
 
@@ -163,37 +165,24 @@ class Search
      *
      * @return Builder|null
      */
-    protected function applyEquality($comparison, $query, $field, $input): ?Builder
+    protected function applyEquality($comparison, $query, $field, $input)
     {
-        // Make SQL safe values
-        $safe_field = $this->makeSafeField($field);
-        $safe_input = $input == '' ?
-        'NULL' : DB::connection()->getPdo()->quote($input);
-
-        // Different engines have different APIs
-        switch (DB::getDriverName()) {
-        case 'mysql':
-            return $this->applyMysqlEquality(
-                $comparison,
-                $query,
-                $safe_field,
-                $safe_input
-            );
-        case 'sqlite':
-            return $this->applySqliteEquality(
-                $comparison,
-                $query,
-                $safe_field,
-                $safe_input
-            );
-        case 'sqlsrv':
-            return $this->applySqlServerEquality(
-                $comparison,
-                $query,
-                $safe_field,
-                $safe_input
-            );
+        // Keep NULL-safe equality portable. The previous implementation used
+        // MySQL's <=> operator and returned null for PostgreSQL.
+        if ($input === '' || $input === null) {
+            return $comparison === '='
+                ? $query->whereNull($field)
+                : $query->whereNotNull($field);
         }
+
+        if ($comparison === '=') {
+            return $query->where($field, '=', $input);
+        }
+
+        return $query->where(function ($nestedQuery) use ($field, $input) {
+            $nestedQuery->where($field, '!=', $input)
+                ->orWhereNull($field);
+        });
     }
 
     /**
@@ -205,12 +194,9 @@ class Search
      */
     protected function makeSafeField($field)
     {
-        switch (DB::getDriverName()) {
-        case 'sqlsrv':
-            return is_string($field) ? "[{$field}]" : $field;
-        default:
-            return is_string($field) ? "`{$field}`" : $field;
-        }
+        return is_string($field)
+            ? DB::connection()->getQueryGrammar()->wrap($field)
+            : $field;
     }
 
     /**

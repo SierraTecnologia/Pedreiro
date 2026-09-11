@@ -179,7 +179,7 @@ class Pedreiro
     public function formFields(): self
     {
         $connection = config('database.default');
-        $driver = config("database.connections.{$connection}.driver", 'mysql');
+        $driver = config("database.connections.{$connection}.driver", 'pgsql');
 
         return collect($this->formFields)->filter(
             function ($after) use ($driver) {

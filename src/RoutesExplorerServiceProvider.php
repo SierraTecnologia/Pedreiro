@@ -40,7 +40,10 @@ class RoutesExplorerServiceProvider extends ServiceProvider
             'views'
         );
 
-        $this->loadViewsFrom(__DIR__ . '/../views', 'infyomlabs');
+        $viewsDirectory = __DIR__ . '/../views';
+        if (is_dir($viewsDirectory)) {
+            $this->loadViewsFrom($viewsDirectory, 'infyomlabs');
+        }
 
         if (config('infyom.routes_explorer.enable_explorer')) {
             $this->app['router']->get(

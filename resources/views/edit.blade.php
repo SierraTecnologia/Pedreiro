@@ -11,7 +11,7 @@
 
             <div class="box-body panel-body card-body">
                 @include('pedreiro::_errors')
-                <form action="{{ route("$route.update", ['id' => $entity]) }}" method="POST">
+                <form action="{{ route("$route.update", $entity) }}" method="POST">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <div class="row">
@@ -30,7 +30,7 @@
 
                         {{-- Cancel and go back to resource show --}}
                         <div class="col-sm-2">
-                            <a href="{{ route("$route.show", ['id' => $entity]) }}" class="btn btn-warning btn-block">
+                            <a href="{{ route("$route.show", $entity) }}" class="btn btn-warning btn-block">
                                 <i class='fa fa-ban'></i> {{ __('pedreiro::generic.cancel') }}
                             </a>
                         </div>
