@@ -27,8 +27,8 @@
     </div>
 </div>
 @push('javascript')
-<script>
-new Vue({
+<script type="module">
+new window.Vue({
     el: '#media_picker_{{ $row->field }}'
 });
 </script>

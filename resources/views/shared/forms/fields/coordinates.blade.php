@@ -70,8 +70,8 @@
 </div>
 
 @push('javascript')
-    <script>
-        Vue.component('coordinates', {
+    <script type="module">
+        window.Vue.component('coordinates', {
             props: {
                 apiKey: {
                     type: String,
@@ -139,7 +139,7 @@
                     // Setup places Autocomplete
                     if (this.showAutocomplete) {
                         vm.autocomplete = new google.maps.places.Autocomplete(document.getElementById('places-autocomplete'));
-                        places = new google.maps.places.PlacesService(vm.map);
+                        const places = new google.maps.places.PlacesService(vm.map);
                         vm.autocomplete.addListener('place_changed', vm.onPlaceChange);
                     }
                 },
@@ -189,7 +189,7 @@
                             clearTimeout(this.onChangeDebounceTimeout);
                         }
 
-                        self = this
+                        const self = this
                         this.onChangeDebounceTimeout = setTimeout(function() {
                             {{ $row->details->onChange }}(eventType, {
                                 lat: self.lat,
@@ -202,6 +202,6 @@
             }
         });
 
-        var gMapVm = new Vue({ el: '#coordinates-formfield' });
+        var gMapVm = new window.Vue({ el: '#coordinates-formfield' });
     </script>
 @endpush
