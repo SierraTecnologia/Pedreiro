@@ -519,7 +519,9 @@ class PedreiroServiceProvider extends ServiceProvider
 
         // Add Facilitador's custom Fields to Former so they can be invoked using the "Former::"
         // namespace and so we can take advantage of sublassing Former's Field class.
-        $this->app['former.dispatcher']->addRepository('Pedreiro\\Elements\\Fields\\');
+        if ($this->app->bound('former.dispatcher')) {
+            $this->app['former.dispatcher']->addRepository('Pedreiro\\Elements\\Fields\\');
+        }
     }
     protected function loadTranslations(): void
     {

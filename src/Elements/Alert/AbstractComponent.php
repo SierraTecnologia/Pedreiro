@@ -2,7 +2,7 @@
 
 namespace Pedreiro\Elements\Alert;
 
-use Support\Alert;
+use Pedreiro\Alert;
 
 abstract class AbstractComponent implements ComponentInterface
 {
