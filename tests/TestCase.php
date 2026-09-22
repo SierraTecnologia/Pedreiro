@@ -23,7 +23,6 @@ class TestCase extends Orchestra
     {
         return [
             PedreiroServiceProvider::class,
-            \Former\FormerServiceProvider::class,
             \Pedreiro\Test\Providers\RouteServiceProvider::class,
         ];
     }

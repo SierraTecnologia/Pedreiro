@@ -153,13 +153,7 @@ class Handler extends \SiUtils\Exceptions\Handler
         // if we don't do this exceptions are shown as a default template.
         if (config('app.env') == 'production' && $this->shouldReport($exception) && ! $this->isHttpException($exception) && ! config('app.debug')) {
             $exception = new HttpException(500, 'Whoops!');
-        } elseif (config('app.debug') && $this->shouldReport($exception)) {
-            dd('Error Handler', $exception);
         }
-        // // Caso não esteja em desenvolvimento não dispara erro
-        // elseif (config('app.env') == 'development' || config('app.env') == 'local' || config('app.env') == 'dev') {
-        //     dd($exception);
-        // }
 
         if (! $request->ajax()
             && ! $request->expectsJson()

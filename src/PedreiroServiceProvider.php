@@ -49,8 +49,6 @@ class PedreiroServiceProvider extends ServiceProvider
 
         'Translation' => \Translation\Facades\Translation::class,
         'TranslationCache' => \Translation\Facades\TranslationCache::class,
-        // Form field generation
-        'Former' => \Former\Facades\Former::class,
     ];
 
     // public static $providers = [
@@ -61,7 +59,6 @@ class PedreiroServiceProvider extends ServiceProvider
          * Layoults
          */
         \RicardoSierra\Minify\MinifyServiceProvider::class,
-        \Collective\Html\HtmlServiceProvider::class,
         \Laracasts\Flash\FlashServiceProvider::class,
 
         \JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
@@ -74,7 +71,6 @@ class PedreiroServiceProvider extends ServiceProvider
         /**
          * VEio pelo Facilitador
          **/
-        \Former\FormerServiceProvider::class,
         \Bkwld\Upchuck\ServiceProvider::class,
 
         \Translation\TranslationServiceProvider::class,

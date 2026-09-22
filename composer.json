@@ -17,12 +17,10 @@
     ],
     "require": {
         "php": "^8.3",
-        "sierratecnologia/former": "^2.0",
         "ricardosierra/minify": "^2.0",
         "ricardosierra/validate": "^0.4.4",
         "ricardosierra/changelog": "~1.4",
         "sierratecnologia/muleta": "^2.0",
-        "sierratecnologia/crudmaker": "^2.0",
         "google/recaptcha": "^1.5",
         "kartik-v/bootstrap-fileinput": "^5.5",
         "creativeorange/gravatar": "^1.0",
@@ -42,14 +40,18 @@
         "graham-campbell/markdown": "^16.1",
         "laracasts/flash": "^3.2",
         "jeroennoten/laravel-adminlte": "^4.0",
-        "symfony/yaml": "^7.2",
-        "sierratecnologia/collective-html": "^2.0"
+        "symfony/yaml": "^7.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.68",
         "orchestra/testbench": "^11.0",
         "phpro/grumphp": "^2.12",
         "phpunit/phpunit": "^13.0"
+    },
+    "suggest": {
+        "sierratecnologia/former": "Optional legacy form builder",
+        "sierratecnologia/crudmaker": "Optional legacy CRUD generator",
+        "sierratecnologia/collective-html": "Optional legacy form helpers"
     },
     "autoload": {
         "psr-4": {
