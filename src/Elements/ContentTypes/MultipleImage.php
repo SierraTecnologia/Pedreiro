@@ -4,14 +4,15 @@ namespace Pedreiro\Elements\ContentTypes;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Constraint;
-use Intervention\Image\Facades\Image as InterventionImage;
+use Muleta\Image\Constraint;
+use Muleta\Image\Image as InterventionImage;
 
 class MultipleImage extends BaseType
 {
     /**
      * @return false|null|string
      */
+    #[\Override]
     public function handle()
     {
         $filesPath = [];
